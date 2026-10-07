@@ -1,0 +1,1633 @@
+:root {
+  --color-bg: #ffffff;
+  --color-text-inverse: #ffffff; /* all white text, full opacity */
+  --color-text: #040404; /* all black text */
+  --color-text-muted: rgba(0, 0, 0, 0.4);
+  --color-dot: #040404;
+  --color-card: #ffffff;
+  --color-border: #e6e6e6;
+  --color-text-strong: #040404;
+  /* The footer palette hue, picked in the footer (footer.js) and kept for the
+     visit (site.js applies it before the first paint). The accent is the
+     palette's strongest shade: teal #19c3c3 at the default hue. */
+  --hue: 180; /* teal; magenta = 282, orange = 35 */
+  --color-accent: hsl(var(--hue) 77.3% 43.1%);
+  --color-hairline: rgba(0, 0, 0, 0.08); /* thin outlines on rows and icon buttons */
+  --color-hover: rgba(0, 0, 0, 0.04); /* icon button hover */
+  --color-photo-border: #dcdcdc;
+  --color-photo-frame: #ffffff; /* the border around community photos */
+  --color-button-bg: #040404;
+  --color-button-text: #ffffff;
+  --page-margin: 80px; /* left and right margin of all page content (not the footer) */
+  --nav-height: 77px; /* the top nav bar: 24px + 29px link row + 24px */
+  --font-sans: "Host Grotesk", system-ui, sans-serif;
+  /* Motion: one language across the site. Things arrive with a fade and a
+     small rise that overshoots slightly and settles (a gentle bounce). */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* layout changes, plain fades */
+  --ease-bounce: cubic-bezier(0.34, 1.45, 0.64, 1); /* entrances over short distances */
+  --ease-bounce-soft: cubic-bezier(0.34, 1.12, 0.64, 1); /* long travel (photos) */
+  --rise: 12px; /* how far entrances rise into place */
+  --page-in: 560ms; /* new page fading in */
+  --page-out: 180ms; /* old page fading out */
+}
+
+/* Picking a footer colour eases every use of the hue (shapes, nav dot) over. */
+:root {
+  transition: --hue 700ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+/* min-height (not height), so the body grows with the page and the sticky
+   footer can sit at its very end. */
+body {
+  min-height: 100vh;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+p,
+ul {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+/* ---------- Page ---------- */
+
+.landing {
+  /* Opaque and above the footer, which waits underneath until the page ends. */
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg);
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* Photos rise in from below the screen; trim them at the viewport, never mid-page. */
+  overflow: clip;
+  /* Photo scale: in the intro the cards are 231.7 × 297.9 (Figma), 1.655× the
+     original 140 × 180; on the landing screen they are thumbnails. */
+  --s: 1.6549;
+}
+
+.landing[data-state="home"] {
+  --s: 0.2112;
+}
+
+/* Page content. During the intro it spans the whole screen; once the nav
+   shows, it sits below the top nav bar with an 80px margin on each side. It is
+   a size container, so the content inside responds to its width. */
+.content-panel {
+  --pad-left: 16px;
+  --pad-right: 16px;
+  container: panel / inline-size;
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px var(--pad-right) 16px var(--pad-left);
+}
+
+.landing:not([data-state="intro"]) .content-panel {
+  --pad-left: var(--page-margin);
+  --pad-right: var(--page-margin);
+  padding-block: var(--nav-height) 24px;
+}
+
+/* Home page: the introduction fills the first screen, centred; the Work
+   grid follows just below it. */
+.home-intro {
+  position: relative;
+  flex: 1 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing[data-state="home"] .content-panel {
+  justify-content: flex-start;
+  align-items: stretch;
+  padding-block: 0;
+}
+
+/* Pinned while the Work grid slides up over it. */
+.landing[data-state="home"] .home-intro {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* Room for the scroll hint, kept symmetric so the hero stays centered. */
+  padding-block: 112px;
+}
+
+/* Work grid: an opaque layer, so it covers the pinned introduction as it
+   comes up. 24px above (Figma) and 48px below, as on the other pages. */
+.work {
+  position: relative;
+  z-index: 1;
+  padding: 24px 0 48px;
+  background: var(--color-bg);
+}
+
+.landing[data-state="intro"] .work {
+  display: none;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  max-width: 100%;
+}
+
+.hero > .intro {
+  flex-shrink: 0;
+}
+
+/* Landing-screen pieces stay out of the layout until the intro hands off. */
+.landing[data-state="intro"] .hero__divider,
+.landing[data-state="intro"] .about,
+.landing[data-state="intro"] .scroll-hint,
+.landing[data-state="intro"] .side-nav,
+.landing[data-state="home"] .intro__tagline {
+  display: none;
+}
+
+/* ---------- Intro ---------- */
+
+.intro {
+  /* Above the landing text, so photos pass over it while they shrink into place. */
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.intro__heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation:
+    intro-slide 800ms var(--ease-bounce) 100ms both,
+    intro-make-room 1200ms var(--ease-out) 1350ms both;
+}
+
+.intro__dot {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--color-dot);
+}
+
+.intro__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.36px;
+  white-space: nowrap;
+}
+
+.intro__tagline {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: var(--color-text-muted);
+  text-align: center;
+  animation:
+    intro-slide 800ms var(--ease-bounce) 600ms both,
+    intro-make-room 1200ms var(--ease-out) 1350ms both;
+}
+
+/* Intro: heading, then tagline, slide up into place. */
+@keyframes intro-slide {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Photo carousel ---------- */
+
+/* Carousel reveal (after the intro settles): the cards rise up from the
+   bottom of the screen, one after another, while the heading and tagline
+   glide up to make room (intro-make-room). The row keeps its full size the
+   whole time and only transforms animate, so it stays smooth. */
+.carousel-reveal {
+  display: grid;
+  grid-template-rows: 1fr;
+  width: 100%;
+}
+
+/* Half the photo row (card, padding and the 12px gap above it): how far below
+   its resting place the intro starts, so it sits centred before the row arrives. */
+.landing[data-state="intro"] {
+  --intro-room: calc((180px * var(--s) + 2 * 26.63px + 12px) / 2);
+}
+
+.landing[data-state="intro"] .carousel__card {
+  will-change: transform;
+}
+
+.carousel-reveal__clip {
+  min-height: 0;
+  /* Centers the row even when it is wider than the screen. */
+  display: flex;
+  justify-content: center;
+}
+
+/* Every dimension is multiplied by --s, so the thumbnail row is an exact
+   scaled-down copy of the full row (as in Figma). */
+.carousel {
+  display: flex;
+  align-items: center;
+  gap: calc(4px * var(--s));
+  flex-shrink: 0;
+  /* 12px below the tagline (Figma); padding = 16px frame padding plus room
+     for the tilted corners */
+  margin: 12px 0 0;
+  padding: calc(22px * var(--s)) calc(24px * var(--s));
+  list-style: none;
+}
+
+/* Intro: spacing straight from Figma. Neighbouring tilted cards overlap by
+   13px, which puts their centres 245.55px apart (13.86px between cards); the
+   padding is the 16px frame plus room for the tilted corners. */
+.landing[data-state="intro"] .carousel {
+  gap: 13.86px;
+  padding: 26.63px 30.03px;
+}
+
+.landing[data-state="home"] .carousel {
+  margin-top: 8px;
+}
+
+.carousel__card {
+  position: relative;
+  flex-shrink: 0;
+  width: calc(140px * var(--s));
+  height: calc(180px * var(--s));
+  /* Same 1px border as the about photo; scales with the card, so it thins
+     out with the thumbnails rather than staying a heavy 1px. */
+  border: calc(1px * var(--s)) solid var(--color-photo-border);
+  border-radius: calc(8px * var(--s));
+  background: var(--color-card);
+  box-shadow: 0 0 calc(4px * var(--s)) 0 rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transform: rotate(var(--tilt, 0deg));
+  /* Rises up from the bottom of the screen and grows into place (card-rise).
+     Backwards
+     fill only, so once done the card rests on its own tilt with no blur left. */
+  animation:
+    card-rise 900ms var(--ease-out) backwards;
+}
+
+/* Carousel photos, cropped as in Figma. Every crop is a percentage of the
+   card, so it holds as the card shrinks into a thumbnail. */
+.carousel__photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+.photo--1 { left: -4.01%; top: -10.08%; width: 108.99%; height: 113.02%; }
+.photo--2 { left: -57.64%; top: -18.1%; width: 230.78%; height: 119.64%; }
+.photo--3 { object-fit: cover; }
+
+/* Landing screen: hovering a thumbnail straightens it and lifts it a little,
+   like the community photos on the about page. Uses the separate rotate and
+   scale properties, which stack with the tilt the entrance animation holds. */
+.landing[data-state="home"] .carousel__card {
+  transition:
+    rotate 360ms var(--ease-bounce),
+    scale 360ms var(--ease-bounce);
+}
+
+.landing[data-state="home"] .carousel__card:hover {
+  z-index: 1;
+  rotate: calc(-1 * var(--tilt, 0deg));
+  scale: 1.12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing[data-state="home"] .carousel__card {
+    transition: none;
+  }
+}
+
+/* Domino: each photo follows the one before it. */
+.carousel__card:nth-child(1) { animation-delay: 1450ms; }
+.carousel__card:nth-child(2) { animation-delay: 1540ms; }
+.carousel__card:nth-child(3) { animation-delay: 1630ms; }
+
+@keyframes intro-make-room {
+  from { translate: 0 var(--intro-room); }
+  to   { translate: 0 0; }
+}
+
+/* Starts a full screen lower, i.e. below the bottom edge, so each photo
+   travels up from the bottom of the screen into place. */
+@keyframes card-rise {
+  from {
+    transform: translateY(100vh) scale(0.86) rotate(var(--tilt, 0deg));
+  }
+}
+
+/* ---------- Landing screen ---------- */
+
+.icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+.icon {
+  display: block;
+}
+
+.icon--left { transform: rotate(180deg); }
+.icon--down { transform: rotate(90deg); }
+
+.about {
+  flex: 0 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.about__lead,
+.tag,
+.scroll-hint__label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: var(--color-text-muted);
+}
+
+.about__statement {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.36px;
+}
+
+.about__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.scroll-hint:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 4px;
+}
+
+/* Landing screen content fades up once the photos have started shrinking. */
+.landing[data-state="home"] .hero__divider { animation: intro-slide 700ms var(--ease-bounce) 350ms both; }
+.landing[data-state="home"] .about__lead { animation: intro-slide 700ms var(--ease-bounce) 400ms both; }
+.landing[data-state="home"] .about__statement { animation: intro-slide 700ms var(--ease-bounce) 480ms both; }
+.landing[data-state="home"] .about__tags { animation: intro-slide 700ms var(--ease-bounce) 560ms both; }
+.landing[data-state="home"] .scroll-hint,
+.landing[data-state="home"] .side-nav { animation: fade-in 700ms var(--ease-out) 900ms both; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------- About page ---------- */
+
+/* The intro fills the first screen and is centred on it, like the home
+   intro. It starts under the fixed nav bar, with the bar's height of padding
+   top and bottom so nothing ever sits behind the bar. */
+.about-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin-top: calc(-1 * var(--nav-height));
+  padding-block: var(--nav-height);
+}
+
+.about-page__photo {
+  position: relative;
+  flex-shrink: 0;
+  width: 239.772px;
+  height: 300px;
+  /* Leaves room for the tilted corners (268 × 322 rotated bounds in Figma). */
+  margin: 11px 14px;
+  border: 1px solid var(--color-photo-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transform: rotate(-5.62deg);
+}
+
+/* Crop taken directly from the Figma image fill. */
+.about-page__photo img {
+  position: absolute;
+  left: -26.97%;
+  top: -63.47%;
+  width: 147.75%;
+  height: 177.11%;
+  max-width: none;
+}
+
+/* "Hi, designer friends and creative people!", to the left of the chevron. */
+.about-page__greeting {
+  flex-shrink: 0;
+  width: 193px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.36px;
+}
+
+/* Photo beside the heading, bio and buttons. Sized to its content so the
+   whole row stays centred on wide screens. */
+.about-page__body {
+  flex: 0 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.about-page__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.36px;
+}
+
+.about-page__bio {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: var(--color-text-muted);
+}
+
+/* 592px wide (Figma), narrowing only when the screen needs it. */
+.about-page__details {
+  flex: 0 1 592px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.about-page__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-page__bio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.about-page__bio a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+.about-page__bio a:hover {
+  color: var(--color-text-strong);
+}
+
+/* Contact buttons on the left, location on the right. */
+.about-page__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.about-page__contact {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.location-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.location-chip__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.location-chip__icon img {
+  display: block;
+}
+
+.about-page__socials {
+  display: flex;
+  gap: 4px;
+}
+
+.button-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 135px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.icon-button {
+  display: flex;
+  padding: 6px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 6px;
+  transition: background-color 150ms ease;
+}
+
+.button-primary:hover {
+  opacity: 0.85;
+}
+
+.icon-button:hover {
+  background: var(--color-hover);
+}
+
+.about-page a:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+/* Not enough room in the panel for photo, name and bio in one row: stack them. */
+@container panel (max-width: 860px) {
+  .about-page {
+    flex-direction: column;
+    gap: 40px;
+    max-width: 588px;
+    /* Stacked, it is taller than the screen: keep 24px clear below the nav bar. */
+    padding-top: calc(var(--nav-height) + 24px);
+    padding-bottom: 24px;
+  }
+
+  .about-page__body {
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .about-page__greeting {
+    width: auto;
+    text-align: center;
+  }
+
+  .about-page__divider .icon--left {
+    transform: rotate(90deg);
+  }
+
+  .about-page__details {
+    width: 100%;
+  }
+}
+
+/* ---------- About page: sections ---------- */
+
+.about-sections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  /* With the panel's own 24px, this leaves 48px below the last section. */
+  padding-bottom: 24px;
+}
+
+/* Dashed line between sections (black at 20%). The Figma line is drawn at its
+   real size and cropped to the panel, so the 5px dashes never stretch. */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: url("assets/divider-dashed-dark.svg") left center / 1171px 1px repeat-x;
+}
+
+/* ---------- About page: experiences & community ---------- */
+
+.about-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.about-block--experiences {
+  gap: 24px;
+}
+
+.about-block--community {
+  gap: 24px;
+}
+
+/* Section label with a small dot, e.g. "• Experiences". */
+.about-block__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding-inline: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: var(--color-text-strong);
+}
+
+.about-block__title::before {
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-text-strong);
+}
+
+/* Experiences */
+
+.roles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.role {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  transition: background-color 200ms ease;
+}
+
+/* The current role sits on a light grey; others pick up the same grey on
+   hover. */
+.role--current,
+.role:hover {
+  background: #f4f4f4;
+}
+
+.role__main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Company logos: a 30px tile. Cardinal is a complete app icon; the others are
+   a 16px mark inside an outlined box. */
+.role__app-icon {
+  display: block;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.role__logo {
+  display: flex;
+  flex-shrink: 0;
+  padding: 6px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 6px;
+}
+
+.role__logo--framer {
+  background: #000;
+}
+
+.role__logo--autoinvent {
+  background: rgba(190, 167, 119, 0.06);
+}
+
+.role__mark {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+}
+
+.role__mark img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Crops taken from the Figma image fills. */
+.role__mark--headlamp img {
+  left: -7.14%;
+  top: -6.19%;
+  width: 114.29%;
+  height: 114.29%;
+}
+
+.role__mark--autoinvent img {
+  left: -27.57%;
+  top: -2.88%;
+  width: 331.43%;
+  height: 177.2%;
+  max-width: none;
+}
+
+.role__company {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.role__title,
+.role__dates {
+  color: var(--color-text-muted);
+}
+
+.role__dates {
+  text-align: right;
+}
+
+.role--current .role__dates {
+  color: var(--color-text);
+}
+
+/* Community deep dive */
+
+.community {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Photos are 240 × 240 and shrink with the page so all four always fit;
+   the overlap and room for the tilt scale with them. */
+.community__photos {
+  --card: min(240px, calc(100cqi / 4.04));
+  display: flex;
+  align-items: center;
+  padding: calc(4px + var(--card) * 0.042) calc(var(--card) * 0.042);
+  list-style: none;
+}
+
+.community__photos li {
+  flex-shrink: 0;
+  width: var(--card);
+  height: var(--card);
+  border: 1px solid var(--color-photo-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-photo-frame);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 360ms var(--ease-bounce);
+}
+
+.community__photos li + li {
+  margin-left: calc(var(--card) * -0.017);
+}
+
+/* Hover: a photo straightens up and lifts toward you. */
+.community__photos li:hover {
+  position: relative;
+  z-index: 1;
+  transform: rotate(0deg) scale(1.04);
+}
+
+.community__photos img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.community__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+}
+
+.community__intro,
+.community__list {
+  color: var(--color-text-muted);
+}
+
+.community__label {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .community__photos li {
+    transition: none;
+  }
+}
+
+/* ---------- Design explorations page ---------- */
+
+/* Same panel as the about page; the grid starts at the top rather than
+   being centred on the screen. */
+.landing[data-state="explorations"] .content-panel {
+  justify-content: flex-start;
+}
+
+/* 48px above (Figma) and below (as on the about page), counting the panel's
+   own 24px. */
+.explorations {
+  width: 100%;
+  padding-block: 24px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.project-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.project-grid__column {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* A project card. Its height keeps the Figma proportions (--ratio) at any
+   width. */
+.project {
+  position: relative;
+  margin: 0;
+  aspect-ratio: var(--ratio);
+  border: 1px solid var(--color-photo-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+.project:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+.project__visual {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Cards whose artwork sits on a colour rather than filling the card. */
+.project__art {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+.project--framer {
+  background: #b8e7ff;
+}
+
+.project--framer .project__art {
+  /* Runs off the right edge, as in Figma. */
+  left: 19.63%;
+  top: 17.22%;
+  width: 80.72%;
+}
+
+.project--constellation {
+  background: #252133;
+}
+
+/* Feels Chat is a screen recording: zoom in a touch so the window's rounded
+   black corners stay outside the card. */
+.project--feels-chat .project__visual {
+  scale: 1.03;
+}
+
+.project--constellation .project__art {
+  left: 50%;
+  top: 50%;
+  width: 80.2%;
+  translate: -50% -50%;
+}
+
+/* Caption: hidden until the card is hovered (or focused), then it rises in
+   from the bottom edge. */
+.project__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  translate: 0 100%;
+  transition:
+    translate 380ms var(--ease-bounce-soft),
+    opacity 220ms ease;
+}
+
+.project__caption strong {
+  font-weight: 500;
+}
+
+.project__role {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.project:hover .project__caption,
+.project:focus-visible .project__caption {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Entrance (reveal.js): each card starts lower, smaller, transparent and
+   blurred, then rises into place and comes into focus as it scrolls into
+   view, one after another. The focus clears a little after the move. */
+.project-grid[data-reveal] .project {
+  --reveal-delay: 0ms;
+  transition:
+    opacity 700ms var(--ease-out) var(--reveal-delay),
+    transform 900ms var(--ease-out) var(--reveal-delay),
+    filter 1100ms var(--ease-out) var(--reveal-delay);
+}
+
+/* Replaying grids (reveal.js) reset a card out of sight, without animating. */
+.project-grid[data-reveal] .project.is-resetting {
+  transition: none;
+}
+
+.project-grid[data-reveal] .project:not(.is-in) {
+  opacity: 0;
+  transform: translateY(80px) scale(0.86);
+  filter: blur(16px);
+}
+
+/* Re-entering from above (reveal.js): comes back down into place. */
+.project-grid[data-reveal] .project.from-above:not(.is-in) {
+  transform: translateY(-80px) scale(0.86);
+}
+
+/* Blur-up: an image still loading stays soft, then sharpens. */
+.project__visual,
+.project__art {
+  transition: filter 600ms var(--ease-out);
+}
+
+.project:not(.is-loaded) :is(.project__visual, .project__art) {
+  filter: blur(12px);
+}
+
+/* ---------- Project pop-up (lightbox.js) ---------- */
+
+.project {
+  cursor: pointer;
+}
+
+/* The card stays in the grid, hidden, while its picture is out. */
+.project.is-lifted {
+  visibility: hidden;
+}
+
+.has-lightbox {
+  overflow: hidden;
+}
+
+.lightbox {
+  --lb-pad-y: 16px;
+  --lb-height: 63dvh; /* 420px of a 667px-tall screen, as in Figma */
+  --lb-pad-x: var(--page-margin);
+  --lb-caption: 44px; /* 12px + one line + 12px */
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: var(--lb-pad-y) var(--lb-pad-x);
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.lightbox[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox::backdrop {
+  background: var(--color-bg);
+}
+
+.lightbox:focus {
+  outline: none;
+}
+
+.lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+/* As large as the screen allows at the card's own proportions. */
+.lightbox__frame {
+  position: relative;
+  aspect-ratio: var(--ratio);
+  width: min(
+    100vw - 2 * var(--lb-pad-x),
+    min(var(--lb-height), 100dvh - 2 * var(--lb-pad-y) - var(--lb-caption)) * var(--ratio)
+  );
+  border: 1px solid var(--color-photo-border);
+  border-radius: 10px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  cursor: default;
+}
+
+.lightbox__caption {
+  max-width: 100%;
+  padding-block: 12px;
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.32px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lightbox__caption strong {
+  font-weight: 500;
+}
+
+.lightbox__caption .project__role {
+  color: var(--color-text-muted);
+}
+
+/* Narrow panel: one column. */
+@container panel (max-width: 720px) {
+  .project-grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project__caption,
+  .project-grid[data-reveal] .project,
+  .project__visual,
+  .project__art {
+    transition: none;
+  }
+}
+
+/* ---------- Footer: "just dots" (every page) ---------- */
+
+/* Lets the palette hue animate smoothly when a colour is picked. */
+@property --hue {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 180;
+}
+
+/* Sticky to the bottom of the screen but stacked beneath the page, so it is
+   only uncovered once the page content scrolls up past its end. */
+.site-footer {
+  /* Figma 10% white over black, made solid so it stays legible where the
+     shapes run under the picker on narrower screens. */
+  --footer-chip: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #000;
+  position: sticky;
+  bottom: 0;
+  z-index: 0;
+  height: clamp(280px, 26.3vw, 398px);
+  overflow: clip;
+  /* Dot grid in the back, behind the shapes; fixed and still, tiles to any size. */
+  --footer-bg: #000;
+  --footer-dot: rgba(255, 255, 255, 0.18);
+  background:
+    radial-gradient(circle, var(--footer-dot) 1px, transparent 1.6px) center / 16px 16px,
+    var(--footer-bg);
+}
+
+.site-footer__stage {
+  position: relative;
+  height: 100%;
+}
+
+/* The picker and caption fade up as the footer is uncovered
+   (--footer-progress: 0 → 1); the shapes have their own entrance. */
+.footer-panel {
+  opacity: calc(0.3 + 0.7 * var(--footer-progress, 1));
+}
+
+/* Shape entrance (footer.js): like the Design explorations cards, each shape
+   starts lower, smaller, transparent and blurred, then rises into place and
+   comes into focus as the uncovered edge reaches it. */
+.footer-shape {
+  --shape-delay: 0ms;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition:
+    opacity 700ms var(--ease-out) var(--shape-delay),
+    transform 900ms var(--ease-out) var(--shape-delay),
+    filter 1100ms var(--ease-out) var(--shape-delay);
+}
+
+.footer-shape:not(.is-in) {
+  opacity: 0;
+  transform: translateY(60px) scale(0.86);
+  filter: blur(12px);
+}
+
+.site-footer.is-resetting .footer-shape {
+  transition: none;
+}
+
+/* The Figma composition (1512 × 398) scaled to cover the footer at any width.
+   The cursor parts the shapes like water as it moves through them (footer.js). */
+.footer-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Four shades of the picked hue, matching the Figma teal set exactly at 180. */
+.footer-art .shade-1 { fill: hsl(var(--hue) 77.3% 43.1%); }
+.footer-art .shade-2 { fill: hsl(var(--hue) 39.6% 81.2%); }
+.footer-art .shade-3 { fill: hsl(var(--hue) 74.5% 90.8%); }
+.footer-art .shade-4 { fill: hsl(var(--hue) 100% 94.3%); }
+
+.footer-panel {
+  position: absolute;
+  right: 15px;
+  bottom: 19px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.color-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--footer-chip);
+}
+
+.color-picker__icon {
+  display: block;
+}
+
+.swatch {
+  position: relative;
+  display: flex;
+  padding: 2px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.swatch::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: hsl(var(--swatch-hue) 77.3% 43.1%);
+}
+
+.swatch:hover,
+.swatch[aria-pressed="true"] {
+  background: #fff;
+}
+
+.swatch:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Colour name, shown above a swatch while it is hovered or focused. */
+.swatch__name {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  translate: -50% 4px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: var(--footer-chip);
+  color: var(--color-text-inverse);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease, translate 150ms ease;
+}
+
+.swatch:hover .swatch__name,
+.swatch:focus-visible .swatch__name {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* The last name lines up with the picker edge so it never runs off screen. */
+.swatch:last-of-type .swatch__name {
+  left: auto;
+  right: -8px;
+  translate: 0 4px;
+}
+
+.swatch:last-of-type:hover .swatch__name,
+.swatch:last-of-type:focus-visible .swatch__name {
+  translate: 0 0;
+}
+
+/* Hugs its two lines (broken after "kinds", as in Figma). */
+.footer-caption {
+  width: max-content;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--footer-chip);
+  color: var(--color-text-inverse);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer {
+    transition: none;
+  }
+
+  .footer-panel {
+    opacity: 1;
+  }
+
+  .footer-shape {
+    transition: none;
+  }
+}
+
+/* The intro on the home page plays without scrolling; the footer is reachable
+   once the landing screen is up. */
+html:has(.landing[data-state="intro"]) {
+  overflow: hidden;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+/* ---------- Side nav ---------- */
+
+
+/* A bar along the top of the page, its links centred. */
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--nav-height);
+  padding: 0 var(--page-margin);
+  background: var(--color-bg);
+}
+
+.side-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.side-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 300ms ease;
+}
+
+/* Every link carries the dot, collapsed (and its gap cancelled) unless active,
+   so the active state can glide from one link to another: the dot shrinks on
+   one, grows on the next, and the text slides over to make room. */
+.side-nav__link::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0;
+  height: 8px;
+  margin-right: -8px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  opacity: 0;
+  transition:
+    width 360ms var(--ease-bounce),
+    margin-right 360ms var(--ease-bounce),
+    opacity 200ms ease;
+}
+
+/* Which link is active is set on <html data-nav> by site.js (before the first
+   paint), so a new page can start from the previous page's state. */
+.side-nav__link:hover,
+html[data-nav="work"] .side-nav__link[data-nav="work"],
+html[data-nav="explorations"] .side-nav__link[data-nav="explorations"],
+html[data-nav="about"] .side-nav__link[data-nav="about"] {
+  color: var(--color-text-strong);
+}
+
+html[data-nav="work"] .side-nav__link[data-nav="work"]::before,
+html[data-nav="explorations"] .side-nav__link[data-nav="explorations"]::before,
+html[data-nav="about"] .side-nav__link[data-nav="about"]::before {
+  width: 8px;
+  margin-right: 0;
+  opacity: 1;
+}
+
+.side-nav__link:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+
+/* Panel too narrow for the hero row: stack the landing screen. */
+@container panel (max-width: 600px) {
+  .hero {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Stacked layout: the chevron points down to the content below it. */
+  .hero__divider .icon--left {
+    transform: rotate(90deg);
+  }
+
+  .about {
+    align-items: center;
+    text-align: center;
+  }
+
+  .about__tags {
+    justify-content: center;
+  }
+
+  .tag {
+    white-space: normal;
+  }
+}
+
+/* Phones: smaller margins and a shorter nav bar. */
+@media (max-width: 760px) {
+  :root {
+    --page-margin: 16px;
+    --nav-height: 53px;
+  }
+}
+
+.landing[data-skip-intro] :is(
+  .intro__heading,
+  .intro__tagline,
+  .carousel-reveal,
+  .carousel__card,
+  .hero__divider,
+  .about__lead,
+  .about__statement,
+  .about__tags,
+  .scroll-hint,
+  .side-nav
+) {
+  animation: none !important;
+}
+
+/* ---------- Page transitions ---------- */
+
+/* Moving between pages: the old page fades out quickly and the new one fades
+   in with the same small rise and bounce as every other entrance. Browsers
+   with cross-document view transitions do this natively; site.js gives the
+   others the same motion. */
+@view-transition {
+  navigation: auto;
+}
+
+/* The nav is the same on every page, so it stays put rather than fading. */
+.side-nav {
+  view-transition-name: side-nav;
+}
+
+::view-transition-old(root) {
+  animation: page-out var(--page-out) ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: page-in var(--page-in) var(--ease-bounce) both;
+}
+
+/* The new page draws the nav exactly as the old page left it (site.js), so
+   there is nothing to fade: swap it straight in, then let the active state
+   glide over on the live page. */
+::view-transition-old(side-nav) {
+  display: none;
+}
+
+::view-transition-new(side-nav) {
+  animation: none;
+}
+
+@keyframes page-out {
+  to { opacity: 0; }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise));
+  }
+}
+
+html.page-enter .content-panel {
+  /* backwards: hidden before it starts, nothing left behind once it ends */
+  animation: page-in var(--page-in) var(--ease-bounce) backwards;
+}
+
+html.page-leave .content-panel {
+  animation: page-out var(--page-out) ease-in both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro__heading,
+  .intro__tagline,
+  .carousel-reveal,
+  .carousel__card,
+  .landing[data-state="home"] .hero__divider,
+  .landing[data-state="home"] .about__lead,
+  .landing[data-state="home"] .about__statement,
+  .landing[data-state="home"] .about__tags,
+  .landing[data-state="home"] .scroll-hint,
+  .landing[data-state="home"] .side-nav,
+  html.page-enter .content-panel,
+  html.page-leave .content-panel {
+    animation: none;
+  }
+
+  .side-nav__link,
+  .side-nav__link::before {
+    transition: none;
+  }
+
+  @view-transition {
+    navigation: none;
+  }
+}

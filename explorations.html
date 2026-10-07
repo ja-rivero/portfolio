@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design explorations · Jordan Rivero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="site.js"></script>
+  <script src="footer.js" defer></script>
+  <script src="reveal.js" defer></script>
+  <script src="lightbox.js" defer></script>
+  <noscript><style>.project-grid[data-reveal] .project { opacity: 1; transform: none; filter: none; }</style></noscript>
+</head>
+<body>
+  <main class="landing" data-state="explorations">
+    <nav class="side-nav" aria-label="Primary">
+      <ul class="side-nav__list">
+        <li><a class="side-nav__link" href="index.html#work" data-nav="work">Work</a></li>
+        <li><a class="side-nav__link" href="explorations.html" data-nav="explorations" aria-current="page">Design explorations</a></li>
+        <li><a class="side-nav__link" href="about.html" data-nav="about">About</a></li>
+      </ul>
+    </nav>
+
+    <div class="content-panel">
+      <section class="explorations" aria-labelledby="explorations-title">
+        <h1 class="visually-hidden" id="explorations-title">Design explorations</h1>
+
+        <!-- Three columns, as in Figma. Cards make their entrance as they scroll
+             into view (reveal.js); each shows its caption on hover (or
+             when focused, e.g. tapped on a phone). -->
+        <div class="project-grid" data-reveal>
+          <div class="project-grid__column">
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 335">
+              <img class="project__visual" src="assets/explorations/cardinal.png" alt="Cardinal’s people search: stacked tables of names, roles and companies over a pink paper texture" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>Cardinal (YC Winter 26)</strong> <strong>&gt;</strong> <span class="project__role">Contract Designer</span></figcaption>
+            </figure>
+
+            <figure class="project project--feels-chat" tabindex="0" style="--ratio: 382.33 / 252">
+              <video class="project__visual" src="assets/explorations/video/feels-chat.mp4" poster="assets/explorations/feels-chat.png" aria-label="Feels Chat: soft pink and lilac gradient interface" muted loop playsinline preload="metadata"></video>
+              <figcaption class="project__caption"><strong>Feels Chat</strong></figcaption>
+            </figure>
+
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 474">
+              <img class="project__visual" src="assets/explorations/headlamp.png" alt="Headlamp Health patient portal: a dark mobile check-in screen with mood log and brain games" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>Headlamp Health Patient Portal</strong></figcaption>
+            </figure>
+          </div>
+
+          <div class="project-grid__column">
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 364">
+              <video class="project__visual" src="assets/explorations/video/docusign.mp4" poster="assets/explorations/docusign-poster.jpg" aria-label="Docusign project" muted loop playsinline preload="metadata"></video>
+              <figcaption class="project__caption"><strong>Docusign</strong> <strong>&gt;</strong> <span class="project__role">Product Design Intern</span></figcaption>
+            </figure>
+
+            <figure class="project project--framer" tabindex="0" style="--ratio: 382.33 / 397">
+              <img class="project__art" src="assets/explorations/framer.png" alt="Framer campus ambassador cards for UCLA, 2025" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>Framer @UCLA</strong></figcaption>
+            </figure>
+
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 271">
+              <img class="project__visual" src="assets/explorations/pixr.png" alt="PIXR: a cozy bedroom scene with floating reminder cards" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>PIXR</strong> <strong>&gt;</strong> <span class="project__role">Personal Project</span></figcaption>
+            </figure>
+          </div>
+
+          <div class="project-grid__column">
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 506">
+              <video class="project__visual" src="assets/explorations/video/pinterest.mp4" poster="assets/explorations/pinterest.png" aria-label="Pinterest outfit board concept on a phone, over a pink background" muted loop playsinline preload="metadata"></video>
+              <figcaption class="project__caption"><strong>Pinterest</strong> <strong>&gt;</strong> <span class="project__role">Personal Project</span></figcaption>
+            </figure>
+
+            <figure class="project project--constellation" tabindex="0" style="--ratio: 382.33 / 391">
+              <img class="project__art" src="assets/explorations/constellation.png" alt="Constellation ticket: “You are the Joyous Constellation” with a star map" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>Constellation Tickets</strong></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

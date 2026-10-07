@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="app">
+<rect width="30" height="30" rx="6" fill="#6D8E92"/>
+<rect x="0.5" y="0.5" width="29" height="29" rx="5.5" stroke="black" stroke-opacity="0.08"/>
+<g id="Subtract">
+<path d="M18.6005 11.2102L18.0241 11.438C17.2841 11.7303 16.9852 12.5946 17.3934 13.2622L18.533 15.1261L19.121 16.1007C20.2959 18.0483 19.9838 20.5217 18.3596 22.1339C18.0115 22.4794 17.6179 22.7697 17.1929 23H7.5017L7.5 22.9998L12.1472 15.2085C13.4385 13.0434 13.5674 10.4013 12.4926 8.12658L11.9604 7L18.6005 11.2102Z" fill="white"/>
+<path d="M22.5 13.6827L19.2572 14.3618L18.2738 12.7533C18.186 12.6096 18.2503 12.4236 18.4095 12.3607L19.6451 11.8725L22.5 13.6827Z" fill="white"/>
+</g>
+</g>
+</svg>

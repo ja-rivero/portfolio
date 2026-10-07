@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jordan Rivero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" as="image" href="assets/carousel/photo-1.jpg">
+  <link rel="preload" as="image" href="assets/carousel/photo-2.jpg">
+  <link rel="preload" as="image" href="assets/carousel/photo-3.jpg">
+  <script src="site.js"></script>
+  <script src="main.js" defer></script>
+  <script src="footer.js" defer></script>
+  <script src="reveal.js" defer></script>
+  <script src="lightbox.js" defer></script>
+  <noscript><style>.project-grid[data-reveal] .project { opacity: 1; transform: none; filter: none; }</style></noscript>
+</head>
+<body>
+  <main class="landing" data-state="intro">
+    <script>
+      // Arriving from another page via a section link (e.g. index.html#work):
+      // start on the landing screen before the first paint, so the page
+      // transition sees the real layout and the same nav as the page before.
+      if (window.location.hash) {
+        const landing = document.currentScript.parentElement;
+        landing.dataset.state = "home";
+        landing.dataset.skipIntro = "";
+      }
+    </script>
+    <nav class="side-nav" aria-label="Primary">
+      <ul class="side-nav__list">
+        <li><a class="side-nav__link" href="#work" data-nav="work" aria-current="true">Work</a></li>
+        <li><a class="side-nav__link" href="explorations.html" data-nav="explorations">Design explorations</a></li>
+        <li><a class="side-nav__link" href="about.html" data-nav="about">About</a></li>
+      </ul>
+    </nav>
+
+    <div class="content-panel">
+      <!-- The introduction stays pinned while the Work grid slides up over it. -->
+      <div class="home-intro">
+        <section class="hero">
+          <div class="intro">
+            <div class="intro__heading">
+              <span class="intro__dot" aria-hidden="true"></span>
+              <h1 class="intro__title">Hey, I’m Jordan!</h1>
+            </div>
+            <p class="intro__tagline">A designer dabbling here and there...</p>
+            <div class="carousel-reveal">
+              <div class="carousel-reveal__clip">
+                <ul class="carousel" aria-label="Photos">
+                  <li class="carousel__card" style="--tilt: -5.62deg"><img class="carousel__photo photo--1" src="assets/carousel/photo-1.jpg" alt="An ornate rotunda lit up at night"></li>
+                  <li class="carousel__card" style="--tilt: 5.12deg"><img class="carousel__photo photo--2" src="assets/carousel/photo-2.jpg" alt="Jordan in a graduation stole beside stone columns"></li>
+                  <li class="carousel__card" style="--tilt: -5.62deg"><img class="carousel__photo photo--3" src="assets/carousel/photo-3.jpg" alt="A cat napping on a shop counter"></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <span class="icon-box hero__divider" aria-hidden="true">
+            <img class="icon icon--left" src="assets/chevron-right-small.svg" width="16" height="16" alt="">
+          </span>
+
+          <div class="about">
+            <p class="about__lead">I design to...</p>
+            <p class="about__statement">Break the silence and create unforgettable moments.</p>
+            <ul class="about__tags">
+              <li class="tag">Currently designing @Cardinal (YC W26)</li>
+              <li class="tag">Prev. design @Docusign</li>
+            </ul>
+          </div>
+        </section>
+
+        <button class="scroll-hint" type="button">
+          <span class="scroll-hint__label">Scroll for work</span>
+          <span class="icon-box" aria-hidden="true">
+            <img class="icon icon--down" src="assets/chevron-right-small.svg" width="16" height="16" alt="">
+          </span>
+        </button>
+      </div>
+
+      <!-- Work: sits just below the first screen and slides up over the pinned
+           introduction; cards make their entrance as they come into view (reveal.js). -->
+      <section class="work" aria-labelledby="work-title">
+        <h2 class="visually-hidden" id="work-title">Work</h2>
+        <div class="project-grid" data-reveal="replay">
+          <div class="project-grid__column">
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 335">
+              <img class="project__visual" src="assets/explorations/cardinal.png" alt="Cardinal’s people search: stacked tables of names, roles and companies over a pink paper texture" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>Cardinal (YC Winter 26)</strong> <strong>&gt;</strong> <span class="project__role">Contract Designer</span></figcaption>
+            </figure>
+
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 474">
+              <img class="project__visual" src="assets/explorations/headlamp.png" alt="Headlamp Health patient portal: a dark mobile check-in screen with mood log and brain games" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>Headlamp Health Patient Portal</strong></figcaption>
+            </figure>
+          </div>
+          <div class="project-grid__column">
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 364">
+              <video class="project__visual" src="assets/explorations/video/docusign.mp4" poster="assets/explorations/docusign-poster.jpg" aria-label="Docusign project" muted loop playsinline preload="metadata"></video>
+              <figcaption class="project__caption"><strong>Docusign</strong> <strong>&gt;</strong> <span class="project__role">Product Design Intern</span></figcaption>
+            </figure>
+
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 271">
+              <img class="project__visual" src="assets/explorations/pixr.png" alt="PIXR: a cozy bedroom scene with floating reminder cards" loading="lazy" decoding="async">
+              <figcaption class="project__caption"><strong>PIXR</strong> <strong>&gt;</strong> <span class="project__role">Personal Project</span></figcaption>
+            </figure>
+          </div>
+          <div class="project-grid__column">
+            <figure class="project" tabindex="0" style="--ratio: 382.33 / 506">
+              <video class="project__visual" src="assets/explorations/video/pinterest.mp4" poster="assets/explorations/pinterest.png" aria-label="Pinterest outfit board concept on a phone, over a pink background" muted loop playsinline preload="metadata"></video>
+              <figcaption class="project__caption"><strong>Pinterest</strong> <strong>&gt;</strong> <span class="project__role">Personal Project</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
