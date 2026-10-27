@@ -402,18 +402,31 @@
       tagRaf = (on || Math.abs(tx - x) + Math.abs(ty - y) > 0.5) ? requestAnimationFrame(follow) : 0;
     };
 
+    const show = (cx, cy) => {
+      tx = cx + OFFSET; ty = cy + OFFSET;
+      if (!on) { x = tx; y = ty; }   // appear at the cursor, then trail it
+      on = true;
+      tag.classList.add('is-on');
+      if (!tagRaf) { tagLast = performance.now(); tagRaf = requestAnimationFrame(follow); }
+    };
+    const hide = () => { on = false; tag.classList.remove('is-on'); };
+
     document.querySelectorAll('.project:not([data-href])').forEach((p) => {
-      p.addEventListener('pointerenter', (e) => {
-        if (e.pointerType !== 'mouse') return;
-        tx = e.clientX + OFFSET; ty = e.clientY + OFFSET;
-        if (!on) { x = tx; y = ty; }   // appear at the cursor, then trail it
-        on = true;
-        tag.classList.add('is-on');
-        if (!tagRaf) { tagLast = performance.now(); tagRaf = requestAnimationFrame(follow); }
-      });
+      p.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') show(e.clientX, e.clientY); });
       p.addEventListener('pointermove', (e) => { tx = e.clientX + OFFSET; ty = e.clientY + OFFSET; });
-      p.addEventListener('pointerleave', () => { on = false; tag.classList.remove('is-on'); });
+      p.addEventListener('pointerleave', hide);
     });
+
+    // Scrolling the page moves projects under a still cursor without any
+    // pointer events, so check what's under it once the scroll has moved
+    let mx = -1, my = -1;
+    addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') { mx = e.clientX; my = e.clientY; } }, { passive: true });
+    addEventListener('scroll', () => {
+      if (mx < 0) return;
+      const over = document.elementFromPoint(mx, my)?.closest('.project:not([data-href])');
+      if (over && !on) show(mx, my);
+      else if (!over && on) hide();
+    }, { passive: true });
   }
 
   // Case study videos play only while on screen (and not for reduced motion)

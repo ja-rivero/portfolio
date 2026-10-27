@@ -474,7 +474,7 @@ body {
 .project::after {
   content: "";
   position: absolute;
-  inset: -11px 0;
+  inset: -11px 0 3px; /* 11px past the images: the strip's 14px reveal room hangs below them */
   z-index: 1;
   background: rgba(255, 255, 255, 0.1);
   opacity: 0;
@@ -482,7 +482,9 @@ body {
   transition: opacity 0.3s ease;
 }
 
-.project:focus-within::after { opacity: 1; }
+/* Keyboard focus only: a mouse click also focuses the strip, which would leave
+   the wash on after the cursor moves away */
+.project:has(:focus-visible)::after { opacity: 1; }
 
 @media (hover: hover) {
   .project:hover::after { opacity: 1; }
@@ -515,6 +517,11 @@ body {
   gap: 16px;
   padding: 0 16px;
   overflow-x: auto;
+  /* Tiles sit 14px low before they reveal: give that room inside the strip
+     (taken back by the margin) so it never becomes vertically scrollable */
+  overflow-y: hidden;
+  padding-bottom: 14px;
+  margin-bottom: -14px;
   overscroll-behavior-x: contain;
   scroll-padding: 0 16px;
   scrollbar-width: none;
