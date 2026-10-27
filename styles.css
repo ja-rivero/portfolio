@@ -122,7 +122,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: calc(48px + var(--nav-h)) 16px 20px;
+  padding: calc(48px + var(--nav-h)) 16px 48px; /* 48px below the nav and above the screen's bottom */
 }
 
 /* Excerpt top-left, ball centred, facts bottom-right (1480px frame in the design) */
@@ -133,7 +133,7 @@ body {
   grid-template-areas: "excerpt center facts";
   column-gap: 24px;
   /* Exactly one screen tall so facts stay in view; the ball can overflow it */
-  height: calc(100svh - var(--nav-h) - 68px);
+  height: calc(100svh - var(--nav-h) - 96px);
   grid-template-rows: minmax(0, 1fr);
 }
 
@@ -766,12 +766,12 @@ body { padding-bottom: var(--footer-h, 474px); }
   letter-spacing: inherit;
 }
 
-/* Intro: greeting + photos on the left, bio pinned bottom-right */
+/* Intro: greeting + photos on the left, bio bottom-right filling up to 48px
+   from the photos */
 .about__intro {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 32px;
+  gap: 48px;
 }
 
 .about__hello {
@@ -804,7 +804,7 @@ body { padding-bottom: var(--footer-h, 474px); }
 }
 
 .about__bio {
-  flex: 0 0 397px;
+  flex: 1 0 397px;
   display: flex;
   flex-direction: column;
   gap: 16px;
