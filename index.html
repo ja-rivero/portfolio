@@ -4,119 +4,157 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jordan Rivero</title>
+  <meta name="description" content="Jordan Rivero — product designer, imagineer, creative.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="preload" as="image" href="assets/carousel/photo-1.jpg">
-  <link rel="preload" as="image" href="assets/carousel/photo-2.jpg">
-  <link rel="preload" as="image" href="assets/carousel/photo-3.jpg">
-  <script src="site.js"></script>
-  <script src="main.js" defer></script>
-  <script src="footer.js" defer></script>
-  <script src="reveal.js" defer></script>
-  <script src="lightbox.js" defer></script>
-  <noscript><style>.project-grid[data-reveal] .project { opacity: 1; transform: none; filter: none; }</style></noscript>
+  <!-- "work" links here with #home: skip the intro and show the home screen as-is -->
+  <script>if (location.hash === '#home') { document.documentElement.classList.add('skip-intro'); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-reveal'); }</script>
 </head>
 <body>
-  <main class="landing" data-state="intro">
-    <script>
-      // Arriving from another page via a section link (e.g. index.html#work):
-      // start on the landing screen before the first paint, so the page
-      // transition sees the real layout and the same nav as the page before.
-      if (window.location.hash) {
-        const landing = document.currentScript.parentElement;
-        landing.dataset.state = "home";
-        landing.dataset.skipIntro = "";
-      }
-    </script>
-    <nav class="side-nav" aria-label="Primary">
-      <ul class="side-nav__list">
-        <li><a class="side-nav__link" href="#work" data-nav="work" aria-current="true">Work</a></li>
-        <li><a class="side-nav__link" href="explorations.html" data-nav="explorations">Design explorations</a></li>
-        <li><a class="side-nav__link" href="about.html" data-nav="about">About</a></li>
-      </ul>
-    </nav>
-
-    <div class="content-panel">
-      <!-- The introduction stays pinned while the Work grid slides up over it. -->
-      <div class="home-intro">
-        <section class="hero">
-          <div class="intro">
-            <div class="intro__heading">
-              <span class="intro__dot" aria-hidden="true"></span>
-              <h1 class="intro__title">Hey, I’m Jordan!</h1>
-            </div>
-            <p class="intro__tagline">A designer dabbling here and there...</p>
-            <div class="carousel-reveal">
-              <div class="carousel-reveal__clip">
-                <ul class="carousel" aria-label="Photos">
-                  <li class="carousel__card" style="--tilt: -5.62deg"><img class="carousel__photo photo--1" src="assets/carousel/photo-1.jpg" alt="An ornate rotunda lit up at night"></li>
-                  <li class="carousel__card" style="--tilt: 5.12deg"><img class="carousel__photo photo--2" src="assets/carousel/photo-2.jpg" alt="Jordan in a graduation stole beside stone columns"></li>
-                  <li class="carousel__card" style="--tilt: -5.62deg"><img class="carousel__photo photo--3" src="assets/carousel/photo-3.jpg" alt="A cat napping on a shop counter"></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <span class="icon-box hero__divider" aria-hidden="true">
-            <img class="icon icon--left" src="assets/chevron-right-small.svg" width="16" height="16" alt="">
-          </span>
-
-          <div class="about">
-            <p class="about__lead">I design to...</p>
-            <p class="about__statement">Break the silence and create unforgettable moments.</p>
-            <ul class="about__tags">
-              <li class="tag">Currently designing @Cardinal (YC W26)</li>
-              <li class="tag">Prev. design @Docusign</li>
-            </ul>
-          </div>
-        </section>
-
-        <button class="scroll-hint" type="button">
-          <span class="scroll-hint__label">Scroll for work</span>
-          <span class="icon-box" aria-hidden="true">
-            <img class="icon icon--down" src="assets/chevron-right-small.svg" width="16" height="16" alt="">
-          </span>
-        </button>
+  <nav class="nav" aria-label="Primary">
+    <div class="nav__left">
+      <a class="nav__reset" href="index.html" aria-label="Replay the intro"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.66667 5.33333H3.33333V2M3.52733 10.9047C4.14857 11.8613 5.06012 12.5935 6.12817 12.9939C7.19621 13.3942 8.36448 13.4416 9.46145 13.1291C10.5584 12.8166 11.5263 12.1607 12.223 11.2575C12.9197 10.3544 13.3085 9.25175 13.3324 8.11138C13.3562 6.97101 13.0138 5.85303 12.3555 4.92158C11.6972 3.99014 10.7575 3.29429 9.67458 2.9362C8.59163 2.5781 7.4224 2.57664 6.33856 2.93201C5.25471 3.28738 4.31335 3.98087 3.65267 4.91067"/></svg></a>
+      <div class="nav__links">
+        <a class="nav__link is-active" href="index.html#home" aria-current="page">work</a>
+        <a class="nav__link" href="about.html">about</a>
       </div>
+    </div>
+    <div class="nav__actions">
+      <a class="nav__button" href="https://drive.google.com/file/d/1X71QwJowurffZBn5JLsABfMoCpLJ9Lz0/view?usp=sharing" target="_blank" rel="noopener">resume</a>
+      <a class="nav__button" href="mailto:jarivero004@gmail.com">let’s talk!<svg class="btn-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
+    </div>
+  </nav>
 
-      <!-- Work: sits just below the first screen and slides up over the pinned
-           introduction; cards make their entrance as they come into view (reveal.js). -->
-      <section class="work" aria-labelledby="work-title">
-        <h2 class="visually-hidden" id="work-title">Work</h2>
-        <div class="project-grid" data-reveal="replay">
-          <div class="project-grid__column">
-            <figure class="project" tabindex="0" style="--ratio: 382.33 / 335">
-              <img class="project__visual" src="assets/explorations/cardinal.png" alt="Cardinal’s people search: stacked tables of names, roles and companies over a pink paper texture" loading="lazy" decoding="async">
-              <figcaption class="project__caption"><strong>Cardinal (YC Winter 26)</strong> <strong>&gt;</strong> <span class="project__role">Contract Designer</span></figcaption>
-            </figure>
-
-            <figure class="project" tabindex="0" style="--ratio: 382.33 / 474">
-              <img class="project__visual" src="assets/explorations/headlamp.png" alt="Headlamp Health patient portal: a dark mobile check-in screen with mood log and brain games" loading="lazy" decoding="async">
-              <figcaption class="project__caption"><strong>Headlamp Health Patient Portal</strong></figcaption>
-            </figure>
-          </div>
-          <div class="project-grid__column">
-            <figure class="project" tabindex="0" style="--ratio: 382.33 / 364">
-              <video class="project__visual" src="assets/explorations/video/docusign.mp4" poster="assets/explorations/docusign-poster.jpg" aria-label="Docusign project" muted loop playsinline preload="metadata"></video>
-              <figcaption class="project__caption"><strong>Docusign</strong> <strong>&gt;</strong> <span class="project__role">Product Design Intern</span></figcaption>
-            </figure>
-
-            <figure class="project" tabindex="0" style="--ratio: 382.33 / 271">
-              <img class="project__visual" src="assets/explorations/pixr.png" alt="PIXR: a cozy bedroom scene with floating reminder cards" loading="lazy" decoding="async">
-              <figcaption class="project__caption"><strong>PIXR</strong> <strong>&gt;</strong> <span class="project__role">Personal Project</span></figcaption>
-            </figure>
-          </div>
-          <div class="project-grid__column">
-            <figure class="project" tabindex="0" style="--ratio: 382.33 / 506">
-              <video class="project__visual" src="assets/explorations/video/pinterest.mp4" poster="assets/explorations/pinterest.png" aria-label="Pinterest outfit board concept on a phone, over a pink background" muted loop playsinline preload="metadata"></video>
-              <figcaption class="project__caption"><strong>Pinterest</strong> <strong>&gt;</strong> <span class="project__role">Personal Project</span></figcaption>
-            </figure>
+  <!-- Takeover: home pins while the ball grows to fill the screen on scroll -->
+  <div class="takeover" id="takeover">
+    <!-- Home screen: revealed once the intro ball has grown into place -->
+    <section class="home" id="home">
+      <div class="home__grid">
+        <div class="home__center">
+          <h1 class="home__hello">
+            <span data-reveal>hello world~</span>
+            <span data-reveal>i’m jordan and welcome to my living canvas!</span>
+          </h1>
+          <div class="home__stage" id="slot">
+            <p class="note note--shiny" data-reveal>ooo, shiny ball</p>
+            <p class="note note--scroll" data-reveal>oh... as you scroll it gets bigger?</p>
           </div>
         </div>
-      </section>
+
+        <section class="excerpt" aria-labelledby="excerpt-title">
+          <h2 class="side-title" data-reveal id="excerpt-title">excerpt.</h2>
+          <p data-reveal>i am a fall 2026 college grad (almost there!) and designer who breaks silence with overflowing tenacity and creativity.</p>
+          <p data-reveal>from design to dance, i find no bounds to expressing myself and my passions to the world!</p>
+          <p data-reveal>thank you for visiting my depths of the internet, it’s great to have you here.</p>
+          <a class="chip" data-reveal href="about.html">i’m curious to know more<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
+        </section>
+
+        <section class="facts" aria-labelledby="facts-title">
+          <h2 class="side-title" data-reveal id="facts-title">facts.</h2>
+          <ul class="facts__list">
+            <li data-reveal><a class="chip" href="about.html">ucla design student<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
+            <li data-reveal><a class="chip" href="cardinal.html">designer @cardinal<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
+            <li data-reveal><a class="chip" href="docusign.html">prev. design intern @docusign<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
+          </ul>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <!-- Projects: appear on the dark screen once the ball has taken over.
+       Each strip scrolls sideways; --w is a tile's width in the 630px-tall design,
+       --t / --hh place a shorter image inside its column -->
+  <section class="work" id="work" aria-label="work">
+    <article class="project">
+      <header class="project__caption" data-reveal><h2>wispr &gt; founder/designer</h2><span>2026</span></header>
+      <div class="project__strip" tabindex="0" aria-label="wispr images">
+        <div class="tile" data-reveal style="--w: 811"><img src="assets/projects/wispr-1.jpg" width="2433" height="1890" alt="wispr logo beside a glowing jar of notes with its cork popping off" loading="lazy" draggable="false"></div>
+        <div class="tile" data-reveal style="--w: 1148"><img src="assets/projects/wispr-2.jpg" width="3444" height="1890" alt="Two wispr app screens: twist the cork for a wispr, and your friends’ jars" loading="lazy" draggable="false"></div>
+        <div class="tile" data-reveal style="--w: 695"><img src="assets/projects/wispr-3.jpg" width="2085" height="1890" alt="wispr screen with night-night notes from Jess above an empty jar" loading="lazy" draggable="false"></div>
+      </div>
+    </article>
+
+    <article class="project" data-href="cardinal.html">
+      <header class="project__caption" data-reveal><h2><a href="cardinal.html">cardinal &gt; contract designer</a></h2><span>2026</span></header>
+      <div class="project__strip" tabindex="0" aria-label="cardinal images">
+        <div class="tile" data-reveal style="--w: 485"><img src="assets/projects/cardinal-1.jpg" width="1455" height="1890" alt="Cardinal bird logo drawn over a cutting mat" loading="lazy" draggable="false"></div>
+        <div class="tile" data-reveal style="--w: 940"><img src="assets/projects/cardinal-2.jpg" width="2820" height="1890" alt="Cardinal brand graphic: Point your sales in the right direction" loading="lazy" draggable="false"></div>
+        <div class="tile" data-reveal style="--w: 768"><img src="assets/projects/cardinal-3.jpg" width="2304" height="1890" alt="Cardinal people-search tables on a teal and black paper collage" loading="lazy" draggable="false"></div>
+      </div>
+    </article>
+
+    <article class="project" data-href="docusign.html">
+      <header class="project__caption" data-reveal><h2><a href="docusign.html">docusign &gt; product design intern</a></h2><span>2026</span></header>
+      <div class="project__strip" tabindex="0" aria-label="docusign images">
+        <div class="tile" data-reveal style="--w: 811"><video class="tile__video" poster="assets/projects/docusign-1.jpg" width="1920" height="1040" muted loop playsinline preload="none" aria-label="Hover chat: editing a clause with the AI assistant"><source src="assets/projects/docusign-hover-chat.mp4" type="video/mp4"></video></div>
+        <div class="tile" data-reveal style="--w: 440">
+          <div class="tile__panel" style="--t: 0; --hh: 376"><img src="assets/projects/docusign-chatbox.png" width="951" height="633" alt="AI prompt box with two pinned clauses: edit the fields to match the clause repository" loading="lazy" draggable="false"></div>
+          <img src="assets/projects/docusign-2b.jpg" width="1320" height="714" alt="Floating document icons around a gradient file" loading="lazy" draggable="false" style="--t: 392; --hh: 238">
+        </div>
+        <div class="tile" data-reveal style="--w: 695"><img src="assets/projects/docusign-3.jpg" width="2085" height="1890" alt="AI assistant asking which party the agreement is for" loading="lazy" draggable="false"></div>
+      </div>
+    </article>
+
+    <article class="project">
+      <header class="project__caption" data-reveal><h2>pinterest &gt; project</h2><span>2026</span></header>
+      <div class="project__strip" tabindex="0" aria-label="pinterest images">
+        <div class="tile" data-reveal style="--w: 616"><video class="tile__video" poster="assets/projects/pinterest-1.jpg" width="1272" height="1080" muted loop playsinline preload="none" aria-label="Pinterest outfits board demo on a phone"><source src="assets/projects/pinterest-demo.mp4" type="video/mp4"></video></div>
+        <div class="tile" data-reveal style="--w: 383"><img src="assets/projects/pinterest-2.jpg" width="1149" height="1335" alt="Outfit maker icon with red and black tiles" loading="lazy" draggable="false" style="--t: 0; --hh: 445"></div>
+        <div class="tile" data-reveal style="--w: 695"><img src="assets/projects/pinterest-3.jpg" width="2085" height="1890" alt="Ask-anything chat with outfit photos and suggestions above a keyboard" loading="lazy" draggable="false"></div>
+      </div>
+    </article>
+
+    <article class="project" style="--base: 519">
+      <header class="project__caption" data-reveal><h2>pixr &gt; project</h2><span>2026</span></header>
+      <div class="project__strip" tabindex="0" aria-label="pixr images">
+        <div class="tile" data-reveal style="--w: 737"><img src="assets/projects/pixr-1.jpg" width="2211" height="1557" alt="Evening reminder floating over a sunlit bed" loading="lazy" draggable="false"></div>
+        <div class="tile" data-reveal style="--w: 653"><img src="assets/projects/pixr-2.jpg" width="1959" height="1071" alt="Memory cards recalling a trip to a farm in Maine" loading="lazy" draggable="false" style="--t: 0; --hh: 357"></div>
+        <div class="tile" data-reveal style="--w: 514"><img src="assets/projects/pixr-3.jpg" width="1542" height="1410" alt="Breakfast and vineyard walk reminders in a warm room" loading="lazy" draggable="false" style="--t: 49; --hh: 470"></div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- Follows the cursor over projects that don't have a case study yet -->
+  <div class="cursor-tag" id="cursorTag" aria-hidden="true">study coming soon!</div>
+
+  <!-- Intro: ball rolls in, then grows into the home screen's ball -->
+  <div class="landing">
+    <div class="intro" id="intro" aria-label="jordan rivero - product designer - imagineer - creative">
+      <div class="ball" id="ball" data-reveal aria-hidden="true">
+        <!-- Body rotates as it rolls -->
+        <svg class="ball__body" viewBox="0 0 39.2 39.2">
+          <circle cx="19.6" cy="19.6" r="19.6"/>
+        </svg>
+        <!-- Reflection stays fixed relative to the light source -->
+        <svg class="ball__light" viewBox="0 0 39.2 39.2">
+          <ellipse cx="23.607" cy="4.59368" rx="2.64022" ry="7.46881" transform="rotate(-74.0262 23.607 4.59368)" fill="#F8F8F8"/>
+        </svg>
+      </div>
+      <p class="intro__text" id="text" aria-hidden="true">jordan rivero - product designer - imagineer - creative</p>
     </div>
-  </main>
+  </div>
+  <!-- Footer: fixed underneath the page and revealed as the content scrolls off it -->
+  <footer class="footer" id="footer">
+    <div class="footer__balls" id="gumballs" aria-hidden="true"></div>
+    <div class="footer__controls">
+      <span class="footer__tip" id="gumTip" aria-hidden="true">black</span>
+      <div class="footer__picker" role="radiogroup" aria-label="Gumball colour">
+        <svg class="footer__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M9.526 8.85067L5.59467 12.782C4.994 13.3827 4.69333 13.6833 4.31133 13.842C3.92867 14 3.504 14 2.65333 14H2V13.3467C2 12.496 2 12.0713 2.158 11.6887C2.31667 11.3067 2.61733 11.006 3.218 10.4053L4.77267 8.85067L8.95667 4.66667M4.77267 8.85067H9.526M9.526 8.85067L11.3333 7.04333M13.88 6.66667L12.806 5.59267L13.38 5.018C13.5753 4.82267 13.6733 4.72533 13.7407 4.63C13.9092 4.39302 13.9997 4.10945 13.9997 3.81867C13.9997 3.52788 13.9092 3.24431 13.7407 3.00733C13.6727 2.912 13.5753 2.81467 13.3807 2.61933C13.1853 2.42467 13.0873 2.32733 12.9927 2.25933C12.7557 2.09082 12.4721 2.00027 12.1813 2.00027C11.8905 2.00027 11.607 2.09082 11.37 2.25933C11.2747 2.32733 11.1767 2.42467 10.982 2.61933L10.4073 3.194L9.33333 2.12M12.8067 5.59333L10.4067 3.19333" stroke-width="1.33"/></svg>
+        <button class="swatch is-active" type="button" role="radio" aria-checked="true" aria-label="black" data-name="black" style="--c: #141414"></button>
+        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="teal" data-name="teal" style="--c: #19c3c3"></button>
+        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="purple" data-name="purple" style="--c: #9019c3"></button>
+        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="orange" data-name="orange" style="--c: #c37c19"></button>
+      </div>
+      <button class="footer__empty" id="gumEmpty" type="button"><svg class="footer__icon footer__spill" viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.4" cy="3.2" r="1.5"/><circle cx="7.6" cy="7.4" r="1.9"/><circle cx="12.1" cy="12.1" r="2.3"/></svg><span>spill the gumballs</span></button>
+    </div>
+  </footer>
+
+  <script src="gumballs.js"></script>
+  <script src="reveal.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

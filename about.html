@@ -1,154 +1,113 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="is-grown">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About · Jordan Rivero</title>
+  <title>About — Jordan Rivero</title>
+  <meta name="description" content="Jordan Rivero — a product designer who thinks about process and effect before building.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="site.js"></script>
-  <script src="footer.js" defer></script>
+  <!-- Opt into the entrance animation (about.js) unless motion is reduced -->
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-reveal');</script>
 </head>
 <body>
-  <main class="landing" data-state="about">
-    <nav class="side-nav" aria-label="Primary">
-      <ul class="side-nav__list">
-        <li><a class="side-nav__link" href="index.html#work" data-nav="work">Work</a></li>
-        <li><a class="side-nav__link" href="explorations.html" data-nav="explorations">Design explorations</a></li>
-        <li><a class="side-nav__link" href="about.html" data-nav="about" aria-current="page">About</a></li>
-      </ul>
-    </nav>
-
-    <div class="content-panel">
-      <div class="about-sections">
-        <section class="about-page">
-          <p class="about-page__greeting">Hi, designer friends and creative people!</p>
-
-          <span class="icon-box about-page__divider" aria-hidden="true">
-            <img class="icon icon--left" src="assets/chevron-right-small.svg" width="16" height="16" alt="">
-          </span>
-
-          <div class="about-page__body">
-            <div class="about-page__photo">
-              <img src="assets/about-photo.jpg" alt="Jordan in a suit and blue graduation stole, leaning against a stone column">
-            </div>
-
-            <div class="about-page__details">
-              <h1 class="about-page__title">I’m Jordan, a product designer who thinks about process and effect before building.</h1>
-
-              <div class="about-page__info">
-                <div class="about-page__bio">
-                  <p>As a brand designer with <a href="https://www.trycardinal.com/" target="_blank" rel="noopener">Cardinal</a>, I create a visual narrative for agencies to interpret and extract our design system standards across mediums.</p>
-                  <p>Before, I worked with pre-seed start-ups and <a href="https://www.docusign.com" target="_blank" rel="noopener">Docusign</a> as a product designer building AI-assisted workflows, design systems and tokens, and public-facing materials.</p>
-                  <p>My craft isn’t limited to design, but involves dance, choreography, music, and digital experimentation.</p>
-                </div>
-
-                <div class="about-page__actions">
-                  <div class="about-page__contact">
-                    <a class="button-primary" href="mailto:jarivero004@gmail.com">
-                      Contact me
-                      <img src="assets/arrow-right.svg" width="16" height="16" alt="">
-                    </a>
-                    <div class="about-page__socials">
-                      <a class="icon-button" href="https://www.linkedin.com/in/jordanarivero" target="_blank" rel="noopener" aria-label="LinkedIn">
-                        <img src="assets/linkedin.svg" width="16" height="16" alt="">
-                      </a>
-                      <a class="icon-button" href="mailto:jarivero004@gmail.com" aria-label="Email">
-                        <img src="assets/mail-open.svg" width="16" height="16" alt="">
-                      </a>
-                    </div>
-                  </div>
-
-                  <p class="location-chip">
-                    <span class="location-chip__icon" aria-hidden="true"><img src="assets/location.svg" width="12" height="14.67" alt=""></span>
-                    SF/LA-based
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="about-block about-block--experiences" aria-labelledby="experiences-title">
-          <h2 class="about-block__title" id="experiences-title">Experiences</h2>
-          <ul class="roles">
-            <li class="role role--current">
-              <div class="role__main">
-                <img class="role__app-icon" src="assets/logos/cardinal.svg" width="30" height="30" alt="">
-                <div class="role__text">
-                  <p class="role__company">Cardinal</p>
-                  <p class="role__title">Designer</p>
-                </div>
-              </div>
-              <p class="role__dates">September to Present</p>
-            </li>
-            <li class="role">
-              <div class="role__main">
-                <span class="role__logo"><span class="role__mark"><img src="assets/logos/docusign.png" alt=""></span></span>
-                <div class="role__text">
-                  <p class="role__company">Docusign</p>
-                  <p class="role__title">Product Design Intern</p>
-                </div>
-              </div>
-              <p class="role__dates">June to September</p>
-            </li>
-            <li class="role">
-              <div class="role__main">
-                <span class="role__logo role__logo--framer"><img class="role__mark" src="assets/logos/framer.svg" width="16" height="16" alt=""></span>
-                <div class="role__text">
-                  <p class="role__company">Framer</p>
-                  <p class="role__title">Student Campus Leader</p>
-                </div>
-              </div>
-              <p class="role__dates">January to June</p>
-            </li>
-            <li class="role">
-              <div class="role__main">
-                <span class="role__logo"><span class="role__mark role__mark--headlamp"><img src="assets/logos/headlamp.jpg" alt=""></span></span>
-                <div class="role__text">
-                  <p class="role__company">Headlamp Health</p>
-                  <p class="role__title">Product Design Intern</p>
-                </div>
-              </div>
-              <p class="role__dates">March to May</p>
-            </li>
-            <li class="role">
-              <div class="role__main">
-                <span class="role__logo role__logo--autoinvent"><span class="role__mark role__mark--autoinvent"><img src="assets/logos/autoinvent.png" alt=""></span></span>
-                <div class="role__text">
-                  <p class="role__company">Autoinvent</p>
-                  <p class="role__title">Product Designer</p>
-                </div>
-              </div>
-              <p class="role__dates">October 2025 to January</p>
-            </li>
-          </ul>
-        </section>
-
-        <hr class="section-divider">
-
-        <section class="about-block about-block--community" aria-labelledby="community-title">
-          <h2 class="about-block__title" id="community-title">Community deep dive</h2>
-          <div class="community">
-            <ul class="community__photos">
-              <li style="--tilt: -5deg"><img src="assets/community-1.png" alt="" loading="lazy" decoding="async"></li>
-              <li style="--tilt: 5deg"><img src="assets/community-2.jpg" alt="" loading="lazy" decoding="async"></li>
-              <li style="--tilt: -5deg"><img src="assets/community-3.jpg" alt="" loading="lazy" decoding="async"></li>
-              <li style="--tilt: 5deg"><img src="assets/community-4.jpg" alt="" loading="lazy" decoding="async"></li>
-            </ul>
-            <div class="community__text">
-              <p class="community__intro">Along with designing things, creative community has been a big part of my journey. Whether building it from the ground up or creating social niches with other designers, I find that the best work comes from working with the best people!</p>
-              <div>
-                <p class="community__label">Notable communities:</p>
-                <p class="community__list">Samahang Modern, Framer @UCLA, Docusign, Creative Labs, UCLA Kaufman Dance Department</p>
-              </div>
-            </div>
-          </div>
-        </section>
+  <nav class="nav" aria-label="Primary">
+    <div class="nav__left">
+      <a class="nav__reset" href="index.html" aria-label="Replay the intro"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.66667 5.33333H3.33333V2M3.52733 10.9047C4.14857 11.8613 5.06012 12.5935 6.12817 12.9939C7.19621 13.3942 8.36448 13.4416 9.46145 13.1291C10.5584 12.8166 11.5263 12.1607 12.223 11.2575C12.9197 10.3544 13.3085 9.25175 13.3324 8.11138C13.3562 6.97101 13.0138 5.85303 12.3555 4.92158C11.6972 3.99014 10.7575 3.29429 9.67458 2.9362C8.59163 2.5781 7.4224 2.57664 6.33856 2.93201C5.25471 3.28738 4.31335 3.98087 3.65267 4.91067"/></svg></a>
+      <div class="nav__links">
+        <a class="nav__link" href="index.html#home">work</a>
+        <a class="nav__link is-active" href="about.html" aria-current="page">about</a>
       </div>
     </div>
+    <div class="nav__actions">
+      <a class="nav__button" href="https://drive.google.com/file/d/1X71QwJowurffZBn5JLsABfMoCpLJ9Lz0/view?usp=sharing" target="_blank" rel="noopener">resume</a>
+      <a class="nav__button" href="mailto:jarivero004@gmail.com">let’s talk!<svg class="btn-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
+    </div>
+  </nav>
+
+  <main class="about">
+    <section class="about__intro">
+      <div class="about__hello">
+        <h1 class="about__title" data-reveal>hi, designer friends and creative people!</h1>
+        <div class="about__photos">
+          <img data-reveal src="assets/about/photo-palace.jpg" width="960" height="888" style="--w: 320; --h: 296" alt="The Palace of Fine Arts in San Francisco lit up at night" loading="lazy">
+          <img data-reveal src="assets/about/photo-grad.jpg" width="1053" height="1317" style="--w: 351; --h: 439" alt="Jordan in a suit and UCLA graduation stole beside stone columns" loading="lazy">
+          <img data-reveal src="assets/about/photo-selfie.jpg" width="720" height="639" style="--w: 240; --h: 213" alt="Jordan taking a mirror selfie in glasses and a knit sweater" loading="lazy">
+        </div>
+      </div>
+
+      <div class="about__bio">
+        <p class="about__lead" data-reveal>i’m jordan, a product designer who thinks about process and effect before building.</p>
+        <div class="about__text">
+          <p data-reveal>as a designer at <a href="https://www.trycardinal.com/" target="_blank" rel="noopener">cardinal</a>, i redesigned a brand book to help product leads and partners extract visual assets.</p>
+          <p data-reveal>before, i worked with pre-seed start-ups and <a href="https://www.docusign.com" target="_blank" rel="noopener">docusign</a> as a product designer building ai-assisted workflows, design systems and tokens, and public-facing materials.</p>
+          <p data-reveal>my craft isn’t limited to design, but involves dance, choreography, music, and digital experimentation.</p>
+        </div>
+        <div class="about__actions" data-reveal>
+          <div class="about__contact">
+            <a class="chip" href="mailto:jarivero004@gmail.com">let’s talk<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
+            <div class="about__icons">
+              <a class="icon-btn" href="https://www.linkedin.com/in/jordanarivero" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.286 5.97933H8.762V7.21267C9.11867 6.50333 10.0333 5.866 11.4073 5.866C14.0413 5.866 14.6667 7.278 14.6667 9.86867V14.6667H12V10.4587C12 8.98333 11.6433 8.15133 10.7353 8.15133C9.476 8.15133 8.95267 9.048 8.95267 10.458V14.6667H6.286V5.97933ZM1.71333 14.5533H4.38V5.866H1.71333V14.5533ZM4.762 3.03333C4.7621 3.25685 4.71777 3.47816 4.63159 3.68439C4.54541 3.89063 4.4191 4.07768 4.26 4.23467C4.10043 4.39341 3.91114 4.51916 3.70295 4.60472C3.49476 4.69028 3.27175 4.73399 3.04667 4.73333C2.59307 4.73231 2.15794 4.55352 1.83467 4.23533C1.6762 4.07776 1.55035 3.8905 1.46433 3.68425C1.37831 3.47799 1.33379 3.25681 1.33333 3.03333C1.33333 2.582 1.51333 2.15 1.83533 1.83133C2.1578 1.51192 2.59345 1.33292 3.04733 1.33333C3.502 1.33333 3.938 1.51267 4.26 1.83133C4.582 2.15 4.762 2.582 4.762 3.03333Z"/></svg></a>
+              <a class="icon-btn" href="mailto:jarivero004@gmail.com" aria-label="Email"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.3667 5.44667L12.6667 4.31333V3.34C12.6667 2.97333 12.3667 2.67333 12 2.67333H10.2L8.36667 1.45333C8.14 1.30667 7.85333 1.30667 7.62667 1.45333L5.79333 2.67333H3.99333C3.62667 2.67333 3.32667 2.97333 3.32667 3.34V4.31333L1.62667 5.44667C1.44 5.57333 1.32667 5.78 1.32667 6V13.3333C1.32667 14.0667 1.92667 14.6667 2.66 14.6667H13.3267C14.06 14.6667 14.66 14.0667 14.66 13.3333V6C14.66 5.78 14.5467 5.56667 14.36 5.44667H14.3667ZM4.66667 4H11.3333V6.97333L8 9.19333L4.66667 6.97333V4ZM2.66667 13.3333V7.24667L3.63333 7.88667L7.63333 10.5533C7.74667 10.6267 7.87333 10.6667 8 10.6667C8.12667 10.6667 8.26 10.6267 8.36667 10.5533L12.3667 7.88667L13.3333 7.24667V13.3333H2.66667Z"/></svg></a>
+            </div>
+          </div>
+          <span class="about__place"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(2 0.667)"><path d="M6 8C7.10457 8 8 7.10457 8 6C8 4.89543 7.10457 4 6 4C4.89543 4 4 4.89543 4 6C4 7.10457 4.89543 8 6 8Z"/><path d="M2.22876 2.22876C3.22896 1.22857 4.58551 0.666667 6 0.666667C7.41449 0.666667 8.77104 1.22857 9.77124 2.22876C10.7714 3.22896 11.3333 4.58551 11.3333 6C11.3333 7.26133 11.0653 8.08667 10.3333 9L6 14L1.66667 9C0.934667 8.08667 0.666667 7.26133 0.666667 6C0.666667 4.58551 1.22857 3.22896 2.22876 2.22876Z"/></g></svg>sf/la-based</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="about__work" aria-labelledby="work-title">
+      <h2 class="about__heading" id="work-title" data-reveal>i previously worked with...</h2>
+      <ul class="roles">
+        <li class="role is-current" data-reveal><img src="assets/about/logo-cardinal.png" width="30" height="30" alt=""><div class="role__name"><strong>cardinal</strong><span>designer</span></div><span class="role__date">sept — now</span></li>
+        <li class="role" data-reveal><img src="assets/about/logo-docusign.png" width="30" height="30" alt=""><div class="role__name"><strong>docusign</strong><span>product design intern</span></div><span class="role__date">jun — sept</span></li>
+        <li class="role" data-reveal><img src="assets/about/logo-framer.png" width="30" height="30" alt=""><div class="role__name"><strong>framer</strong><span>student campus leader</span></div><span class="role__date">jan — jun</span></li>
+        <li class="role" data-reveal><img src="assets/about/logo-headlamp.png" width="30" height="30" alt=""><div class="role__name"><strong>headlamp health</strong><span>product design intern</span></div><span class="role__date">mar — may</span></li>
+        <li class="role" data-reveal><img src="assets/about/logo-autoinvent.png" width="30" height="30" alt=""><div class="role__name"><strong>autoinvent</strong><span>product designer</span></div><span class="role__date">oct ‘25 – jan</span></li>
+      </ul>
+    </section>
+
+    <hr class="about__divider" data-reveal>
+
+    <section class="about__community" aria-labelledby="community-title">
+      <h2 class="about__heading" id="community-title" data-reveal>my community deep dive</h2>
+      <div class="community__grid">
+        <div class="community__col" style="--w: 416">
+          <img data-reveal src="assets/about/community-framer.jpg" width="1248" height="840" style="--w: 416; --h: 280" alt="Two Framer campus leaders holding Framer tote bags in a classroom" loading="lazy">
+          <img data-reveal src="assets/about/community-lunch.jpg" width="708" height="627" style="--w: 236; --h: 209" alt="A group sharing food outdoors on campus" loading="lazy">
+        </div>
+        <div class="community__col" style="--w: 434">
+          <img class="is-end" data-reveal src="assets/about/community-call.jpg" width="708" height="840" style="--w: 236; --h: 280" alt="A video call grid of teammates wearing paper moustaches" loading="lazy">
+          <img data-reveal src="assets/about/community-dance.jpg" width="1302" height="840" style="--w: 434; --h: 280" alt="Dance team holding a 3rd place banner at night" loading="lazy">
+        </div>
+      </div>
+      <div class="community__text">
+        <p data-reveal>along with designing things, creative community has been a big part of my journey. these relationships have shaped me, my work, and how i see myself -- confident, optimistic, and down for anything.</p>
+        <p data-reveal><strong>notable communities:</strong><br>samahang modern, framer @ucla, docusign create team, creative labs, ucla kaufman dance dept.</p>
+      </div>
+    </section>
   </main>
+
+  <!-- Footer: fixed underneath the page and revealed as the content scrolls off it -->
+  <footer class="footer" id="footer">
+    <div class="footer__balls" id="gumballs" aria-hidden="true"></div>
+    <div class="footer__controls">
+      <span class="footer__tip" id="gumTip" aria-hidden="true">black</span>
+      <div class="footer__picker" role="radiogroup" aria-label="Gumball colour">
+        <svg class="footer__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M9.526 8.85067L5.59467 12.782C4.994 13.3827 4.69333 13.6833 4.31133 13.842C3.92867 14 3.504 14 2.65333 14H2V13.3467C2 12.496 2 12.0713 2.158 11.6887C2.31667 11.3067 2.61733 11.006 3.218 10.4053L4.77267 8.85067L8.95667 4.66667M4.77267 8.85067H9.526M9.526 8.85067L11.3333 7.04333M13.88 6.66667L12.806 5.59267L13.38 5.018C13.5753 4.82267 13.6733 4.72533 13.7407 4.63C13.9092 4.39302 13.9997 4.10945 13.9997 3.81867C13.9997 3.52788 13.9092 3.24431 13.7407 3.00733C13.6727 2.912 13.5753 2.81467 13.3807 2.61933C13.1853 2.42467 13.0873 2.32733 12.9927 2.25933C12.7557 2.09082 12.4721 2.00027 12.1813 2.00027C11.8905 2.00027 11.607 2.09082 11.37 2.25933C11.2747 2.32733 11.1767 2.42467 10.982 2.61933L10.4073 3.194L9.33333 2.12M12.8067 5.59333L10.4067 3.19333" stroke-width="1.33"/></svg>
+        <button class="swatch is-active" type="button" role="radio" aria-checked="true" aria-label="black" data-name="black" style="--c: #141414"></button>
+        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="teal" data-name="teal" style="--c: #19c3c3"></button>
+        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="purple" data-name="purple" style="--c: #9019c3"></button>
+        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="orange" data-name="orange" style="--c: #c37c19"></button>
+      </div>
+      <button class="footer__empty" id="gumEmpty" type="button"><svg class="footer__icon footer__spill" viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.4" cy="3.2" r="1.5"/><circle cx="7.6" cy="7.4" r="1.9"/><circle cx="12.1" cy="12.1" r="2.3"/></svg><span>spill the gumballs</span></button>
+    </div>
+  </footer>
+
+  <script src="gumballs.js"></script>
+  <script src="reveal.js"></script>
 </body>
 </html>
