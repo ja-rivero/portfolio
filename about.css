@@ -58,7 +58,6 @@ html { background: #fcfcfc; }
   aspect-ratio: var(--w) / var(--h);
   object-fit: cover;
   display: block;
-  border: 1px solid #dcdcdc;
 }
 
 /* Bio (Figma 328:539): the lead line on the left, the paragraphs and contact row beside it */

@@ -176,7 +176,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Excerpt | hello + box | facts: 328 / 728 / 328 with 48px gaps across the 1480px Figma
    row, filling the height between the nav and the 48px bottom margin. The side columns
-   give way (down to 230px, the text width) before the box does */
+   give way (down to 280px: "facts." beside its longest chip) before the box does */
 :root {
   --center-pad: clamp(16px, 6.1svh, 48px); /* space above the header and below the box */
   /* everything stacked around the box: nav 48 + gap 48 + bottom 48 + header 40 + gap 16 */
@@ -186,7 +186,7 @@ a { color: inherit; text-decoration: none; }
 .landing {
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(230px, 1fr) auto minmax(230px, 1fr);
+  grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   column-gap: 48px;
   align-content: center; /* row hugs the centre column, so facts line up 52px under the box */
   width: 100%;
@@ -224,13 +224,14 @@ a { color: inherit; text-decoration: none; }
 }
 
 .excerpt { align-self: start; }
-/* Bottom of its column, level with the bottom of the box, from the column's left edge */
-.facts { align-self: end; }
+/* Bottom-right of its column, with each chip against the right edge */
+.facts { align-self: end; justify-self: end; }
 
 .facts__list {
+  flex: 1; /* fills the row when stacked, so the chips still sit on the right */
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 8px;
   list-style: none;
 }
@@ -281,8 +282,8 @@ a { color: inherit; text-decoration: none; }
 .slot {
   position: relative;
   /* As big as the viewport allows at the Figma 728:489 ratio: limited by the height left
-     under the nav and header, or by the width left beside two 230px side columns */
-  width: min(2000px, 100vw - 32px - 2 * (230px + 48px), max(280px, (100svh - var(--box-chrome)) * 728 / 489));
+     under the nav and header, or by the width left beside two 280px side columns */
+  width: min(2000px, 100vw - 32px - 2 * (280px + 48px), max(280px, (100svh - var(--box-chrome)) * 728 / 489));
   aspect-ratio: 728 / 489;
 }
 
@@ -468,8 +469,9 @@ a { color: inherit; text-decoration: none; }
     transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rd, 0ms);
 }
 
-/* Narrower screens: stack the columns under the box */
-@media (max-width: 900px) {
+/* Narrower screens: stack the columns under the box (three need ~1020px: two 280px sides,
+   the gaps, and the header line) */
+@media (max-width: 1040px) {
   .landing {
     grid-template-columns: minmax(0, 1fr);
     gap: 48px;
