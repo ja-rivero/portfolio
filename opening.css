@@ -2,6 +2,10 @@
 
 html, body { min-height: 100%; }
 
+/* No rubber-band bounce past the top or bottom: the nav and footers stay against the screen
+   edges instead of pulling away to show the page colour beyond them */
+html, body { overscroll-behavior: none; }
+
 body {
   background: #fcfcfc;
   color: rgba(0, 0, 0, 0.9);
