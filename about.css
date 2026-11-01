@@ -60,16 +60,27 @@ html { background: #fcfcfc; }
   display: block;
 }
 
+/* Bio (Figma 328:539): the lead line on the left, the paragraphs and contact row beside it */
 .about__bio {
-  flex: 1 0 397px;
+  flex: 1 0 497px;
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   gap: 16px;
 }
 
 .about__lead {
+  flex: none;
+  width: 165px;
   font-weight: 500;
   color: #000;
+}
+
+.about__bio-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .about__text {
@@ -150,19 +161,22 @@ html { background: #fcfcfc; }
   outline-offset: 2px;
 }
 
-/* Previous roles */
+/* Previous roles: the heading on the left, the list beside it, rows 16px apart */
 .about__work {
-  max-width: 610px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
   margin-top: 48px;
 }
 
-.about__heading { font-weight: 500; }
+.about__heading { flex: none; font-weight: 500; }
 
 .roles {
+  flex: 0 1 528px; /* 8 + 442 (logo and name) + the date + 8 */
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 16px;
+  gap: 16px;
   padding: 0;
   list-style: none;
 }
@@ -171,7 +185,7 @@ html { background: #fcfcfc; }
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 8px;
+  padding: 0 8px;
   border-radius: 6px;
 }
 
@@ -181,10 +195,11 @@ html { background: #fcfcfc; }
   flex-shrink: 0;
 }
 
+/* logo + name take 442 of the row, as in Figma; the date follows on the right */
 .role__name {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0 1 400px;
   min-width: 0;
   font-weight: 300;
 }
@@ -195,6 +210,7 @@ html { background: #fcfcfc; }
 }
 
 .role__date {
+  margin-left: auto;
   font-weight: 300;
   white-space: nowrap;
 }
@@ -215,11 +231,18 @@ html { background: #fcfcfc; }
   margin-left: auto;
 }
 
+/* The heading and its text side by side, then the photos 48px below */
+.community__intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
 .community__grid {
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  margin-top: 10px;
 }
 
 .community__col {
@@ -247,7 +270,6 @@ html { background: #fcfcfc; }
   flex-direction: column;
   gap: 16px;
   max-width: 432px;
-  margin-top: 10px;
   font-weight: 300;
 }
 
@@ -267,6 +289,10 @@ html { background: #fcfcfc; }
 @media (max-width: 600px) {
   .about__photos { gap: 8px; }
   .about__actions { flex-wrap: wrap; }
+  /* no room for labels beside text: each goes back above its content */
+  .about__bio, .about__work, .community__intro { flex-direction: column; }
+  .about__lead { width: auto; }
+  .roles { flex-basis: auto; width: 100%; }
   .community__grid { gap: 8px; }
   .community__col { gap: 8px; }
 }

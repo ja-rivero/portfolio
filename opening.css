@@ -176,7 +176,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Excerpt | hello + box | facts: 328 / 728 / 328 with 48px gaps across the 1480px Figma
    row, filling the height between the nav and the 48px bottom margin. The side columns
-   give way (down to 230px, the text width) before the box does */
+   give way (down to 280px: "facts." beside its longest chip) before the box does */
 :root {
   --center-pad: clamp(16px, 6.1svh, 48px); /* space above the header and below the box */
   /* everything stacked around the box: nav 48 + gap 48 + bottom 48 + header 40 + gap 16 */
@@ -186,22 +186,31 @@ a { color: inherit; text-decoration: none; }
 .landing {
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(230px, 1fr) auto minmax(230px, 1fr);
+  grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
   column-gap: 48px;
   align-content: center; /* row hugs the centre column, so facts line up 52px under the box */
   width: 100%;
   padding: 0 16px;
 }
 
+/* Label on the left, its content 16px to the right (Figma 565:2516) */
 .excerpt,
 .facts {
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   gap: 16px;
   font-size: 14px;
   line-height: 1.2;
   letter-spacing: -0.7px;
+}
+
+.excerpt__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
 .excerpt p { font-weight: 300; }
@@ -211,16 +220,18 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.7px;
+  flex: none;
 }
 
-.excerpt { align-self: start; max-width: 230px; }
-/* Bottom of its column, 48px under the box, with the title and each chip right-aligned */
-.facts { align-self: end; align-items: flex-end; }
+.excerpt { align-self: start; }
+/* Bottom-right of its column (the longest chip against the right edge), with the chips
+   left-aligned 16px from "facts." */
+.facts { align-self: end; justify-self: end; }
 
 .facts__list {
   display: flex;
   flex-direction: column;
-  align-items: inherit;
+  align-items: flex-start;
   gap: 8px;
   list-style: none;
 }
@@ -271,8 +282,8 @@ a { color: inherit; text-decoration: none; }
 .slot {
   position: relative;
   /* As big as the viewport allows at the Figma 728:489 ratio: limited by the height left
-     under the nav and header, or by the width left beside two 230px side columns */
-  width: min(2000px, 100vw - 32px - 2 * (230px + 48px), max(280px, (100svh - var(--box-chrome)) * 728 / 489));
+     under the nav and header, or by the width left beside two 280px side columns */
+  width: min(2000px, 100vw - 32px - 2 * (280px + 48px), max(280px, (100svh - var(--box-chrome)) * 728 / 489));
   aspect-ratio: 728 / 489;
 }
 
@@ -458,8 +469,9 @@ a { color: inherit; text-decoration: none; }
     transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rd, 0ms);
 }
 
-/* Narrower screens: stack the columns under the box */
-@media (max-width: 900px) {
+/* Narrower screens: stack the columns under the box (three need ~1020px: two 280px sides,
+   the gaps, and the header line) */
+@media (max-width: 1040px) {
   .landing {
     grid-template-columns: minmax(0, 1fr);
     gap: 48px;
@@ -639,6 +651,19 @@ a { color: inherit; text-decoration: none; }
 .case__copy p + p,
 .case__note p + p { margin-top: 1.2em; }
 
+/* Cardinal's mission (Figma 566:3426): a 660px row, the label with both paragraphs stacked
+   16px apart beside it */
+.case__context--side { grid-template-columns: minmax(0, 804fr) minmax(0, 660fr); }
+.case__copy--side { display: flex; align-items: flex-start; gap: 16px; max-width: none; }
+.case__copy--side .case__title { flex: none; width: var(--lw, auto); margin-bottom: 0; } /* --lw: Figma's label width where it wraps */
+.case__copy-text { flex: 1; min-width: 0; }
+.case__copy-text p + p { margin-top: 16px; }
+/* Docusign's overview (Figma 354:2094): the Iris art fills everything left of the 500px copy,
+   its picture cropped (plain grey off the top and bottom) to the 964×428 frame */
+.case__context--iris { grid-template-columns: minmax(0, 964fr) minmax(0, 500fr); }
+.case__fill { object-fit: cover; }
+.case__copy--overview { max-width: 500px; justify-self: end; }
+
 /* Final assets: rows of artwork (968) beside a note (496), alternating sides */
 .case__row {
   display: grid;
@@ -722,8 +747,9 @@ a { color: inherit; text-decoration: none; }
 
 /* A section of copy then artwork, 16px apart */
 .case__block > * + * { margin-top: 16px; }
-.case__copy--lead { max-width: 646px; }
-.case__copy--right { margin-left: calc(834 / 1480 * 100%); } /* the right-hand 646 column */
+/* Docusign's copy blocks (Figma 574:4639–4645): 740 wide, the right-hand ones starting halfway */
+.case__copy--lead { max-width: 740px; }
+.case__copy--right { margin-left: 50%; } /* the right-hand 740 of 1480 */
 .case__dotted { text-decoration: underline dotted; text-underline-offset: 2px; }
 
 /* Two images side by side; the columns (their Figma widths) are set inline */
@@ -754,6 +780,10 @@ a { color: inherit; text-decoration: none; }
   .case__art img { width: 100%; }
   .case__hero--art-first, .case__duo, .case__challenges { grid-template-columns: minmax(0, 1fr) !important; row-gap: 16px; }
   .case__copy--right { margin-left: 0; }
+  /* no room for a label column: the label goes back above its text */
+  .case__copy--side { flex-direction: column; }
+  .case__copy--side .case__title { width: auto; }
+  .case__copy--overview { justify-self: stretch; max-width: none; }
   .case__flow, .case__flow--caption-left { flex-direction: column; align-items: flex-start; gap: 8px; }
   .case__flow img, .case__flow video { width: 100%; }
 }
