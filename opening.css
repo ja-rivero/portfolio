@@ -224,14 +224,14 @@ a { color: inherit; text-decoration: none; }
 }
 
 .excerpt { align-self: start; }
-/* Bottom-right of its column, with each chip against the right edge */
+/* Bottom-right of its column (the longest chip against the right edge), with the chips
+   left-aligned 16px from "facts." */
 .facts { align-self: end; justify-self: end; }
 
 .facts__list {
-  flex: 1; /* fills the row when stacked, so the chips still sit on the right */
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 8px;
   list-style: none;
 }
