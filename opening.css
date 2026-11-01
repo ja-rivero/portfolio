@@ -656,7 +656,10 @@ a { color: inherit; text-decoration: none; }
 .case__copy--side .case__title { flex: none; width: var(--lw, auto); margin-bottom: 0; } /* --lw: Figma's label width where it wraps */
 .case__copy-text { flex: 1; min-width: 0; }
 .case__copy-text p + p { margin-top: 16px; }
-/* Docusign's overview (Figma 354:6415): 500 wide, against the right edge */
+/* Docusign's overview (Figma 354:2094): the Iris art fills everything left of the 500px copy,
+   its picture cropped (plain grey off the top and bottom) to the 964×428 frame */
+.case__context--iris { grid-template-columns: minmax(0, 964fr) minmax(0, 500fr); }
+.case__fill { object-fit: cover; }
 .case__copy--overview { max-width: 500px; justify-self: end; }
 
 /* Final assets: rows of artwork (968) beside a note (496), alternating sides */
