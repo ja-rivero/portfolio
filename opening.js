@@ -484,7 +484,7 @@
     e.preventDefault();
     openCase(pl.id);
   })));
-  // "back to works" at the top, "return to work" at the bottom
+  // "return to works", at the top and at the bottom
   document.querySelectorAll('[data-case-back]').forEach((a) => a.addEventListener('click', (e) => {
     e.preventDefault();
     leaveCase();
