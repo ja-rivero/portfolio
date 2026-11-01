@@ -653,9 +653,11 @@ a { color: inherit; text-decoration: none; }
    16px apart beside it */
 .case__context--side { grid-template-columns: minmax(0, 804fr) minmax(0, 660fr); }
 .case__copy--side { display: flex; align-items: flex-start; gap: 16px; max-width: none; }
-.case__copy--side .case__title { flex: none; margin-bottom: 0; }
+.case__copy--side .case__title { flex: none; width: var(--lw, auto); margin-bottom: 0; } /* --lw: Figma's label width where it wraps */
 .case__copy-text { flex: 1; min-width: 0; }
 .case__copy-text p + p { margin-top: 16px; }
+/* Docusign's overview (Figma 354:6415): 500 wide, against the right edge */
+.case__copy--overview { max-width: 500px; justify-self: end; }
 
 /* Final assets: rows of artwork (968) beside a note (496), alternating sides */
 .case__row {
@@ -740,8 +742,9 @@ a { color: inherit; text-decoration: none; }
 
 /* A section of copy then artwork, 16px apart */
 .case__block > * + * { margin-top: 16px; }
-.case__copy--lead { max-width: 646px; }
-.case__copy--right { margin-left: calc(834 / 1480 * 100%); } /* the right-hand 646 column */
+/* Docusign's copy blocks (Figma 574:4639–4645): 740 wide, the right-hand ones starting halfway */
+.case__copy--lead { max-width: 740px; }
+.case__copy--right { margin-left: 50%; } /* the right-hand 740 of 1480 */
 .case__dotted { text-decoration: underline dotted; text-underline-offset: 2px; }
 
 /* Two images side by side; the columns (their Figma widths) are set inline */
@@ -772,6 +775,10 @@ a { color: inherit; text-decoration: none; }
   .case__art img { width: 100%; }
   .case__hero--art-first, .case__duo, .case__challenges { grid-template-columns: minmax(0, 1fr) !important; row-gap: 16px; }
   .case__copy--right { margin-left: 0; }
+  /* no room for a label column: the label goes back above its text */
+  .case__copy--side { flex-direction: column; }
+  .case__copy--side .case__title { width: auto; }
+  .case__copy--overview { justify-self: stretch; max-width: none; }
   .case__flow, .case__flow--caption-left { flex-direction: column; align-items: flex-start; gap: 8px; }
   .case__flow img, .case__flow video { width: 100%; }
 }
