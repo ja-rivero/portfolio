@@ -4,157 +4,346 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jordan Rivero</title>
-  <meta name="description" content="Jordan Rivero — product designer, imagineer, creative.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <!-- "work" links here with #home: skip the intro and show the home screen as-is -->
-  <script>if (location.hash === '#home') { document.documentElement.classList.add('skip-intro'); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-reveal'); }</script>
+  <link rel="stylesheet" href="opening.css">
+  <!-- Arriving from the about page (#intro / #work / #cardinal): the opening is skipped, so keep
+       its frame out of sight and the nav in place until the script takes over -->
+  <script>if (location.hash.length > 1) document.documentElement.classList.add('is-skip');</script>
 </head>
 <body>
-  <nav class="nav" aria-label="Primary">
-    <div class="nav__left">
-      <a class="nav__reset" href="index.html" aria-label="Replay the intro"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.66667 5.33333H3.33333V2M3.52733 10.9047C4.14857 11.8613 5.06012 12.5935 6.12817 12.9939C7.19621 13.3942 8.36448 13.4416 9.46145 13.1291C10.5584 12.8166 11.5263 12.1607 12.223 11.2575C12.9197 10.3544 13.3085 9.25175 13.3324 8.11138C13.3562 6.97101 13.0138 5.85303 12.3555 4.92158C11.6972 3.99014 10.7575 3.29429 9.67458 2.9362C8.59163 2.5781 7.4224 2.57664 6.33856 2.93201C5.25471 3.28738 4.31335 3.98087 3.65267 4.91067"/></svg></a>
-      <div class="nav__links">
-        <a class="nav__link is-active" href="index.html#home" aria-current="page">work</a>
-        <a class="nav__link" href="about.html">about</a>
+  <!-- Landing page: laid out from the start so the opening box knows where to land.
+       Everything marked data-in stays hidden until the box has landed -->
+  <div class="page">
+    <nav class="nav" data-in aria-label="Primary">
+      <div class="nav__left">
+        <!-- Reload: a fresh page plays the opening animation from the start -->
+        <a class="nav__reset" href="index.html" aria-label="Replay the intro"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.66667 5.33333H3.33333V2M3.52733 10.9047C4.14857 11.8613 5.06012 12.5935 6.12817 12.9939C7.19621 13.3942 8.36448 13.4416 9.46145 13.1291C10.5584 12.8166 11.5263 12.1607 12.223 11.2575C12.9197 10.3544 13.3085 9.25175 13.3324 8.11138C13.3562 6.97101 13.0138 5.85303 12.3555 4.92158C11.6972 3.99014 10.7575 3.29429 9.67458 2.9362C8.59163 2.5781 7.4224 2.57664 6.33856 2.93201C5.25471 3.28738 4.31335 3.98087 3.65267 4.91067"/></svg></a>
+        <div class="nav__links">
+          <!-- intro is current on the landing, work over the sky and case studies (opening.js) -->
+          <a class="nav__link is-active" href="#" data-nav="intro" aria-current="page">intro</a>
+          <a class="nav__link" href="#" data-nav="work">work</a>
+          <a class="nav__link" href="about.html">about</a>
+        </div>
+      </div>
+      <div class="nav__actions">
+        <a class="button" href="https://drive.google.com/file/d/1X71QwJowurffZBn5JLsABfMoCpLJ9Lz0/view?usp=sharing" target="_blank" rel="noopener">resume</a>
+        <a class="button" href="mailto:jarivero004@gmail.com">let’s talk!</a>
+      </div>
+    </nav>
+
+    <main class="landing">
+      <section class="excerpt" aria-labelledby="excerpt-title">
+        <h2 class="side-title" data-in id="excerpt-title">excerpt.</h2>
+        <p data-in>i am a fall 2026 college grad (almost there!) and a designer who breaks the silence with overflowing tenacity and creativity.</p>
+        <p data-in>from design to dance, i find no bounds to expressing myself and my passions to the world!</p>
+        <p data-in>thank you for visiting my depths of the internet, it’s great to have you here.</p>
+        <a class="chip" data-in href="about.html">i’m curious to know more<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
+      </section>
+
+      <div class="center">
+        <h1 class="hello" id="hello" data-in>
+          <span>hello world~</span>
+          <span>i’m jordan and welcome to my design archive!</span>
+        </h1>
+        <!-- The opening frame is moved in here once it lands -->
+        <div class="slot" id="slot"></div>
+      </div>
+
+      <section class="facts" aria-labelledby="facts-title">
+        <h2 class="side-title" data-in id="facts-title">facts.</h2>
+        <ul class="facts__list">
+          <li data-in><a class="chip" href="about.html">ucla design student<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
+          <li data-in><a class="chip" href="#cardinal" data-go-case="cardinal">designer @cardinal<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
+          <li data-in><a class="chip" href="#docusign" data-go-case="docusign">prev. design intern @docusign<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <div class="opening" id="opening" aria-hidden="true">
+    <div class="group" id="group">
+      <!-- Box frame: corner ticks sit on the outer edge, the bordered window is inset (4px → 8px) -->
+      <div class="frame" id="frame">
+        <div class="box">
+          <!-- One picture, 473px tall (Figma 565:2532): the cloud photo under a grid of nine cells,
+               some washed with the gradient. Each screen's box is a window onto part of it:
+               the centre cell, then the middle row, then all nine (opening.js moves the camera) -->
+          <div class="art" id="art">
+            <div class="art__sky" id="sky"></div>
+            <div class="grid" id="grid"></div>
+          </div>
+        </div>
+        <i class="corner corner--tl"></i>
+        <i class="corner corner--tr"></i>
+        <i class="corner corner--bl"></i>
+        <i class="corner corner--br"></i>
       </div>
     </div>
-    <div class="nav__actions">
-      <a class="nav__button" href="https://drive.google.com/file/d/1X71QwJowurffZBn5JLsABfMoCpLJ9Lz0/view?usp=sharing" target="_blank" rel="noopener">resume</a>
-      <a class="nav__button" href="mailto:jarivero004@gmail.com">let’s talk!<svg class="btn-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
-    </div>
-  </nav>
+  </div>
 
-  <!-- Takeover: home pins while the ball grows to fill the screen on scroll -->
-  <div class="takeover" id="takeover">
-    <!-- Home screen: revealed once the intro ball has grown into place -->
-    <section class="home" id="home">
-      <div class="home__grid">
-        <div class="home__center">
-          <h1 class="home__hello">
-            <span data-reveal>hello world~</span>
-            <span data-reveal>i’m jordan and welcome to my living canvas!</span>
-          </h1>
-          <div class="home__stage" id="slot">
-            <p class="note note--shiny" data-reveal>ooo, shiny ball</p>
-            <p class="note note--scroll" data-reveal>oh... as you scroll it gets bigger?</p>
+  <!-- After one scroll down the frame fills the viewport (Figma 566:3062), then paper planes fly
+       in (566:3134). Each plane goes with a case study chip; hovering either highlights both (566:4429) -->
+  <div class="planes" id="planes"></div>
+  <aside class="cases" aria-labelledby="cases-title">
+    <p class="cases__title" id="cases-title">select a case study to explore...</p>
+    <div class="cases__list">
+      <a class="case-chip" href="#" data-case="cardinal">cardinal</a>
+      <a class="case-chip" href="#" data-case="docusign">docusign</a>
+      <a class="case-chip" href="#" data-case="wispr">wispr</a>
+      <a class="case-chip" href="#" data-case="pinterest">pinterest</a>
+      <a class="case-chip" href="#" data-case="pixr">pixr</a>
+    </div>
+  </aside>
+
+  <!-- Case study (Figma 566:3215). Opens below the sky: a scrim fades the clouds into the page
+       as it scrolls up, then the study follows. Artwork blocks are Figma renders -->
+  <article class="case" id="case-cardinal" aria-label="cardinal case study" hidden>
+    <div class="case__scrim" aria-hidden="true"></div>
+    <div class="case__body">
+      <header class="case__hero">
+        <div class="case__intro">
+          <!-- Scrolling up stops at the top of the study; this is the way back to the planes -->
+          <a class="case__return" href="#" data-case-back><svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 8H3M6.9375 12L3 8L6.9375 4"/></svg>return to works</a>
+          <div class="case__intro-text">
+            <p class="case__crumb">cardinal &gt; designer</p>
+            <p class="case__lede">constructed a brand book for a series A startup, scaling a paper concept to help customers make better sales decisions.</p>
+          </div>
+        </div>
+        <img class="case__logo" src="assets/cardinal/hero-1.jpg" width="337" height="353" alt="cardinal logo mark on a cutting mat grid">
+        <img class="case__key" src="assets/cardinal/hero-2.jpg" width="827" height="554" alt="Poster: Point your sales in the right direction, with paper rays converging">
+      </header>
+
+      <dl class="case__meta">
+        <div><dt>role-team</dt><dd><span class="tag">designer</span><span class="tag">product design team</span><span class="tag">brand book design</span></dd></div>
+        <div><dt>skills</dt><dd><span class="tag">figma</span><span class="tag">gemini</span><span class="tag">claude ai</span></dd></div>
+        <div><dt>time</dt><dd><span class="tag">sept - oct 2026</span></dd></div>
+        <div><dt>status</dt><dd><span class="tag">shipped</span></dd></div>
+      </dl>
+
+      <section class="case__context">
+        <div class="case__pair">
+          <img src="assets/cardinal/context-1.jpg" width="345" height="469" alt="Search bar reading: Find $10m funded startups" loading="lazy">
+          <div class="case__stack"><img src="assets/cardinal/context-2.jpg" width="461" height="300" alt="Find better outbound. Get better sales. collage" loading="lazy"><img src="assets/cardinal/context-3.jpg" width="461" height="157" alt="Three app icon variants" loading="lazy"></div>
+        </div>
+        <div class="case__copy">
+          <h2 class="case__title">context - mission</h2>
+          <p>cardinal is an ai revenue platform built for sales and go-to-market teams, straight out of y-combinator. founded by two-time yc founders, cardinal was looking a fresh brand book to hand-off to partners and design clients.</p>
+          <p>i touched on mostly public-facing assets (ex. linkedin posts, billboards, posters), but also website tokens like typography, padding, color palette, and iconography.</p>
+        </div>
+      </section>
+
+      <section class="case__assets">
+        <h2 class="case__title">final assets</h2>
+
+        <div class="case__row">
+          <div class="case__art">
+            <img src="assets/cardinal/poster-1.jpg" width="968" height="544" alt="Poster: Point your sales in the right direction, framed by four circles" loading="lazy">
+            <img style="--w: 580.6" src="assets/cardinal/poster-2.jpg" width="581" height="327" alt="Poster: Take your outbound to new heights" loading="lazy">
+            <img style="--w: 1152" src="assets/cardinal/poster-3.jpg" width="1152" height="648" alt="Billboard: Design how you sell, with a paper hand placing a coin" loading="lazy">
+          </div>
+          <div class="case__note"><h3>posters</h3><div class="case__note-text"><p>staying true to cardinal’s torn paper/mache concept, i found ways to weave language into visual abstraction.</p><p>large shapes and focal points help onlookers read for our central message.</p></div></div>
+        </div>
+
+        <div class="case__row case__row--flip">
+          <div class="case__note"><h3>design context</h3><div class="case__note-text"><p>to help develop new design tokens for our website, i tested different (and more affordable) typography and color options.</p><p>our team ended up preferring this blue wash, given its soothing hue and readability.</p></div></div>
+          <div class="case__art">
+            <img class="case__trim" src="assets/cardinal/colors.jpg" width="968" height="705" alt="Color palette swatches: chalk, stone, slate, ink and the blue wash" loading="lazy">
+            <img src="assets/cardinal/type.jpg" width="968" height="648" alt="Type scale: Sentient headings with General Sans body" loading="lazy">
           </div>
         </div>
 
-        <section class="excerpt" aria-labelledby="excerpt-title">
-          <h2 class="side-title" data-reveal id="excerpt-title">excerpt.</h2>
-          <p data-reveal>i am a fall 2026 college grad (almost there!) and designer who breaks silence with overflowing tenacity and creativity.</p>
-          <p data-reveal>from design to dance, i find no bounds to expressing myself and my passions to the world!</p>
-          <p data-reveal>thank you for visiting my depths of the internet, it’s great to have you here.</p>
-          <a class="chip" data-reveal href="about.html">i’m curious to know more<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
-        </section>
-
-        <section class="facts" aria-labelledby="facts-title">
-          <h2 class="side-title" data-reveal id="facts-title">facts.</h2>
-          <ul class="facts__list">
-            <li data-reveal><a class="chip" href="about.html">ucla design student<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
-            <li data-reveal><a class="chip" href="cardinal.html">designer @cardinal<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
-            <li data-reveal><a class="chip" href="docusign.html">prev. design intern @docusign<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a></li>
-          </ul>
-        </section>
-      </div>
-    </section>
-  </div>
-
-  <!-- Projects: appear on the dark screen once the ball has taken over.
-       Each strip scrolls sideways; --w is a tile's width in the 630px-tall design,
-       --t / --hh place a shorter image inside its column -->
-  <section class="work" id="work" aria-label="work">
-    <article class="project">
-      <header class="project__caption" data-reveal><h2>wispr &gt; founder/designer</h2><span>2026</span></header>
-      <div class="project__strip" tabindex="0" aria-label="wispr images">
-        <div class="tile" data-reveal style="--w: 811"><img src="assets/projects/wispr-1.jpg" width="2433" height="1890" alt="wispr logo beside a glowing jar of notes with its cork popping off" loading="lazy" draggable="false"></div>
-        <div class="tile" data-reveal style="--w: 1148"><img src="assets/projects/wispr-2.jpg" width="3444" height="1890" alt="Two wispr app screens: twist the cork for a wispr, and your friends’ jars" loading="lazy" draggable="false"></div>
-        <div class="tile" data-reveal style="--w: 695"><img src="assets/projects/wispr-3.jpg" width="2085" height="1890" alt="wispr screen with night-night notes from Jess above an empty jar" loading="lazy" draggable="false"></div>
-      </div>
-    </article>
-
-    <article class="project" data-href="cardinal.html">
-      <header class="project__caption" data-reveal><h2><a href="cardinal.html">cardinal &gt; contract designer</a></h2><span>2026</span></header>
-      <div class="project__strip" tabindex="0" aria-label="cardinal images">
-        <div class="tile" data-reveal style="--w: 485"><img src="assets/projects/cardinal-1.jpg" width="1455" height="1890" alt="Cardinal bird logo drawn over a cutting mat" loading="lazy" draggable="false"></div>
-        <div class="tile" data-reveal style="--w: 940"><img src="assets/projects/cardinal-2.jpg" width="2820" height="1890" alt="Cardinal brand graphic: Point your sales in the right direction" loading="lazy" draggable="false"></div>
-        <div class="tile" data-reveal style="--w: 768"><img src="assets/projects/cardinal-3.jpg" width="2304" height="1890" alt="Cardinal people-search tables on a teal and black paper collage" loading="lazy" draggable="false"></div>
-      </div>
-    </article>
-
-    <article class="project" data-href="docusign.html">
-      <header class="project__caption" data-reveal><h2><a href="docusign.html">docusign &gt; product design intern</a></h2><span>2026</span></header>
-      <div class="project__strip" tabindex="0" aria-label="docusign images">
-        <div class="tile" data-reveal style="--w: 811"><video class="tile__video" poster="assets/projects/docusign-1.jpg" width="3840" height="2080" muted loop playsinline preload="none" aria-label="Hover chat: editing a clause with the AI assistant"><source src="assets/projects/docusign-hover-chat.mp4" type="video/mp4"></video></div>
-        <div class="tile" data-reveal style="--w: 440">
-          <div class="tile__panel" style="--t: 0; --hh: 376"><img src="assets/projects/docusign-chatbox.png" width="951" height="633" alt="AI prompt box with two pinned clauses: edit the fields to match the clause repository" loading="lazy" draggable="false"></div>
-          <img src="assets/projects/docusign-2b.jpg" width="1320" height="714" alt="Floating document icons around a gradient file" loading="lazy" draggable="false" style="--t: 392; --hh: 238">
+        <div class="case__row">
+          <div class="case__art">
+            <img style="--w: 488" src="assets/cardinal/product-1.jpg" width="488" height="389" alt="Search prompt on paper texture" loading="lazy">
+            <img src="assets/cardinal/product-2.jpg" width="968" height="506" alt="Lead search modal over a torn paper background" loading="lazy">
+            <img src="assets/cardinal/product-3.jpg" width="968" height="648" alt="Business and contact lead cards over a blue paper background" loading="lazy">
+          </div>
+          <div class="case__note"><h3>product assets</h3><div class="case__note-text"><p>these are replicable visuals to show impactful processes for users.</p><p>i selected modals that could potentially tell a story about our product: finding leads on customers and businesses.</p></div></div>
         </div>
-        <div class="tile" data-reveal style="--w: 695"><img src="assets/projects/docusign-3.jpg" width="2085" height="1890" alt="AI assistant asking which party the agreement is for" loading="lazy" draggable="false"></div>
-      </div>
-    </article>
 
-    <article class="project">
-      <header class="project__caption" data-reveal><h2>pinterest &gt; project</h2><span>2026</span></header>
-      <div class="project__strip" tabindex="0" aria-label="pinterest images">
-        <div class="tile" data-reveal style="--w: 616"><video class="tile__video" poster="assets/projects/pinterest-1.jpg" width="2544" height="2160" muted loop playsinline preload="none" aria-label="Pinterest outfits board demo on a phone"><source src="assets/projects/pinterest-demo.mp4" type="video/mp4"></video></div>
-        <div class="tile" data-reveal style="--w: 383"><img src="assets/projects/pinterest-2.jpg" width="1149" height="1335" alt="Outfit maker icon with red and black tiles" loading="lazy" draggable="false" style="--t: 0; --hh: 445"></div>
-        <div class="tile" data-reveal style="--w: 695"><img src="assets/projects/pinterest-3.jpg" width="2085" height="1890" alt="Ask-anything chat with outfit photos and suggestions above a keyboard" loading="lazy" draggable="false"></div>
-      </div>
-    </article>
+        <div class="case__row case__row--flip">
+          <div class="case__note"><h3>iconography</h3><div class="case__note-text"><p>i reimagined logo display and isolation -- mainly focusing on geometric lines and paper-textured ridges while editing.</p></div></div>
+          <div class="case__art">
+            <img style="--w: 537.6" src="assets/cardinal/icon-1.jpg" width="538" height="302" alt="cardinal mark in white on black paper" loading="lazy">
+            <img style="--w: 768" src="assets/cardinal/icon-2.jpg" width="768" height="432" alt="cardinal mark rising over a hill on a construction grid" loading="lazy">
+            <img src="assets/cardinal/icon-3.jpg" width="968" height="581" alt="cardinal wordmark on white paper" loading="lazy">
+          </div>
+        </div>
+      </section>
 
-    <article class="project" style="--base: 519">
-      <header class="project__caption" data-reveal><h2>pixr &gt; project</h2><span>2026</span></header>
-      <div class="project__strip" tabindex="0" aria-label="pixr images">
-        <div class="tile" data-reveal style="--w: 737"><img src="assets/projects/pixr-1.jpg" width="2211" height="1557" alt="Evening reminder floating over a sunlit bed" loading="lazy" draggable="false"></div>
-        <div class="tile" data-reveal style="--w: 653"><img src="assets/projects/pixr-2.jpg" width="1959" height="1071" alt="Memory cards recalling a trip to a farm in Maine" loading="lazy" draggable="false" style="--t: 0; --hh: 357"></div>
-        <div class="tile" data-reveal style="--w: 514"><img src="assets/projects/pixr-3.jpg" width="1542" height="1410" alt="Breakfast and vineyard walk reminders in a warm room" loading="lazy" draggable="false" style="--t: 49; --hh: 470"></div>
-      </div>
-    </article>
+      <section class="case__takeaways">
+        <h2 class="case__title">value points and takeaways</h2>
+        <ul>
+          <li>start building anything. creative roadblocks happen, but never sit around waiting for a good idea -- chase inspiration.</li>
+          <li>never feel ashamed about a design before showing it to someone else, maybe they’ll actually like it more than the design you prefer.</li>
+        </ul>
+      </section>
 
-  </section>
-
-  <!-- Follows the cursor over projects that don't have a case study yet -->
-  <div class="cursor-tag" id="cursorTag" aria-hidden="true">study coming soon!</div>
-
-  <!-- Intro: ball rolls in, then grows into the home screen's ball -->
-  <div class="landing">
-    <div class="intro" id="intro" aria-label="jordan rivero - product designer - imagineer - creative">
-      <div class="ball" id="ball" data-reveal aria-hidden="true">
-        <!-- Body rotates as it rolls -->
-        <svg class="ball__body" viewBox="0 0 39.2 39.2">
-          <circle cx="19.6" cy="19.6" r="19.6"/>
-        </svg>
-        <!-- Reflection stays fixed relative to the light source -->
-        <svg class="ball__light" viewBox="0 0 39.2 39.2">
-          <ellipse cx="23.607" cy="4.59368" rx="2.64022" ry="7.46881" transform="rotate(-74.0262 23.607 4.59368)" fill="#F8F8F8"/>
-        </svg>
-      </div>
-      <p class="intro__text" id="text" aria-hidden="true">jordan rivero - product designer - imagineer - creative</p>
     </div>
-  </div>
-  <!-- Footer: fixed underneath the page and revealed as the content scrolls off it -->
-  <footer class="footer" id="footer">
-    <div class="footer__balls" id="gumballs" aria-hidden="true"></div>
-    <div class="footer__controls">
-      <span class="footer__tip" id="gumTip" aria-hidden="true">black</span>
-      <div class="footer__picker" role="radiogroup" aria-label="Gumball colour">
-        <svg class="footer__icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M9.526 8.85067L5.59467 12.782C4.994 13.3827 4.69333 13.6833 4.31133 13.842C3.92867 14 3.504 14 2.65333 14H2V13.3467C2 12.496 2 12.0713 2.158 11.6887C2.31667 11.3067 2.61733 11.006 3.218 10.4053L4.77267 8.85067L8.95667 4.66667M4.77267 8.85067H9.526M9.526 8.85067L11.3333 7.04333M13.88 6.66667L12.806 5.59267L13.38 5.018C13.5753 4.82267 13.6733 4.72533 13.7407 4.63C13.9092 4.39302 13.9997 4.10945 13.9997 3.81867C13.9997 3.52788 13.9092 3.24431 13.7407 3.00733C13.6727 2.912 13.5753 2.81467 13.3807 2.61933C13.1853 2.42467 13.0873 2.32733 12.9927 2.25933C12.7557 2.09082 12.4721 2.00027 12.1813 2.00027C11.8905 2.00027 11.607 2.09082 11.37 2.25933C11.2747 2.32733 11.1767 2.42467 10.982 2.61933L10.4073 3.194L9.33333 2.12M12.8067 5.59333L10.4067 3.19333" stroke-width="1.33"/></svg>
-        <button class="swatch is-active" type="button" role="radio" aria-checked="true" aria-label="black" data-name="black" style="--c: #141414"></button>
-        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="teal" data-name="teal" style="--c: #19c3c3"></button>
-        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="purple" data-name="purple" style="--c: #9019c3"></button>
-        <button class="swatch" type="button" role="radio" aria-checked="false" aria-label="orange" data-name="orange" style="--c: #c37c19"></button>
-      </div>
-      <button class="footer__empty" id="gumEmpty" type="button"><svg class="footer__icon footer__spill" viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.4" cy="3.2" r="1.5"/><circle cx="7.6" cy="7.4" r="1.9"/><circle cx="12.1" cy="12.1" r="2.3"/></svg><span>spill the gumballs</span></button>
-    </div>
-  </footer>
 
-  <script src="gumballs.js"></script>
-  <script src="reveal.js"></script>
-  <script src="main.js"></script>
+    <!-- Footer (Figma 571:4565): sits behind the study and is uncovered as its end scrolls past -->
+    <footer class="case__end">
+      <div class="case__ask">
+        <span class="case__plane" aria-hidden="true"><span class="plane__art"><i class="plane__tint"></i></span></span>
+        <p class="case__ask-title">looking for finer details?</p>
+        <p>i don’t post everything about my projects, so let me know if you’re eager to know more!</p>
+        <div class="case__ask-actions">
+          <a class="tag tag--link" href="mailto:jarivero004@gmail.com">let’s talk!</a>
+          <a class="tag tag--link case__back" href="#" data-case-back>return to works<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
+        </div>
+      </div>
+    </footer>
+  </article>
+
+  <!-- Case study (Figma 354:2061), laid out in the cardinal study's light system -->
+  <article class="case" id="case-docusign" aria-label="docusign case study" hidden>
+    <div class="case__scrim" aria-hidden="true"></div>
+    <div class="case__body">
+      <header class="case__hero case__hero--art-first">
+        <video class="case__key" poster="assets/docusign/hero.jpg" width="902" height="543" style="aspect-ratio: 902 / 543" muted loop playsinline preload="none" aria-label="Hover chat: editing a clause with the AI assistant"><source src="assets/docusign/video/hover-chat.mp4" type="video/mp4"></video>
+        <div class="case__intro">
+          <a class="case__return" href="#" data-case-back><svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 8H3M6.9375 12L3 8L6.9375 4"/></svg>return to works</a>
+          <div class="case__intro-text">
+            <p class="case__crumb">docusign &gt; product design intern</p>
+            <p class="case__lede">an 8-week long project bringing ai to the forefront of document preparation, from initial discovery to content generation.</p>
+          </div>
+        </div>
+      </header>
+
+      <dl class="case__meta">
+        <div><dt>role-team</dt><dd><span class="tag">product design intern</span><span class="tag">atb-create team</span><span class="tag">iris ai for document templates</span></dd></div>
+        <div><dt>skills</dt><dd class="case__tags-wrap"><span class="tag">figma</span><span class="tag">v0</span><span class="tag">figma prototype</span><span class="tag">confluence/jira</span></dd></div>
+        <div><dt>time</dt><dd><span class="tag">jun-sept 2026</span></dd></div>
+        <div><dt>status</dt><dd><span class="tag">shipped/launched</span></dd></div>
+      </dl>
+
+      <section class="case__context">
+        <div class="case__art">
+          <img src="assets/docusign/overview-1.jpg" width="818" height="428" alt="Document templates in docusign IAM" loading="lazy">
+          <img style="--w: 488; --of: 818" src="assets/docusign/overview-2.jpg" width="488" height="277" alt="docusign and Iris AI logos" loading="lazy">
+        </div>
+        <div class="case__copy">
+          <h2 class="case__title">overview: working on document templates in IAM</h2>
+          <p>in short, i worked with docusign’s document templates team to lay ground-work concepts for their ai doc-based editor.</p>
+          <p>within 8 weeks of my internship, i shipped 10+ ai features exclusive to document templates as one of docusign’s main q3 projects.</p>
+        </div>
+      </section>
+
+      <section class="case__block">
+        <div class="case__copy case__copy--lead">
+          <h2 class="case__title">final deliverables</h2>
+          <p>my product features were designed to improve ai discoverability and utility in a new space. i observed high-volume areas, such as document sourcing and tracking changes, to see where ai could actually be useful.</p>
+        </div>
+        <div class="case__duo" style="grid-template-columns: minmax(0, 691.2fr) minmax(0, 772.8fr)">
+          <img class="case__trim" src="assets/docusign/deliv-1a.jpg" width="691" height="389" alt="AI chat panel with a tooltip" loading="lazy">
+          <img class="case__trim" src="assets/docusign/deliv-1b.jpg" width="773" height="389" alt="Changes timeline beside an agreement" loading="lazy">
+        </div>
+        <div class="case__duo" style="grid-template-columns: minmax(0, 772.8fr) minmax(0, 691.2fr)">
+          <img class="case__trim" src="assets/docusign/deliv-2a.jpg" width="773" height="389" alt="Document footer suggestions" loading="lazy">
+          <img class="case__trim" src="assets/docusign/deliv-2b.jpg" width="691" height="389" alt="Contextual menu for scope of service fields" loading="lazy">
+        </div>
+        <div class="case__duo" style="grid-template-columns: minmax(0, 574fr) minmax(0, 890fr)">
+          <img src="assets/docusign/deliv-3a.jpg" width="574" height="388" alt="Hover state on an AI action" loading="lazy">
+          <img class="case__trim" src="assets/docusign/deliv-3b.jpg" width="890" height="389" alt="AI chat answering inside the editor" loading="lazy">
+        </div>
+      </section>
+
+      <section class="case__block">
+        <div class="case__copy case__copy--lead case__copy--right">
+          <h2 class="case__title">problem: how do we invite current users into a new ai workflow?</h2>
+          <p>docusign users, right now, edit their contracts on microsoft word. docusign is just another signing and contract management platform to them.</p>
+          <p>so, how do we introduce a ton of <span class="case__dotted">editing-first</span> features?</p>
+        </div>
+        <img src="assets/docusign/problem-wide.jpg" width="1480" height="415" alt="Insight 1: users face decision paralysis before touching the editor, beside the template builder dialog" loading="lazy">
+        <div class="case__duo" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)">
+          <img src="assets/docusign/problem-a.jpg" width="732" height="415" alt="Second insight" loading="lazy">
+          <img src="assets/docusign/problem-b.jpg" width="732" height="415" alt="The agreement upload flow" loading="lazy">
+        </div>
+      </section>
+
+      <section class="case__block">
+        <div class="case__copy case__copy--lead">
+          <h2 class="case__title">solution 1: “entry points galore”</h2>
+          <p>insights from sales and hr teams - doc template users - revealed they prefer to reuse past contracts to make new documents (ex. MSAs, lease documents, offer letters).</p>
+          <p>i observed docusign’s agreement library to find “touchpoints”; places where users could turn agreements into templates. then, i began adding drop-downs and buttons for guidance.</p>
+        </div>
+        <div class="case__duo case__duo--tight" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)">
+          <img src="assets/docusign/sol1-a.jpg" width="734" height="415" alt="Entry points into AI from past agreements" loading="lazy">
+          <img src="assets/docusign/sol1-b.jpg" width="734" height="415" alt="Entry points from trending templates" loading="lazy">
+        </div>
+      </section>
+
+      <section class="case__block">
+        <div class="case__copy case__copy--lead case__copy--right">
+          <h2 class="case__title">solution 2: “simplifying how ai enters and exits”</h2>
+          <p>after studying 8 test users, i learned that making them turn ai on themselves didn’t work -- i had to introduce ai seamlessly, but also make it non-intrusive.</p>
+          <p>i emphasized human input and states for alternating and closing chat views.</p>
+          <p>this way, users could control their canvas while still having ai accessible at all times.</p>
+        </div>
+        <div class="case__duo case__duo--tight" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)">
+          <img src="assets/docusign/sol2-a.jpg" width="734" height="415" alt="Opening the AI chat" loading="lazy">
+          <img src="assets/docusign/sol2-b.jpg" width="734" height="415" alt="Closing the AI chat" loading="lazy">
+        </div>
+        <img src="assets/docusign/sol2-wide.jpg" width="1480" height="456" alt="Hover chat over the document" loading="lazy">
+        <div class="case__duo case__duo--tight" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)">
+          <img src="assets/docusign/sol2-c.jpg" width="734" height="415" alt="Context input in the chat" loading="lazy">
+          <img src="assets/docusign/sol2-d.jpg" width="734" height="415" alt="Alternate chat views in the editor" loading="lazy">
+        </div>
+      </section>
+
+      <section class="case__challenges">
+        <div class="case__copy">
+          <h2 class="case__title">challenges: “finding time to respond to others and facilitate my own work”</h2>
+          <p>as the sole design intern, i was attending to cross-functional partners, catching members up to speed, and making updates to screens i wasn’t in charge of.</p>
+          <p>however, this taught me how to remain creative under pressure.</p>
+          <p>there are always going to be external factors at play and favors asked. but, how that is managed and overcome exemplifies a driven designer.</p>
+        </div>
+        <img src="assets/docusign/challenge.jpg" width="734" height="415" alt="docusign templates, light theme" loading="lazy">
+      </section>
+
+      <section class="case__block">
+        <div class="case__copy case__copy--lead">
+          <h2 class="case__title">final flows</h2>
+          <p>after intensely putting together a few story arcs, i prototyped 4+ flows to hand-off to developers for the next phase. ai in document templates is now shipped and usable!</p>
+        </div>
+        <div class="case__flows">
+          <figure class="case__flow" style="--x: 0; --w: 577"><video poster="assets/docusign/flow-1.jpg" width="577" height="434" style="aspect-ratio: 577 / 434" muted loop playsinline preload="none" aria-label="Bottom chat flow"><source src="assets/docusign/video/flow-bottom-chat.mp4" type="video/mp4"></video><figcaption class="tag">bottom chat</figcaption></figure>
+          <figure class="case__flow case__flow--caption-left" style="--x: 642; --w: 838"><video poster="assets/docusign/flow-2.jpg" width="838" height="642" style="aspect-ratio: 838 / 642" muted loop playsinline preload="none" aria-label="Tracked changes flow"><source src="assets/docusign/video/flow-tracked-changes.mp4" type="video/mp4"></video><figcaption class="tag">tracked changes</figcaption></figure>
+          <figure class="case__flow" style="--x: 0; --w: 799"><video poster="assets/docusign/flow-3.jpg" width="799" height="609" style="aspect-ratio: 799 / 609" muted loop playsinline preload="none" aria-label="Pinning to chat flow"><source src="assets/docusign/video/flow-pinning.mp4" type="video/mp4"></video><figcaption class="tag">pinning to chat</figcaption></figure>
+          <figure class="case__flow case__flow--caption-left" style="--x: 853; --w: 627"><video poster="assets/docusign/flow-4.jpg" width="627" height="440" style="aspect-ratio: 627 / 440" muted loop playsinline preload="none" aria-label="Suggestion timeline flow"><source src="assets/docusign/video/flow-timeline.mp4" type="video/mp4"></video><figcaption class="tag">suggestion timeline</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="case__takeaways">
+        <h2 class="case__title">value points and takeaways</h2>
+        <ul>
+          <li>working within constraints is difficult -- but never impossible. learning to work within confinement shows a skilled designer at work.</li>
+          <li>oversharing is good, give your team options to work with. but, never go all in on one idea because you don’t know what other people may think.</li>
+          <li>think about if a user will actually adopt your feature. bring design back to realism and don’t sweat the extra tinkering just yet.</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- Footer (Figma 571:4565): sits behind the study and is uncovered as its end scrolls past -->
+    <footer class="case__end">
+      <div class="case__ask">
+        <span class="case__plane" aria-hidden="true"><span class="plane__art"><i class="plane__tint"></i></span></span>
+        <p class="case__ask-title">looking for finer details?</p>
+        <p>i don’t post everything about my projects, so let me know if you’re eager to know more!</p>
+        <div class="case__ask-actions">
+          <a class="tag tag--link" href="mailto:jarivero004@gmail.com">let’s talk!</a>
+          <a class="tag tag--link case__back" href="#" data-case-back>return to works<svg class="chip__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8H13M9.0625 12L13 8L9.0625 4"/></svg></a>
+        </div>
+      </div>
+    </footer>
+  </article>
+
+  <button class="replay" id="replay" type="button">replay</button>
+
+  <script src="opening.js"></script>
 </body>
 </html>

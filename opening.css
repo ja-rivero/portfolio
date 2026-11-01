@@ -1,0 +1,759 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { min-height: 100%; }
+
+/* No rubber-band bounce past the top or bottom: the nav and footers stay against the screen
+   edges instead of pulling away to show the page colour beyond them */
+html, body { overscroll-behavior: none; }
+
+body {
+  background: #fcfcfc;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: "Host Grotesk", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* No scrolling until the box has landed (the about page has no opening) */
+html:not(.is-landed):not(.is-about) body { overflow: hidden; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Opening ---------- */
+
+.opening {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* The frame, carried to the landing box */
+.group {
+  position: relative;
+  /* no will-change: as its own layer, the group's origin moves by fractions of a pixel while the
+     box grows, and the clouds re-snap inside it every frame (a visible shake) */
+}
+
+/* Outer size is driven by opening.js: 8×8 (closed) → 138×153 (centre cell) → 728×152
+   (middle row) → 728×489 (all nine cells, fit to the viewport) */
+.frame {
+  --k: 4px; /* box inset: 4px in the opening, 8px on the landing */
+  --b: 1px; /* box border */
+  position: relative;
+  width: 8px;
+  height: 8px;
+}
+
+.box {
+  position: absolute;
+  inset: var(--k);
+  overflow: hidden;
+  background: #fff;
+  border: var(--b) solid rgba(0, 0, 0, 0.12);
+}
+
+.frame.is-closed .box { border-color: transparent; }
+
+/* 4px squares tucked against the box's corners, in the gap around it (Figma 565:2530) */
+.corner {
+  --c: calc(var(--k) - 4px);
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+}
+.corner--tl { left: var(--c); top: var(--c); }
+.corner--tr { right: var(--c); top: var(--c); }
+.corner--bl { left: var(--c); bottom: var(--c); }
+.corner--br { right: var(--c); bottom: var(--c); }
+
+/* The picture, 473px tall and 720 → 712px wide (opening.js sets the width), laid out in its
+   own px. opening.js places it so the window it should show sits on the box centre, scaled
+   to fill the box */
+.art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 720px;
+  height: 473px;
+  transform-origin: 0 0;
+}
+
+.grid { position: absolute; inset: 0; }
+/* the cloud photo at Figma's object-cover size (1672×941 scaled to 473 tall), centred, so
+   it stays put while the grid's width changes */
+.art__sky { position: absolute; top: 0; left: 50%; width: 840px; height: 473px; margin-left: -420px; }
+.art__sky img { width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+
+/* Nine cells split by white lines (opening.js places them: the centre column is 130px wide,
+   rows break at y 194 / 338). A lit cell is washed top → bottom with the Figma gradient;
+   opening.js fades it in and out */
+.grid__cell {
+  position: absolute;
+  background: linear-gradient(rgba(90, 254, 211, 0.4), rgba(152, 54, 118, 0.4));
+  opacity: 0;
+}
+.grid__line { position: absolute; background: #fff; }
+/* lines stay 1 screen px however the picture is scaled (--px = 1 / zoom) */
+.grid__line--v { top: 0; bottom: 0; width: var(--px, 1px); }
+.grid__line--h { left: 0; right: 0; height: var(--px, 1px); }
+
+/* ---------- Landing ---------- */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  min-height: 100svh;
+  padding-bottom: 48px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.nav__left { display: flex; align-items: center; gap: 24px; }
+.nav__links { display: flex; gap: 4px; }
+.nav__actions { display: flex; gap: 8px; }
+
+.nav__link,
+.button,
+.chip {
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  white-space: nowrap;
+}
+
+.nav__link {
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.4);
+  transition: color 0.2s ease;
+}
+.nav__link:hover,
+.nav__link.is-active { color: rgba(0, 0, 0, 0.9); }
+
+.button {
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #000;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+/* Hover inverts the button: a solid fill in the line colour, text knocked out of it (over the
+   sky the same move in white) */
+.button:hover,
+.button:focus-visible { background: rgba(0, 0, 0, 0.9); border-color: rgba(0, 0, 0, 0.9); color: #fff; }
+
+/* Reload (as in new-portfolio): opens the page fresh, replaying the opening. Hover darkens it
+   and the arrow winds back */
+.nav__reset {
+  display: flex;
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.nav__reset svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.6);
+  stroke-width: 1.33;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.2s ease, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.nav__reset:hover,
+.nav__reset:focus-visible { border-color: rgba(0, 0, 0, 0.3); }
+.nav__reset:hover svg,
+.nav__reset:focus-visible svg { stroke: rgba(0, 0, 0, 0.9); transform: rotate(-40deg); }
+
+/* Excerpt | hello + box | facts: 328 / 728 / 328 with 48px gaps across the 1480px Figma
+   row, filling the height between the nav and the 48px bottom margin. The side columns
+   give way (down to 230px, the text width) before the box does */
+:root {
+  --center-pad: clamp(16px, 6.1svh, 48px); /* space above the header and below the box */
+  /* everything stacked around the box: nav 48 + gap 48 + bottom 48 + header 40 + gap 16 */
+  --box-chrome: calc(200px + 2 * var(--center-pad));
+}
+
+.landing {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) auto minmax(230px, 1fr);
+  column-gap: 48px;
+  align-content: center; /* row hugs the centre column, so facts line up 52px under the box */
+  width: 100%;
+  padding: 0 16px;
+}
+
+.excerpt,
+.facts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+.excerpt p { font-weight: 300; }
+
+.side-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+.excerpt { align-self: start; max-width: 230px; }
+/* Bottom of its column, 48px under the box, with the title and each chip right-aligned */
+.facts { align-self: end; align-items: flex-end; }
+
+.facts__list {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  gap: 8px;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.chip:hover { color: rgba(0, 0, 0, 0.9); border-color: rgba(0, 0, 0, 0.3); }
+
+.chip__arrow {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+.chip:hover .chip__arrow { transform: translateX(2px); }
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  align-self: center;
+  padding: var(--center-pad) 0;
+}
+
+.hello {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.9px;
+  white-space: nowrap;
+}
+
+.slot {
+  position: relative;
+  /* As big as the viewport allows at the Figma 728:489 ratio: limited by the height left
+     under the nav and header, or by the width left beside two 230px side columns */
+  width: min(2000px, 100vw - 32px - 2 * (230px + 48px), max(280px, (100svh - var(--box-chrome)) * 728 / 489));
+  aspect-ratio: 728 / 489;
+}
+
+/* Once landed, the frame lives in the slot */
+.slot .frame { position: absolute; inset: 0; width: auto !important; height: auto !important; }
+
+/* ---------- Full sky (after one scroll down) ---------- */
+
+/* The frame leaves the slot and grows past the viewport edges, so its border and corner
+   ticks slide off screen. opening.js drives the rect */
+.slot .frame.is-free {
+  position: fixed;
+  left: var(--fx);
+  top: var(--fy);
+  right: auto;
+  bottom: auto;
+  width: var(--fw) !important;
+  height: var(--fh) !important;
+  z-index: 5;
+}
+
+/* Nav sticks to the top (phones scroll the landing, and the sky opens from its bottom), and
+   stays on top of the sky in white */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fcfcfc;
+  transition: border-color 0.4s ease, background-color 0.4s ease;
+}
+.is-full .nav { background: transparent; }
+.is-full .nav { border-bottom-color: #fff; }
+.is-full .button { border-color: rgba(255, 255, 255, 0.5); } /* over the sky (Figma 566:4291) */
+.is-full .button:hover,
+.is-full .button:focus-visible { background: #fff; border-color: #fff; color: rgba(0, 0, 0, 0.9); }
+.is-full .button,
+.is-full .nav__link:hover,
+.is-full .nav__link.is-active { color: #fff; }
+.is-full .nav__link { color: rgba(255, 255, 255, 0.6); }
+.is-full .nav__reset { border-color: rgba(255, 255, 255, 0.5); }
+.is-full .nav__reset svg { stroke: #fff; }
+.is-full .nav__reset:hover,
+.is-full .nav__reset:focus-visible { background: #fff; border-color: #fff; }
+.is-full .nav__reset:hover svg,
+.is-full .nav__reset:focus-visible svg { stroke: rgba(0, 0, 0, 0.9); }
+
+.is-full .replay { opacity: 0; pointer-events: none; transition-delay: 0s; }
+
+/* Paper planes, placed in the 1512×785 Figma sky and flown in by opening.js */
+.planes {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.plane {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+.is-cases .plane { pointer-events: auto; cursor: pointer; }
+
+.plane__body {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* The coral plane from the transparent sticker sheet, in a 150×56 box centred in the
+   plane's box, then scaled, turned and flipped */
+.plane__art {
+  --sheet: url("assets/planes/plane.png") -0.82px -0.7px / 151.65px 57.43px no-repeat;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  height: 56px;
+  background: var(--sheet);
+  isolation: isolate;
+  transform: translate(-50%, -50%) scale(var(--s, 1)) rotate(var(--rot, 0deg)) scaleY(var(--flip, 1));
+}
+
+/* Recolour: a colour-blend fill cut to the plane's shape by the same crop */
+.plane__tint {
+  position: absolute;
+  inset: 0;
+  background: var(--tint);
+  mix-blend-mode: color;
+  -webkit-mask: var(--sheet);
+  mask: var(--sheet);
+  transition: background-color 0.3s ease;
+}
+
+/* Highlighted (its plane or chip is hovered): nudges forward along its heading, and drops the
+   grey for its own colour */
+.plane.is-hot .plane__body { transform: translate(calc(var(--dx) * 10px), calc(var(--dy) * 10px)) scale(1.05); }
+.plane.is-hot .plane__tint { background-color: var(--hot, var(--tint)); }
+
+/* "coming soon!" tag for studies that aren't up yet: floats just above its plane while the
+   plane or its chip is hovered (Figma 566:4546) */
+.plane__soon {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  padding: 6px 8px;
+  border: 1px solid #f5f3ee;
+  background: #f5f3ee;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: #000;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 4px);
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.plane.is-hot .plane__soon { opacity: 1; transform: translate(-50%, 0); }
+
+.cases {
+  position: fixed;
+  left: 16px;
+  bottom: 48px;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: min(294px, 100vw - 32px);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.is-cases .cases { opacity: 1; transform: none; pointer-events: auto; }
+
+.cases__title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+.cases__list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.case-chip {
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: #000;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+/* Same hover as the nav buttons: filled in near-black; also lit while its plane is hovered */
+.case-chip.is-hot,
+.case-chip:focus-visible { background: rgba(0, 0, 0, 0.9); border-color: rgba(0, 0, 0, 0.9); color: #fff; }
+
+/* Nav and side content load after the header + box, staggered via --d, with the about page's
+   entrance: a 14px rise, 70ms apart */
+[data-in] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease var(--d, 0s), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
+}
+.is-landed [data-in] { opacity: 1; transform: none; }
+
+/* Back to the landing via "intro" on the about page (opening.js enterLanding): the about
+   page's entrance, a quick staggered rise via --rd, instead of replaying the opening. The nav
+   just stays put */
+.is-entering .landing [data-in],
+.is-entering-box .slot { opacity: 0; transform: translateY(14px); transition: none; }
+.is-entering .nav[data-in] { transition: none; }
+.is-skip:not(.is-landed) .opening { visibility: hidden; }
+.is-skip:not(.is-landed) .nav[data-in] { opacity: 1; transform: none; transition: none; }
+.is-reveal .landing [data-in],
+.is-reveal .slot {
+  transition:
+    opacity 0.7s ease var(--rd, 0ms),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rd, 0ms);
+}
+
+/* Narrower screens: stack the columns under the box */
+@media (max-width: 900px) {
+  .landing {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+  .slot { width: min(100%, 728px); }
+  .excerpt, .facts { width: min(100%, 728px); max-width: none; justify-self: center; }
+  .center { order: -1; padding: 0; }
+  .facts { align-self: start; }
+}
+
+.replay {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  background: #fcfcfc;
+  font: inherit;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, color 0.2s ease;
+}
+.replay:hover { color: rgba(0, 0, 0, 0.9); }
+.is-landed .replay { opacity: 1; pointer-events: auto; transition-delay: 1.2s, 0s; }
+
+/* ---------- Case study (Figma 566:3215) ---------- */
+
+/* Opening a case pins the nav; it stays white over the sky, then turns solid once the
+   scrim has covered it (opening.js drops .is-full) */
+.is-case .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: border-color 0.4s ease, background-color 0.4s ease;
+}
+.is-case:not(.is-full) .nav { background: #fcfcfc; }
+.is-case .replay { display: none; }
+
+/* Sits above the fixed sky; the page scrolls it up over the clouds */
+.case {
+  position: relative;
+  z-index: 8;
+}
+
+/* A viewport-tall wash from clear to the page colour, so the clouds fade into the study as it
+   scrolls up instead of being cut off by an edge */
+.case__scrim {
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(252, 252, 252, 0) 0%,
+    rgba(252, 252, 252, 0.18) 30%,
+    rgba(252, 252, 252, 0.6) 62%,
+    rgba(252, 252, 252, 0.9) 84%,
+    #fcfcfc 100%
+  );
+}
+
+.case__body {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  padding: calc(var(--nav-h, 48px) + 48px) 16px 80px; /* 48px under the fixed nav, a section gap before the footer */
+  background: #fcfcfc;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+  color: #000;
+}
+
+/* Scroll entrance, as on the about page (opening.js armReveal): rises 14px into place */
+.case [data-reveal] { opacity: 0; transform: translateY(14px); }
+.case [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s ease var(--d, 0ms),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+}
+
+.case img,
+.case video { display: block; width: 100%; height: auto; background: #f5f5f5; } /* the tint shows while a frame loads */
+/* Some exports picked up a 1px dark edge from the black page they were cut from */
+.case__trim { clip-path: inset(0 1px 1px 0); }
+.case video { object-fit: cover; } /* recordings keep their Figma frame (aspect-ratio set inline) */
+.case p { font-weight: 300; }
+
+.case__title {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Hero: intro text bottom-left, logo and key visual to the right (285.72 / 337 / 827.2 of 1480) */
+.case__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 285.72fr) minmax(0, 337fr) minmax(0, 827.2fr);
+  column-gap: 16px;
+  align-items: start;
+}
+.case__key { margin-left: -1.92px; } /* Figma has 14.08px between the two images */
+
+.case__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  align-self: stretch;
+}
+.case__intro-text { display: flex; flex-direction: column; gap: 16px; }
+
+.case__return {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.case__return:hover .chip__arrow { transform: translateX(-2px); }
+
+/* Arrived: the scrim and the landing above the study are dropped, so scrolling up stops at its
+   top instead of running back into the sky. The way back is a button */
+.is-case-in .landing,
+.is-case-in .case__scrim { display: none; }
+.is-case-in .page { min-height: 0; padding: 0; gap: 0; } /* only the fixed nav is left in it */
+.is-case-in .slot .frame,
+.is-case-in .planes { visibility: hidden; }
+.case__crumb { font-weight: 500 !important; }
+.case__lede { font-size: 18px; letter-spacing: -0.36px; }
+
+/* Meta: four labelled groups of tags */
+.case__meta { display: flex; gap: 24px; }
+.case__meta dt { margin-bottom: 16px; font-weight: 500; }
+.case__meta dd { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+}
+.tag--link { transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease; }
+.case__back { color: rgba(0, 0, 0, 0.6); }
+/* Primary ("let's talk!"): same hover as the nav buttons, filled in near-black */
+.tag--link:not(.case__back):hover,
+.tag--link:not(.case__back):focus-visible { background: rgba(0, 0, 0, 0.9); border-color: rgba(0, 0, 0, 0.9); color: #fff; }
+/* Secondary (back to works / return to work): the facts chips' hover */
+.case__back:hover,
+.case__back:focus-visible,
+.case__return:hover,
+.case__return:focus-visible { color: rgba(0, 0, 0, 0.9); border-color: rgba(0, 0, 0, 0.3); }
+.case__back:hover .chip__arrow { transform: translateX(2px); }
+
+/* Context: two images (345 + 461, 12px apart) beside the mission copy (646) */
+.case__context {
+  display: grid;
+  grid-template-columns: minmax(0, 818fr) minmax(0, 646fr);
+  column-gap: 16px;
+}
+.case__pair {
+  display: grid;
+  grid-template-columns: minmax(0, 345fr) minmax(0, 461fr);
+  column-gap: 12px;
+}
+.case__copy { max-width: 646px; }
+.case__copy p + p,
+.case__note p + p { margin-top: 1.2em; }
+
+/* Final assets: rows of artwork (968) beside a note (496), alternating sides */
+.case__row {
+  display: grid;
+  grid-template-columns: minmax(0, 968fr) minmax(0, 496fr);
+  column-gap: 16px;
+  align-items: start;
+}
+.case__row--flip { grid-template-columns: minmax(0, 496fr) minmax(0, 968fr); }
+.case__row + .case__row { margin-top: 32px; }
+
+/* Artwork keeps its Figma width as a share of the 968 column (--w); the billboard runs past it */
+.case__art { display: flex; flex-direction: column; gap: 16px; }
+.case__art img { width: calc(var(--w, var(--of, 968)) / var(--of, 968) * 100%); max-width: none; } /* --of: the column's Figma width, if not 968 */
+.case__row:not(.case__row--flip) .case__art { position: relative; z-index: 1; }
+
+.case__note { display: flex; gap: 16px; }
+.case__note h3 { flex: none; font-size: 14px; font-weight: 400; }
+.case__note-text { flex: 1; min-width: 0; } /* all paragraphs in one column beside the label */
+
+.case__takeaways ul { max-width: 646px; padding-left: 21px; font-weight: 300; }
+.case__takeaways li + li { margin-top: 1.2em; }
+
+/* Footer (Figma 571:4565): the clouds with a frosted card in the middle. It sticks to
+   the bottom of the viewport underneath the opaque body, so the study's end slides up off it.
+   Only pinned once the study is open: during the glide down from the sky it stays in flow at
+   the article's end, so it never shows over the work page. On the way back up it stays pinned
+   until the study has slid down over it again */
+.case__body { position: relative; z-index: 1; }
+/* A slight inner shadow along the footer's top, hung off the body's bottom edge so it rides
+   the seam the whole way through the reveal */
+.case__body::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+.is-case-in .case__end,
+.is-case-leaving .case__end {
+  position: sticky;
+  bottom: 0;
+}
+.case__end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: max(360px, 34.85vw); /* 527 / 1512 */
+  padding: 16px;
+  background: #3aa6c9 url("assets/clouds-wide.jpg") center bottom / cover no-repeat;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.28px;
+}
+.case__ask {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: min(459px, 100%);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.85);
+}
+.case__ask > p:not(.case__ask-title) { margin: 16px 0; font-weight: 300; color: #000; }
+.case__ask-title { margin-top: 2px; font-weight: 500 !important; color: rgba(0, 0, 0, 0.9); }
+.case__ask-actions { display: flex; justify-content: space-between; align-items: center; align-self: stretch; }
+
+/* The small grey plane: the same sticker as the sky's, at 30% */
+.case__plane { position: relative; width: 52px; height: 44px; }
+.case__plane .plane__art { --s: 0.3; --rot: -20.66deg; --tint: #282829; }
+
+/* ---------- Pieces the docusign study adds to the same system (Figma 354:2061) ---------- */
+
+/* Hero with the key visual first (902 / 562) */
+.case__hero--art-first { grid-template-columns: minmax(0, 902fr) minmax(0, 562fr); }
+.case__hero--art-first .case__key { margin-left: 0; }
+
+/* Skills tags wrap two to a row where they fit */
+.case__tags-wrap { flex-flow: row wrap; max-width: 130px; }
+
+/* A section of copy then artwork, 16px apart */
+.case__block > * + * { margin-top: 16px; }
+.case__copy--lead { max-width: 646px; }
+.case__copy--right { margin-left: calc(834 / 1480 * 100%); } /* the right-hand 646 column */
+.case__dotted { text-decoration: underline dotted; text-underline-offset: 2px; }
+
+/* Two images side by side; the columns (their Figma widths) are set inline */
+.case__duo { display: grid; column-gap: 16px; }
+.case__duo--tight { column-gap: 12px; }
+
+/* Two images stacked in one column, 12px apart (cardinal's mission pair) */
+.case__stack { display: flex; flex-direction: column; gap: 12px; }
+
+/* Copy (730) beside one image (734) */
+.case__challenges { display: grid; grid-template-columns: minmax(0, 730fr) minmax(0, 734fr); column-gap: 16px; align-items: start; }
+.case__challenges .case__copy p { max-width: 646px; }
+
+/* Final flows: each image at its Figma width with its label tag beside its bottom edge,
+   alternating sides */
+.case__flows { display: flex; flex-direction: column; gap: 16px; }
+.case__flow { display: flex; align-items: flex-end; gap: 12px; margin: 0; }
+.case__flow--caption-left { flex-direction: row-reverse; }
+.case__flow img,
+.case__flow video { flex: none; width: calc(var(--w) / 1480 * 100%); }
+.case__flow figcaption { flex: none; }
+
+@media (max-width: 900px) {
+  .case__hero, .case__context, .case__pair, .case__row, .case__row--flip { grid-template-columns: minmax(0, 1fr); row-gap: 16px; }
+  .case__key { margin-left: 0; }
+  .case__meta { flex-wrap: wrap; }
+  .case__row--flip .case__note { order: 2; }
+  .case__art img { width: 100%; }
+  .case__hero--art-first, .case__duo, .case__challenges { grid-template-columns: minmax(0, 1fr) !important; row-gap: 16px; }
+  .case__copy--right { margin-left: 0; }
+  .case__flow, .case__flow--caption-left { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .case__flow img, .case__flow video { width: 100%; }
+}
