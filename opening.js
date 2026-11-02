@@ -605,7 +605,4 @@
       if (hash === 'work') setFull(true);
       else if (CASES[hash]) goCase(hash);
     });
-
-  // The frame has moved into the landing layout, so a replay starts from a fresh page
-  document.getElementById('replay').addEventListener('click', () => location.reload());
 })();
