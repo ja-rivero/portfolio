@@ -275,12 +275,13 @@
   // ('transparent' leaves the coral sticker as is). dir: where the nose points. art: a different
   // plane from the sheet (Figma 586:6107, 586:6090), cut out at 2× and drawn at aw×ah. top: empty
   // space above the turned plane inside its box, so the "coming soon!" tag sits on the wing
+  // (negative lifts the tag clear of a nose that reaches the top)
   const GREY = '#cdd0dd';
   const PLANES = [
     { id: 'cardinal', x: 179, y: 297, w: 150, h: 56, rot: 0, flip: 1, hot: 'transparent', dir: [1, -0.08] },
     { id: 'docusign', x: 415.9, y: 448.2, w: 148.59, h: 98.82, rot: 9.09, flip: 1, hot: '#a98242', dir: [1, -0.09], art: 'plane-gold.png', aw: 138, ah: 78 },
-    { id: 'wispr', soon: true, x: 666, y: 571.28, w: 158.14, h: 122.55, rot: -150.53, flip: -1, hot: '#543665', dir: [-1, -0.65] },
-    { id: 'pinterest', soon: true, x: 961.47, y: 219, w: 160.11, h: 105.33, rot: -20.66, flip: 1, hot: '#a94270', dir: [1, -0.45] },
+    { id: 'wispr', soon: true, x: 666, y: 571.28, w: 158.14, h: 122.55, rot: -150.53, flip: -1, hot: '#543665', dir: [-1, -0.65], top: -8 },
+    { id: 'pinterest', soon: true, x: 961.47, y: 219, w: 160.11, h: 105.33, rot: -20.66, flip: 1, hot: '#a94270', dir: [1, -0.45], top: -8 },
     { id: 'pixr', soon: true, x: 1148.95, y: 444.12, w: 142.11, h: 152.75, rot: 53.83, flip: 1, hot: '#4251a9', dir: [1, 0.75], art: 'plane-blue.png', aw: 130, ah: 81, top: 25 },
   ];
   const FLY_DELAY = { cardinal: 0, docusign: 380, wispr: 160, pinterest: 520, pixr: 260 };
