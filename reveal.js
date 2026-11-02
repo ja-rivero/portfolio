@@ -44,6 +44,11 @@
     }
   };
 
-  // The home page waits until the intro has been skipped and the ball placed
-  if (!root.classList.contains('skip-intro')) window.startReveal();
+  // The home page waits until the intro has been skipped and the ball placed. The about page
+  // waits for its fonts and then a beat, so it comes in at about the pace of the intro
+  const WAIT = 200; // ms after the fonts are ready
+  if (!root.classList.contains('skip-intro')) {
+    Promise.resolve(document.fonts && document.fonts.ready)
+      .then(() => setTimeout(window.startReveal, WAIT));
+  }
 })();
