@@ -272,14 +272,17 @@
   // ---------- Planes: the coral sticker (150×56), turned and recoloured per Figma 566:3134 ----------
   // x/y/w/h: the turned plane's box in the 1512×785 sky. rot/flip turn the sticker. Every plane
   // is tinted Figma's grey (colour blend) until hovered, then shows its own colour: hot
-  // ('transparent' leaves the coral sticker as is). dir: where the nose points
+  // ('transparent' leaves the coral sticker as is). dir: where the nose points. art: a different
+  // plane from the sheet (Figma 586:6107, 586:6090), cut out at 2× and drawn at aw×ah. top: empty
+  // space above the turned plane inside its box, so the "coming soon!" tag sits on the wing
+  // (negative lifts the tag clear of a nose that reaches the top)
   const GREY = '#cdd0dd';
   const PLANES = [
     { id: 'cardinal', x: 179, y: 297, w: 150, h: 56, rot: 0, flip: 1, hot: 'transparent', dir: [1, -0.08] },
-    { id: 'docusign', x: 419.06, y: 423.24, w: 142.23, h: 148.75, rot: 132.19, flip: -1, hot: '#a98242', dir: [-1, 0.43] },
-    { id: 'wispr', soon: true, x: 666, y: 571.28, w: 158.14, h: 122.55, rot: -150.53, flip: -1, hot: '#543665', dir: [-1, -0.65] },
-    { id: 'pinterest', soon: true, x: 961.47, y: 219, w: 160.11, h: 105.33, rot: -20.66, flip: 1, hot: '#a94270', dir: [1, -0.45] },
-    { id: 'pixr', soon: true, x: 1144.89, y: 502.94, w: 153.27, h: 65.45, rot: 3.66, flip: 1, hot: '#4251a9', dir: [1, -0.016] },
+    { id: 'docusign', x: 415.9, y: 448.2, w: 148.59, h: 98.82, rot: 9.09, flip: 1, hot: '#a98242', dir: [1, -0.09], art: 'plane-gold.png', aw: 138, ah: 78 },
+    { id: 'wispr', soon: true, x: 666, y: 571.28, w: 158.14, h: 122.55, rot: -150.53, flip: -1, hot: '#543665', dir: [-1, -0.65], top: -8 },
+    { id: 'pinterest', soon: true, x: 961.47, y: 219, w: 160.11, h: 105.33, rot: -20.66, flip: 1, hot: '#a94270', dir: [1, -0.45], top: -8 },
+    { id: 'pixr', soon: true, x: 1148.95, y: 444.12, w: 142.11, h: 152.75, rot: 53.83, flip: 1, hot: '#4251a9', dir: [1, 0.75], art: 'plane-blue.png', aw: 130, ah: 81, top: 25 },
   ];
   const FLY_DELAY = { cardinal: 0, docusign: 380, wispr: 160, pinterest: 520, pixr: 260 };
   const planesEl = document.getElementById('planes');
@@ -300,9 +303,15 @@
     el.style.setProperty('--flip', pl.flip);
     el.style.setProperty('--tint', GREY);
     el.style.setProperty('--hot', pl.hot);
+    if (pl.top) el.style.setProperty('--top', `${pl.top}px`);
     el.innerHTML = '<span class="plane__body"><span class="plane__art"><i class="plane__tint"></i></span></span>'
       + (pl.soon ? '<span class="plane__soon">coming soon!</span>' : ''); // no study yet (Figma 566:4546)
     if (pl.soon) chips[pl.id].setAttribute('aria-label', `${pl.id}, coming soon`);
+    if (pl.art) {
+      const art = el.querySelector('.plane__art');
+      art.style.setProperty('--sheet', `url("assets/planes/${pl.art}") 0 0 / 100% 100% no-repeat`);
+      Object.assign(art.style, { width: `${pl.aw}px`, height: `${pl.ah}px` });
+    }
     planesEl.appendChild(el);
     pl.el = el;
 
