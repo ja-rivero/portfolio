@@ -75,9 +75,9 @@
     centre: [1000, 1600],   // then its gradient fades in
     widen: [1700, 2850],    // the box widens to the middle row
     morph: [3250, 4150],    // a short hold, then the box grows into the landing box, all nine cells
-    lightTR: [3650, 4150],  // the other two Figma cells fade in, then the light starts moving
-    lightBL: [3750, 4250],
-    end: 4250,
+    lightTR: [4150, 4750],  // once the box has grown, the other two Figma cells fade in like the
+    lightBL: [4250, 4850],  // centre's, then the light starts moving
+    end: 4850,
   };
   // Landing: each diagonal set holds the light for a third of the cycle, crossfading
   const CYCLE = 12000;  // ms
