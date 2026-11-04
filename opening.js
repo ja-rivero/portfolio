@@ -272,15 +272,15 @@
   // ---------- Planes: the coral sticker (150×56), turned and recoloured per Figma 566:3134 ----------
   // x/y/w/h: the turned plane's box in the 1512×785 sky. rot/flip turn the sticker. Every plane
   // is tinted Figma's grey (colour blend) until hovered, then shows its own colour: hot
-  // ('transparent' leaves the coral sticker as is). dir: where the nose points; swoop: comes in
-  // from the right edge and loops back round into place instead of flying straight. art: a different
+  // ('transparent' leaves the coral sticker as is). dir: where the nose points; swoop: arcs down
+  // into place from the right edge instead of flying straight. art: a different
   // plane from the sheet (Figma 586:6107, 586:6090), cut out at 2× and drawn at aw×ah. top: empty
   // space above the turned plane inside its box, so the "coming soon!" tag sits on the wing
   // (negative lifts the tag clear of a nose that reaches the top)
   const GREY = '#cdd0dd';
   const PLANES = [
     { id: 'cardinal', x: 179, y: 297, w: 150, h: 56, rot: 0, flip: 1, hot: 'transparent', dir: [1, -0.08] },
-    { id: 'docusign', x: 415.9, y: 448.2, w: 148.59, h: 98.82, rot: 9.09, flip: 1, hot: '#a98242', dir: [1, -0.09], art: 'plane-gold.png', aw: 138, ah: 78, swoop: true },
+    { id: 'docusign', x: 415.9, y: 448.2, w: 148.59, h: 98.82, rot: 9.09, flip: 1, hot: '#a98242', dir: [-1, 0.1], art: 'plane-gold.png', aw: 138, ah: 78, swoop: true },
     { id: 'wispr', soon: true, x: 666, y: 571.28, w: 158.14, h: 122.55, rot: -150.53, flip: -1, hot: '#543665', dir: [-1, -0.65], top: -8 },
     { id: 'pinterest', soon: true, x: 961.47, y: 219, w: 160.11, h: 105.33, rot: -20.66, flip: 1, hot: '#a94270', dir: [1, -0.45], top: -8 },
     { id: 'pixr', soon: true, x: 1148.95, y: 444.12, w: 142.11, h: 152.75, rot: 53.83, flip: 1, hot: '#4251a9', dir: [1, 0.75], art: 'plane-blue.png', aw: 130, ah: 81, top: 25 },
@@ -371,11 +371,12 @@
     setTimeout(() => { if (full && !openCaseEl) root.classList.add('is-cases'); }, reduce ? 0 : 500);
   }
 
-  // A curve from just off the right edge: heading left above the plane's spot, it bends down
-  // and back round to arrive on its own heading, the nose turning along the path
+  // A curve from just off the right edge, above the plane's spot: it heads left, dips down and
+  // levels out onto the plane's own heading, the nose tilting gently along the path
   function swoopFrames(pl) {
     const { cx, cy, r, s } = pl;
-    const pts = [[innerWidth - cx + r, -170 * s], [-320 * s, -260 * s], [-300 * s, 30 * s], [0, 0]];
+    const sx = innerWidth - cx + r;
+    const pts = [[sx, -240 * s], [sx * 0.5, -240 * s], [220 * s, -22 * s], [0, 0]];
     const at = (t, k) => (1 - t) ** 3 * pts[0][k] + 3 * (1 - t) ** 2 * t * pts[1][k] + 3 * (1 - t) * t * t * pts[2][k] + t ** 3 * pts[3][k];
     const slope = (t, k) => 3 * (1 - t) ** 2 * (pts[1][k] - pts[0][k]) + 6 * (1 - t) * t * (pts[2][k] - pts[1][k]) + 3 * t * t * (pts[3][k] - pts[2][k]);
     const heading = Math.atan2(pl.dy, pl.dx);
@@ -383,7 +384,8 @@
     return Array.from({ length: 41 }, (_, i) => {
       const t = i / 40;
       let a = Math.atan2(slope(t, 1), slope(t, 0)) - heading;
-      if (prev !== undefined) a += Math.round((prev - a) / (2 * Math.PI)) * 2 * Math.PI; // no spinning the long way
+      a -= Math.round(a / (2 * Math.PI)) * 2 * Math.PI; // turns stay small, never the long way
+      if (prev !== undefined) a += Math.round((prev - a) / (2 * Math.PI)) * 2 * Math.PI;
       prev = a;
       turn = i === 40 ? 0 : a;
       return { transform: `translate(${at(t, 0)}px, ${at(t, 1)}px) rotate(${turn}rad)`, opacity: 1 };
