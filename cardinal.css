@@ -1,0 +1,198 @@
+/* ---------- Cardinal case study (Figma 684:24471) ----------
+   Shares opening.css for the nav, scrim, grid lines, frames, reveals, squiggles and footer.
+   Like the other pages, sections sit flush between the dashed rules: framed blocks touch
+   them, text keeps 8px in from the column edge. */
+
+.case {
+  display: flex;
+  flex-direction: column;
+  width: min(728px, 100%);
+}
+.case > .rule { margin-block: 0; }
+
+/* (kept weak with :where so the heading styles below win) */
+:where(.case) :where(h1, h2) { font: inherit; }
+
+/* ----- Shared type ----- */
+
+.case__title {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.3);
+}
+.case__body {
+  font-size: 18px;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
+}
+/* the squiggled phrase reads a step stronger, and may wrap on narrow screens */
+.case__em { font-weight: 500; color: rgba(0, 0, 0, 0.9); white-space: normal; }
+
+/* ----- "Go back" / "Scroll up" rows (Figma 684:25374, 689:27974): 56px between rules ----- */
+
+.case__nav {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 8px;
+}
+.case__nav--centre { justify-content: center; }
+.case__step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+.case__step:hover,
+.case__step:focus-visible { color: rgba(0, 0, 0, 0.6); }
+.case__step:focus-visible { outline: 2px solid rgba(0, 0, 0, 0.3); outline-offset: 4px; }
+/* the chevron (akar-icons chevron-right-small) takes the label's colour */
+.case__chevron {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  background: currentColor;
+  -webkit-mask: url("assets/cardinal/chevron.svg") center / 24px 24px no-repeat;
+  mask: url("assets/cardinal/chevron.svg") center / 24px 24px no-repeat;
+}
+.case__chevron--back { rotate: 180deg; }
+.case__chevron--up { rotate: -90deg; }
+
+/* ----- Images ----- */
+
+/* Each artwork is the exported Figma frame. Inside a frame they stack 8px apart (16px for
+   the logos), each at its Figma width and left offset in the 712-wide window (--w, --x),
+   so they scale down with the column */
+.shot {
+  display: block;
+  width: calc(var(--w, 712) / 712 * 100%);
+  height: auto;
+  margin-left: calc(var(--x, 0) / 712 * 100%);
+  background: rgba(0, 0, 0, 0.03);
+}
+.shots {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.shots--loose { gap: 16px; }
+
+/* ----- Title + hero art ----- */
+
+.case-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 22px;
+}
+.case-hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 8px;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+.case-hero__title { color: rgba(0, 0, 0, 0.6); }
+.case-hero__meta { color: rgba(0, 0, 0, 0.3); }
+
+/* ----- Context: art on the left, text on the right ----- */
+
+.case-context {
+  display: flex;
+  align-items: flex-start; /* text starts at the top, beside the art */
+  gap: 12px;
+}
+.case-context__art { flex: none; width: 384px; }
+.case-context__art .shot { width: 100%; }
+.case-context__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 24px 8px 16px 0; /* title 24px down, as in Figma (frame 7.5 + 16 padding) */
+}
+
+/* ----- A titled part: heading + text, then its framed artwork ----- */
+
+.case-part {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 22px;
+}
+.case-part__head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: calc(var(--hw, 712) * 1px + 16px);
+  max-width: 100%;
+  padding: 0 8px;
+}
+/* some parts set their heading in from the left, as in Figma (--in) */
+.case-part__head--in { margin-left: calc(var(--in) / 728 * 100% - 8px); }
+
+/* ----- Value points and takeaways (same card as the home page's) ----- */
+
+.takeaways {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.03);
+}
+.takeaways__plane {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 112.68px;
+  height: auto;
+  margin-top: 57.85px;
+}
+.takeaways__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 24px;
+}
+.takeaways__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 27px;
+  font-size: 18px;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.takeaways .card__shine { height: 96.287px; top: 8.3px; }
+
+/* ----- Narrow screens ----- */
+
+@media (max-width: 640px) {
+  .case-hero__text { font-size: 20px; }
+  .case-context { flex-direction: column; align-items: stretch; }
+  .case-context__art { width: 100%; }
+  .case-context__text { padding: 0 8px 16px; }
+  .case-part__head--in { margin-left: 0; }
+  .shot { width: 100%; margin-left: 0; }
+  .takeaways { flex-direction: column; }
+  .takeaways__plane { width: 80px; margin: 16px 0 0 16px; }
+  .takeaways__body { padding-top: 8px; }
+}
