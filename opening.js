@@ -135,6 +135,7 @@
   }
   const letters = splitLetters(caption);
   const introLetters = [...document.querySelectorAll('[data-split]')].flatMap(splitLetters);
+  document.documentElement.classList.remove('is-booting'); // letters now hide themselves
 
   // ms. The plane loads in once and stays
   const T = {

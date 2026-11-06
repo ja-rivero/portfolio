@@ -4,6 +4,12 @@
   // Nav opens on hover or keyboard focus, and on tap (for touch, where there's no hover)
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('nav-toggle');
+  // The links open to exactly their own width (not a generous cap), so the pill grows in one
+  // even move instead of overshooting and settling back. Re-measured once the font is in
+  const navLinks = document.getElementById('nav-links');
+  const measureLinks = () => nav.style.setProperty('--links-w', `${navLinks.scrollWidth}px`);
+  measureLinks();
+  if (document.fonts) document.fonts.ready.then(measureLinks);
   const setNav = (open) => {
     nav.classList.toggle('is-open', open);
     navToggle.setAttribute('aria-expanded', open);

@@ -13,6 +13,10 @@
   <!-- Arriving from "Work": flag it before the first paint, so the nav, scrim and grid lines
        are already in place (no blink) while the landing animates in -->
   <script>if (location.hash === '#work') document.documentElement.classList.add('is-work-entrance');</script>
+  <!-- Until opening.js has split the intro and caption into hidden letters, keep them hidden,
+       and start at the top: a reload would otherwise flash them (and the old scroll
+       position) fully drawn for a frame before the opening begins -->
+  <script>document.documentElement.classList.add('is-booting'); if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
   <!-- Scroll reveals: set their hidden starting state before the first paint, so the page
        never flashes fully drawn before reveal.js takes over -->
   <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');</script>
