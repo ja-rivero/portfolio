@@ -750,6 +750,10 @@ html:not(.is-landed) .intro .pill:not(.is-on) { opacity: 0; }
 .work__link:focus-visible .work__img { filter: brightness(0.92); }
 @media (prefers-reduced-motion: reduce) { .work .framed, .work .work__img { transition: none; } }
 
+/* zooms a case study's video in on its centre (--zoom), cropped to the frame */
+.work__zoom { overflow: hidden; }
+.work__zoom > .work__img { scale: var(--zoom, 1); }
+
 .work__caption {
   display: flex;
   flex-wrap: wrap;

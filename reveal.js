@@ -1,6 +1,9 @@
 (() => {
   // Case study videos ([data-autoplay]) play, muted and looping, only while they're on
-  // screen; with reduced motion they stay on their poster
+  // screen; with reduced motion they stay on their poster. data-rate speeds one up (1.2 = 20% faster)
+  document.querySelectorAll('video[data-rate]').forEach((v) => {
+    v.defaultPlaybackRate = v.playbackRate = parseFloat(v.dataset.rate) || 1;
+  });
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const vo = new IntersectionObserver((entries) => {
       entries.forEach(({ target: v, isIntersecting }) => {
