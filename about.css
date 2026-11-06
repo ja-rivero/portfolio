@@ -1,344 +1,403 @@
-/* About page (about.html), brought over from new-portfolio's about page: the bio, previous
-   roles and community. Nav, buttons and chips come from opening.css */
-
-/* The overscroll canvas matches the page */
-html { background: #fcfcfc; }
-
-/* ---------- About page ---------- */
+/* ---------- About page (Figma 684:25418) ----------
+   Shares opening.css for the nav, scrim, grid lines, frames, pills, squiggles, reveals and
+   footer. Like the home page, sections sit flush between the dashed rules: framed blocks
+   touch them, and everything else keeps 16px inside them, 8px in from the column edge. */
 
 .about {
+  display: flex;
+  flex-direction: column;
+  width: min(728px, 100%);
+}
+.about > .rule { margin-block: 0; }
+
+/* (kept weak with :where so the heading styles below win) */
+:where(.about) :where(h1, h2) { font: inherit; }
+
+/* Photos and anything else that would cross the dotted column lines is clipped at them
+   (framed blocks clip themselves); room above and below is left free */
+.about > section:not(.framed) { clip-path: inset(-400px 0); }
+
+/* ----- Photos: the original image in a tilted frame with a border and a soft shadow,
+   cropped as in Figma (--x/--y/--iw/--ih), sized from --w × --h. They grow a little on
+   hover ----- */
+.photo {
   position: relative;
-  background: #fcfcfc;
-  padding: 48px 16px; /* 48px below the nav, and 48px from the last line to the page's end */
-  font-size: 14px;
-  line-height: 1.2;
-  letter-spacing: -0.28px;
-  color: rgba(0, 0, 0, 0.9);
-}
-
-.about h1,
-.about h2 {
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-}
-
-/* Intro: greeting + photos on the left, bio bottom-right filling up to 48px
-   from the photos */
-.about__intro {
-  display: flex;
-  align-items: flex-end;
-  gap: 48px;
-}
-
-.about__hello {
-  flex: 0 1 935px;
-  min-width: 0;
-}
-
-.about__title {
-  max-width: 193px;
-  font-weight: 500;
-  color: #000;
-}
-
-/* Photos keep their design sizes' proportions and scale down together */
-.about__photos {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.about__photos img {
-  flex: var(--w) 1 0;
-  min-width: 0;
-  width: 0;
-  height: auto;
-  aspect-ratio: var(--w) / var(--h);
-  object-fit: cover;
   display: block;
-}
-
-/* Bio (Figma 328:539): the lead line on the left, the paragraphs and contact row beside it */
-.about__bio {
-  flex: 1 0 497px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.about__lead {
   flex: none;
-  width: 165px;
-  font-weight: 500;
-  color: #000;
-}
-
-.about__bio-body {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.about__text {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  font-weight: 300;
-}
-
-.about__text a {
-  color: inherit;
-  text-decoration: underline dotted;
-  text-decoration-thickness: 12%;
-  text-underline-position: from-font;
-  transition: color 0.2s ease;
-}
-
-.about__text a:hover { color: #000; text-decoration-style: solid; }
-
-.about__actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.about__contact {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.about__icons {
-  display: flex;
-  gap: 4px;
-}
-
-.icon-btn {
-  display: flex;
-  padding: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  transition: border-color 0.2s ease;
-}
-
-.icon-btn svg {
-  width: 16px;
-  height: 16px;
-  fill: rgba(0, 0, 0, 0.6);
-  transition: fill 0.2s ease;
-}
-
-.icon-btn:hover { border-color: rgba(0, 0, 0, 0.24); }
-.icon-btn:hover svg { fill: rgba(0, 0, 0, 0.9); }
-
-.about__place {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: rgba(0, 0, 0, 0.6);
-  white-space: nowrap;
-}
-
-.about__place svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: rgba(0, 0, 0, 0.6);
-  stroke-width: 1.33333;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.icon-btn:focus-visible,
-.about__text a:focus-visible {
-  outline: 2px solid #19c3c3;
-  outline-offset: 2px;
-}
-
-/* Previous roles: the heading on the left, the list beside it, rows 16px apart */
-.about__work {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-top: 48px;
-}
-
-.about__heading { flex: none; font-weight: 500; }
-
-.roles {
-  flex: 0 1 528px; /* 8 + 442 (logo and name) + the date + 8 */
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  width: calc(var(--w) * var(--u, 1px));
+  height: calc(var(--h) * var(--u, 1px));
   padding: 0;
+  overflow: hidden;
+  appearance: none;
+  border-radius: 0;
+  background: #eee;
+  font: inherit;
+  rotate: var(--rot, 0deg);
+  scale: calc(var(--s, 1) * var(--hover, 1));
+  transition: scale 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.photo:hover { --hover: 1.06; z-index: 5; }
+.photo img {
+  position: absolute;
+  left: var(--x, 0);
+  top: var(--y, 0);
+  width: var(--iw, 100%);
+  height: var(--ih, 100%);
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.photo--white { border: 3px solid #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+.photo--grey { border: 1.5px solid #e6e6e6; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); }
+.photo--grey.photo--thick { border-width: 1.8px; box-shadow: 0 4.8px 9.6px rgba(0, 0, 0, 0.25); }
+
+/* Shared type */
+.story__title,
+.design-by__title,
+.ai-card__title,
+.journey__title,
+.life__title {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.3);
+}
+.story__body,
+.ai-card__text {
+  font-size: 18px;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+
+/* ----- Header, photos, tags ----- */
+
+.about-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 16px 0; /* 16px inside the grid lines, like the home intro */
+}
+
+.about-hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 0 8px;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.about-hero__lead { color: rgba(0, 0, 0, 0.3); }
+
+
+/* Three photos; clicking a side photo brings it to the middle, biggest. about.js works out
+   each photo's centre (--px) and scale (--s) so the gaps either side are equal; this only
+   animates them there. Everything scales with the row's width */
+.hero-photos {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 726 / 338;
+  container-type: inline-size;
+}
+.hero-photos__item {
+  --u: calc(100cqw / 726);
+  position: absolute;
+  left: var(--px, 50%);
+  top: 50%;
+  translate: -50% -50%;
+  cursor: pointer;
+  transition:
+    left 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+    scale 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hero-photos__item:hover { transition-duration: 0.6s, 0.35s; }
+/* the middle (featured) photo doesn't show a pointer, since clicking it does nothing */
+.hero-photos__item[aria-pressed="true"] { cursor: default; }
+
+.about-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
   list-style: none;
 }
 
-.role {
+/* ----- What I design by: circles that flip on hover, focus or tap ----- */
+
+.design-by {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow: hidden;
+  background: url("assets/sky.png") center / cover no-repeat;
+}
+/* soft blur along the top, under the title */
+.design-by::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 126px;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+  pointer-events: none;
+}
+.design-by__title {
+  position: relative;
+  padding: 24px 24px 0;
+  color: #fff;
+}
+.design-by__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 24px 24px;
+}
+.design-by__row + .design-by__row { margin-top: -24px; }
+
+.flip {
+  position: relative;
+  width: 225px;
+  height: 225px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  perspective: 900px;
+}
+.flip__face {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: 50%;
+  background: center / 100% 100% no-repeat;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+.flip__front { background-image: url("assets/about/flip-front.png"); color: rgba(0, 0, 0, 0.3); }
+.flip__back {
+  display: grid;
+  place-items: center;
+  background-image: url("assets/about/flip-back.png");
+  color: #fff;
+  transform: rotateY(180deg);
+}
+.flip__hint {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 11.5px);
+  width: 173px;
+  translate: -50% 0;
+}
+.flip__num {
+  position: absolute;
+  left: 50%;
+  top: 182px;
+  translate: -50% 0;
+}
+.flip__text { width: 173px; }
+.flip:is(:hover, :focus-visible, .is-flipped) .flip__front { transform: rotateY(-180deg); }
+.flip:is(:hover, :focus-visible, .is-flipped) .flip__back { transform: rotateY(0deg); }
+.flip:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.9); outline-offset: 4px; }
+
+/* ----- Two story sections (text + tilted photos) ----- */
+
+.story {
   display: flex;
   align-items: center;
+  gap: 24px;
+  padding: 22px 8px; /* Figma 684:26404, with the bottom matched to the top */
+}
+.story__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 24px 12px 24px 0;
+}
+.story--flip .story__text { padding: 24px 0 24px 12px; }
+.story__pics {
+  display: flex;
+  flex: none;
+  align-items: center;
+  padding: 8px; /* room for the tilt */
+}
+.story__pic--a { margin-right: -12px; z-index: 1; }
+
+/* ----- How has AI changed my game? (same card as the home page's) ----- */
+
+.ai-card { min-height: 252px; }
+.ai-card__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 0;
+  padding: 24px;
+}
+.ai-card__top { display: flex; flex-direction: column; gap: 16px; }
+.ai-card__meta {
+  font-size: 16px;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.3);
+}
+.ai-card__art {
+  position: relative;
+  display: block;
+  flex: none;
+  align-self: flex-end;
+  width: 324px;
+  height: 252px;
+}
+
+/* The staircase: black steps whose top edge is a dashed white line, 2.5px wide and set
+   just inside the edge. The dashes march up the steps like a conveyor belt (paused with
+   reduced motion). Steps are 69.3px deep and 51px tall; the top step runs out to the right
+   edge, and one more below the box lets the belt run in from the bottom */
+.stairs__steps { position: absolute; inset: 0; display: block; overflow: visible; }
+.stairs__fill { fill: #000; }
+.stairs__edge {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-dasharray: 5 5;
+  animation: stairs-belt 0.5s linear infinite;
+}
+@keyframes stairs-belt { to { stroke-dashoffset: -10; } }
+
+/* The icons (same frosted tiles as the home page card), each placed by its centre; about.js
+   sets the position, tilt and hops. They squash from their bottom edge, like landing feet */
+.stairs .tool { translate: -50% -50%; transform-origin: 50% 100%; }
+/* Claude's image is pulled up into place with a negative margin (its SVG carries a shadow);
+   keep that margin inside its tile so the tile sits centred in its halo */
+.stairs .tool--claude .tool__tile { display: flow-root; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stairs__edge { animation: none; }
+}
+
+/* ----- My design journey ----- */
+
+.journey {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 22px 8px 26px; /* Figma 684:26404 */
+}
+.journey__list {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
+  list-style: none;
+}
+.job {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   padding: 0 8px;
   border-radius: 6px;
 }
-
-.role img {
-  width: 30px;
-  height: 30px;
-  flex-shrink: 0;
+/* Each logo is its Figma tile (Figma 696:27985…): a 6% frosted square around the app icon,
+   exported with the icon's soft shadow, which hangs ~1.5px below the square */
+.job__logo {
+  flex: none;
+  width: 52px;
+  height: 53px;
+  margin-bottom: -1.5px;
 }
-
-/* logo + name take 442 of the row, as in Figma; the date follows on the right */
-.role__name {
+.job__where {
   display: flex;
+  flex: 1;
   flex-direction: column;
-  flex: 0 1 400px;
+  gap: 8px;
   min-width: 0;
-  font-weight: 300;
 }
-
-.role__name strong {
+.job__name,
+.job__role {
+  font-size: 18px;
   font-weight: 500;
-  color: #000;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
 }
-
-.role__date {
-  margin-left: auto;
-  font-weight: 300;
-  white-space: nowrap;
+.job__dates {
+  font-size: 16px;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.3);
 }
+.job__role { text-align: right; }
 
-.role.is-current .role__date { color: #000; }
+/* ----- My double life: a strip of photos you swipe (or drag) sideways ----- */
 
-/* 1px dashed rule, 5px dashes */
-.about__divider {
-  height: 1px;
-  margin: 48px 0;
-  border: 0;
-  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 5px, transparent 5px 10px);
-}
-
-/* Community: sits in the right 866 / 1479 of the page */
-.about__community {
-  width: calc(866 / 1479 * 100%);
-  margin-left: auto;
-}
-
-/* The heading and its text side by side, then the photos 48px below */
-.community__intro {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 48px;
-}
-
-.community__grid {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.community__col {
-  flex: var(--w) 1 0;
-  min-width: 0;
+.life {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 22px 0 16px; /* Figma 685:26461 */
 }
+.life__title,
+.life__hint { margin-left: 8px; }
 
-.community__col img {
-  width: calc(var(--w) / var(--col) * 100%);
-  height: auto;
-  aspect-ratio: var(--w) / var(--h);
-  object-fit: cover;
-  display: block;
-}
-
-.community__col:first-child { --col: 416; }
-.community__col:last-child { --col: 434; }
-.community__col img.is-end { align-self: flex-end; }
-
-.community__text {
+/* The strip runs the full column width, so photos slide under the dotted line on both
+   sides as it scrolls. Its padding leaves room for the tilt and the hover grow, and the
+   negative margin takes that back so the strip is the Figma row's height (329.5px) */
+.life__track {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 432px;
-  font-weight: 300;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 46.6px 24px;
+  margin: -30px 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  cursor: grab;
 }
+.life__track::-webkit-scrollbar { display: none; }
+.life__track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+.life__photo { scroll-snap-align: start; scroll-margin-left: 24px; }
 
-.community__text strong {
-  font-weight: 500;
-  color: #000;
-}
+/* ----- Narrow screens ----- */
 
-/* Narrower screens: stack the intro, let community use the full width */
-@media (max-width: 1100px) {
-  .about__intro { flex-direction: column; align-items: stretch; }
-  .about__hello { flex-basis: auto; }
-  .about__bio { flex-basis: auto; max-width: 560px; }
-  .about__community { width: 100%; }
-}
-
-@media (max-width: 600px) {
-  .about__photos { gap: 8px; }
-  .about__actions { flex-wrap: wrap; }
-  /* no room for labels beside text: each goes back above its content */
-  .about__bio, .about__work, .community__intro { flex-direction: column; }
-  .about__lead { width: auto; }
-  .roles { flex-basis: auto; width: 100%; }
-  .community__grid { gap: 8px; }
-  .community__col { gap: 8px; }
-}
-
-/* ---------- Page entrance (about page, and the home page via "work") ---------- */
-
-.js-reveal [data-reveal] {
-  opacity: 0;
-  transform: translateY(14px);
-}
-
-.js-reveal [data-reveal].is-in {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 0.7s ease var(--d, 0ms),
-    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
-}
-
-/* The dashed divider draws in from the left */
-.js-reveal .about__divider[data-reveal] {
-  opacity: 1;
-  transform: scaleX(0);
-  transform-origin: left center;
-}
-
-.js-reveal .about__divider[data-reveal].is-in {
-  transform: none;
-  transition: transform 1.1s cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0ms);
-}
-
-/* Photos shimmer until they arrive, then sharpen into focus */
-.about img.is-loading {
-  background: linear-gradient(100deg, #ebebeb 30%, #f4f4f4 50%, #ebebeb 70%);
-  background-size: 220% 100%;
-  animation: about-shimmer 1.3s linear infinite;
-}
-
-.about img.is-sharpening { animation: about-sharpen 0.7s ease-out; }
-
-@keyframes about-shimmer {
-  from { background-position: 120% 0; }
-  to { background-position: -120% 0; }
-}
-
-@keyframes about-sharpen {
-  from { filter: blur(12px) saturate(0.85); }
-  to { filter: none; }
+@media (max-width: 640px) {
+  .about-hero__title { font-size: 22px; }
+  .story,
+  .story--flip { flex-direction: column; align-items: flex-start; }
+  .story--flip .story__pics { order: 1; }
+  .story__text,
+  .story--flip .story__text { padding: 0; }
+  .story__pics { align-self: center; }
+  .ai-card { flex-direction: column; }
+  .ai-card__art { width: min(324px, 100%); overflow: hidden; }
+  .job { flex-wrap: wrap; }
+  .job__role { flex-basis: 100%; text-align: left; padding-left: 68px; }
+  .life__title { white-space: normal; }
 }

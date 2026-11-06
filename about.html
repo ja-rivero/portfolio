@@ -1,105 +1,240 @@
 <!doctype html>
-<html lang="en" class="is-about">
+<html lang="en" class="is-landed">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About — Jordan Rivero</title>
-  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="favicon.png" sizes="192x192" type="image/png">
+  <title>About · Jordan Rivero</title>
+  <link rel="icon" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Jordan Rivero — a product designer who thinks about process and effect before building.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="opening.css">
   <link rel="stylesheet" href="about.css">
-  <!-- Opt into the entrance animation (reveal.js) unless motion is reduced -->
-  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-reveal');</script>
+  <!-- Scroll reveals: set their hidden starting state before the first paint, so the page
+       never flashes fully drawn before reveal.js takes over -->
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');</script>
+  <!-- Arrived from a link in the open nav: show the nav open from the first paint (site.js
+       then collapses it), so it never blinks closed-open-closed while the page loads -->
+  <!-- Arriving on about.html#ai ("Learn about my workflow"): drop the hash before the
+       browser jumps to it, so about.js can glide down to the AI card instead -->
+  <script>if (location.hash === '#ai') { history.replaceState(null, '', location.pathname + location.search); window.glideTo = 'ai'; if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; }</script>
+  <script>try { if (sessionStorage.getItem('nav-was-open')) document.documentElement.classList.add('nav-carry'); } catch (e) {}</script>
 </head>
-<body>
-  <nav class="nav" aria-label="Primary">
-    <div class="nav__left">
-      <!-- Reload: opens the main page fresh, so the opening animation plays from the start -->
-      <a class="nav__reset" href="index.html" aria-label="Replay the intro"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.66667 5.33333H3.33333V2M3.52733 10.9047C4.14857 11.8613 5.06012 12.5935 6.12817 12.9939C7.19621 13.3942 8.36448 13.4416 9.46145 13.1291C10.5584 12.8166 11.5263 12.1607 12.223 11.2575C12.9197 10.3544 13.3085 9.25175 13.3324 8.11138C13.3562 6.97101 13.0138 5.85303 12.3555 4.92158C11.6972 3.99014 10.7575 3.29429 9.67458 2.9362C8.59163 2.5781 7.4224 2.57664 6.33856 2.93201C5.25471 3.28738 4.31335 3.98087 3.65267 4.91067"/></svg></a>
-      <div class="nav__links">
-        <a class="nav__link" href="index.html#intro">intro</a>
-        <a class="nav__link" href="index.html#work">work</a>
-        <a class="nav__link is-active" href="about.html" aria-current="page">about</a>
-      </div>
-    </div>
-    <div class="nav__actions">
-      <a class="button" href="https://drive.google.com/file/d/1w5IxtzyevP7wbxTF9Y0Pw_k43agouyh8/view?usp=sharing" target="_blank" rel="noopener">resume</a>
-      <a class="button" href="mailto:jarivero004@gmail.com">let’s talk!</a>
-    </div>
-  </nav>
+<body class="about-page">
+  <!-- About (Figma 637:21051) -->
+  <div class="page">
+    <!-- Nav (Figma 618:19697 collapsed / 618:19668 open): opens on hover, focus or tap -->
+    <nav class="nav" id="nav" aria-label="Primary">
+      <!-- The plane goes home with the opening animation; "Work" goes home without it -->
+      <a class="nav__home" href="index.html" aria-label="Home: play the intro"><span class="plane-mark nav__icon" aria-hidden="true"><span class="plane-mark__plane"></span></span></a>
+      <button class="nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <img src="assets/chevron-right-small-white.svg" alt="" width="24" height="24">
+      </button>
+      <span class="nav__links" id="nav-links">
+        <a class="nav__link" href="index.html#work">Work</a>
+        <a class="nav__link" href="#">Playground</a>
+        <a class="nav__link" href="about.html" aria-current="page">About</a>
+      </span>
+    </nav>
 
-  <main class="about">
-    <section class="about__intro">
-      <div class="about__hello">
-        <h1 class="about__title" data-reveal>hi, designer friends and creative people!</h1>
-        <div class="about__photos">
-          <img data-reveal src="assets/about/photo-palace.jpg" width="954" height="882" style="--w: 320; --h: 296" alt="The Palace of Fine Arts in San Francisco lit up at night" loading="lazy">
-          <img data-reveal src="assets/about/photo-grad.jpg" width="1047" height="1311" style="--w: 351; --h: 439" alt="Jordan in a suit and UCLA graduation stole beside stone columns" loading="lazy">
-          <img data-reveal src="assets/about/photo-selfie.jpg" width="714" height="633" style="--w: 240; --h: 213" alt="Jordan taking a mirror selfie in glasses and a knit sweater" loading="lazy">
-        </div>
-      </div>
+    <!-- Top scrim (Figma 671:24079): content softens and blurs as it passes under the nav -->
+    <div class="scrim" aria-hidden="true"></div>
 
-      <div class="about__bio">
-        <p class="about__lead" data-reveal>I’m jordan, a product designer who thinks about process and effect before building.</p>
-        <div class="about__bio-body">
-          <div class="about__text">
-            <p data-reveal>as a designer at <a href="https://www.trycardinal.com/" target="_blank" rel="noopener">cardinal</a>, I redesigned a brand book to help product leads and partners extract visual assets.</p>
-            <p data-reveal>before, I worked with pre-seed start-ups and <a href="https://www.docusign.com" target="_blank" rel="noopener">docusign</a> as a product designer building AI-assisted workflows, design systems and tokens, and public-facing materials.</p>
-            <p data-reveal>my craft isn’t limited to design, but involves dance, choreography, music, and digital experimentation.</p>
+    <main class="landing">
+      <hr class="rule rule--top">
+      <div class="about">
+
+        <!-- Header, photos, tags -->
+        <section class="about-hero" data-reveal>
+          <h1 class="about-hero__title">
+            <span class="about-hero__lead" data-type>Get to know who I am...</span>
+            <span class="about-hero__line" data-type>as a designer, dancer, student, and personality.</span>
+          </h1>
+          <!-- Clicking (or tapping) a side photo brings it to the middle, biggest (about.js) -->
+          <div class="hero-photos" id="hero-photos" data-layout="2" data-pop>
+            <button type="button" class="photo photo--white hero-photos__item" style="--w: 216; --h: 200; --rot: -2.65deg" data-i="1"><img src="assets/about/photos/hero-1.jpg" alt="The Palace of Fine Arts in San Francisco, lit up at night" style="--x: -1.56%; --y: -22.03%; --iw: 101.56%; --ih: 146.4%"></button>
+            <button type="button" class="photo photo--white hero-photos__item" style="--w: 260; --h: 318; --rot: 4.68deg" data-i="2"><img src="assets/about/photos/hero-2.jpg" alt="Jordan in a graduation stole between stone columns" style="--x: -12.57%; --y: -47.5%; --iw: 122.32%; --ih: 150%"></button>
+            <button type="button" class="photo photo--white hero-photos__item" style="--w: 216; --h: 200; --rot: 3.4deg" data-i="3"><img src="assets/about/photos/hero-3.jpg" alt="Jordan taking a mirror selfie"></button>
           </div>
-          <div class="about__actions" data-reveal>
-            <div class="about__contact">
-              <a class="button" href="mailto:jarivero004@gmail.com">let’s talk!</a>
-              <div class="about__icons">
-                <a class="icon-btn" href="https://www.linkedin.com/in/jordanarivero" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.286 5.97933H8.762V7.21267C9.11867 6.50333 10.0333 5.866 11.4073 5.866C14.0413 5.866 14.6667 7.278 14.6667 9.86867V14.6667H12V10.4587C12 8.98333 11.6433 8.15133 10.7353 8.15133C9.476 8.15133 8.95267 9.048 8.95267 10.458V14.6667H6.286V5.97933ZM1.71333 14.5533H4.38V5.866H1.71333V14.5533ZM4.762 3.03333C4.7621 3.25685 4.71777 3.47816 4.63159 3.68439C4.54541 3.89063 4.4191 4.07768 4.26 4.23467C4.10043 4.39341 3.91114 4.51916 3.70295 4.60472C3.49476 4.69028 3.27175 4.73399 3.04667 4.73333C2.59307 4.73231 2.15794 4.55352 1.83467 4.23533C1.6762 4.07776 1.55035 3.8905 1.46433 3.68425C1.37831 3.47799 1.33379 3.25681 1.33333 3.03333C1.33333 2.582 1.51333 2.15 1.83533 1.83133C2.1578 1.51192 2.59345 1.33292 3.04733 1.33333C3.502 1.33333 3.938 1.51267 4.26 1.83133C4.582 2.15 4.762 2.582 4.762 3.03333Z"/></svg></a>
-                <a class="icon-btn" href="mailto:jarivero004@gmail.com" aria-label="Email"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.3667 5.44667L12.6667 4.31333V3.34C12.6667 2.97333 12.3667 2.67333 12 2.67333H10.2L8.36667 1.45333C8.14 1.30667 7.85333 1.30667 7.62667 1.45333L5.79333 2.67333H3.99333C3.62667 2.67333 3.32667 2.97333 3.32667 3.34V4.31333L1.62667 5.44667C1.44 5.57333 1.32667 5.78 1.32667 6V13.3333C1.32667 14.0667 1.92667 14.6667 2.66 14.6667H13.3267C14.06 14.6667 14.66 14.0667 14.66 13.3333V6C14.66 5.78 14.5467 5.56667 14.36 5.44667H14.3667ZM4.66667 4H11.3333V6.97333L8 9.19333L4.66667 6.97333V4ZM2.66667 13.3333V7.24667L3.63333 7.88667L7.63333 10.5533C7.74667 10.6267 7.87333 10.6667 8 10.6667C8.12667 10.6667 8.26 10.6267 8.36667 10.5533L12.3667 7.88667L13.3333 7.24667V13.3333H2.66667Z"/></svg></a>
-              </div>
+          <ul class="about-hero__tags">
+            <li class="pill" data-pop>Fall 2026 grad</li>
+            <li class="pill" data-pop>UCLA design and comms student</li>
+            <li class="pill" data-pop>Raging creative and dancer</li>
+          </ul>
+        </section>
+
+        <hr class="rule">
+
+        <!-- What I design by: flip circles over the sky -->
+        <section class="framed" aria-labelledby="design-by" data-reveal>
+          <div class="design-by">
+            <h2 class="design-by__title" id="design-by" data-pop>What I design by...</h2>
+            <div class="design-by__row" data-pop>
+            <button class="flip" type="button" aria-label="01: good design isn’t just about skill, but how well you respond to people who need you.">
+              <span class="flip__face flip__front" aria-hidden="true"><span class="flip__hint">hover to flip</span><span class="flip__num">01.</span></span>
+              <span class="flip__face flip__back" aria-hidden="true"><span class="flip__text">good design isn’t just about skill, but how well you respond to people who need you.</span></span>
+            </button>
+            <button class="flip" type="button" aria-label="02: human stories aren’t all intuitive, you need to get to know them.">
+              <span class="flip__face flip__front" aria-hidden="true"><span class="flip__hint">hover to flip</span><span class="flip__num">02.</span></span>
+              <span class="flip__face flip__back" aria-hidden="true"><span class="flip__text">human stories aren’t all intuitive, you need to get to know them.</span></span>
+            </button>
             </div>
-            <span class="about__place"><svg viewBox="0 0 16 16" aria-hidden="true"><g transform="translate(2 0.667)"><path d="M6 8C7.10457 8 8 7.10457 8 6C8 4.89543 7.10457 4 6 4C4.89543 4 4 4.89543 4 6C4 7.10457 4.89543 8 6 8Z"/><path d="M2.22876 2.22876C3.22896 1.22857 4.58551 0.666667 6 0.666667C7.41449 0.666667 8.77104 1.22857 9.77124 2.22876C10.7714 3.22896 11.3333 4.58551 11.3333 6C11.3333 7.26133 11.0653 8.08667 10.3333 9L6 14L1.66667 9C0.934667 8.08667 0.666667 7.26133 0.666667 6C0.666667 4.58551 1.22857 3.22896 2.22876 2.22876Z"/></g></svg>sf/la-based</span>
+            <div class="design-by__row" data-pop>
+            <button class="flip" type="button" aria-label="03: your own craft and UX may clash, but the best results are all about pushing through.">
+              <span class="flip__face flip__front" aria-hidden="true"><span class="flip__hint">hover to flip</span><span class="flip__num">03.</span></span>
+              <span class="flip__face flip__back" aria-hidden="true"><span class="flip__text">your own craft and UX may clash, but the best results are all about pushing through.</span></span>
+            </button>
+            </div>
           </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Intro to design 101 -->
+        <section class="story" data-reveal>
+          <div class="story__text">
+            <h2 class="story__title" data-pop>Intro to design 101</h2>
+            <p class="story__body" data-pop>I didn’t start designing on a screen, but with pen, a notebook, and fantastical dreams. Like every kid, I used to doodle, but I doodled the lives I aspired to live. During childhood, I drew myself running around with cartoon animals I liked. And as a teen, I hand-drew music and choreography formations for my own team.</p>
+          </div>
+          <div class="story__pics" data-pop>
+            <span class="photo photo--grey story__pic story__pic--a" style="--w: 140.799; --h: 164; --rot: 2.31deg"><img src="assets/about/photos/intro-1.jpg" alt="Jordan in a room covered in colourful framed drawings" style="--x: -4.72%; --y: -0.09%; --iw: 105.1%; --ih: 120.31%"></span>
+            <span class="photo photo--grey story__pic" style="--w: 154.976; --h: 164; --rot: -5.11deg"><img src="assets/about/photos/intro-2.jpg" alt="A choreography formation drawn as dots on a grid"></span>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Stumbling into product design -->
+        <section class="story story--flip" data-reveal>
+          <div class="story__pics" data-pop>
+            <span class="photo photo--grey photo--thick story__pic" style="--w: 165.6; --h: 196.475; --rot: -4.02deg"><img src="assets/about/photos/stumbling.jpg" alt="A grid of friends on a video call"></span>
+          </div>
+          <div class="story__text">
+            <h2 class="story__title" data-pop>Stumbling into product design</h2>
+            <p class="story__body" data-pop>The more I dug my teeth into this dream, the more I felt inspired to create. It was serendipitous how I found it — through one uni friend.</p>
+            <p class="story__body" data-pop>Now four internships in, I can say I’ve learned so much about craft, sportsmanship, and detail. Yet, there’s still so much more to experience.</p>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- How has AI changed my game? -->
+        <section class="framed" id="ai" aria-labelledby="ai-title" data-reveal>
+          <div class="card ai-card">
+            <div class="ai-card__body">
+              <div class="ai-card__top">
+                <h2 class="ai-card__title" id="ai-title" data-pop>How has AI changed my game?</h2>
+                <p class="ai-card__text" data-pop>It has become my <span class="wavy">thorough thought partner</span>.<br>When I conduct research, create detailed hand-offs, or need to store precious code — AI creates that stable workflow.</p>
+              </div>
+              <p class="ai-card__meta" data-pop>This site is supported by Git, Claude, and deployed with Vercel!</p>
+            </div>
+            <!-- Staircase conveyor: the dashed edge runs up the steps and the icons hop up a
+                 step at a time; the top one hops off and a new one pops in at the bottom (about.js) -->
+            <div class="ai-card__art stairs" id="stairs" role="img" aria-label="The Vercel, GitHub, Claude and Figma icons climbing a staircase">
+              <svg class="stairs__steps" viewBox="0 0 324 252" width="324" height="252" aria-hidden="true">
+                <path class="stairs__fill" d="M-40 300 V284 H46 V233 H115.3 V182 H184.6 V131 H253.9 V80 H360 V300 Z"/>
+                <path class="stairs__edge" d="M-40 285.25 H47.25 V234.25 H116.55 V183.25 H185.85 V132.25 H255.15 V81.25 H360"/>
+              </svg>
+              <span class="tool tool--play" data-tilt="-3" aria-hidden="true"><span class="tool__tile"><img src="assets/tools/play.svg" width="23.333" height="20" alt=""></span></span>
+              <span class="tool tool--github" data-tilt="4" aria-hidden="true"><span class="tool__tile"><img src="assets/tools/github.svg" width="28" height="28" alt=""></span></span>
+              <span class="tool tool--claude" data-tilt="-3" aria-hidden="true"><span class="tool__tile"><img src="assets/tools/claude.svg" width="72.212" height="72.24" alt=""></span></span>
+              <span class="tool tool--figma" data-tilt="-2" aria-hidden="true"><span class="tool__tile"><img src="assets/tools/figma.svg" width="19" height="28" alt=""></span></span>
+            </div>
+            <i class="card__shine card__shine--top" aria-hidden="true"></i>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- My design journey (Figma 684:26404): logo tiles are the Figma frosted tiles, exported -->
+        <section class="journey" aria-labelledby="journey-title" data-reveal>
+          <h2 class="journey__title" id="journey-title" data-pop>My design journey</h2>
+          <ol class="journey__list">
+            <li class="job" data-pop>
+              <img class="job__logo" src="assets/about/tile-cardinal.png" width="52" height="53" alt="">
+              <span class="job__where"><span class="job__name">Cardinal</span><span class="job__dates">Sept - Oct 2026</span></span>
+              <span class="job__role">Designer</span>
+            </li>
+            <li class="job" data-pop>
+              <img class="job__logo" src="assets/about/tile-docusign.png" width="52" height="53" alt="">
+              <span class="job__where"><span class="job__name">Docusign</span><span class="job__dates">Jun - Sept 2026</span></span>
+              <span class="job__role">Product Design Intern</span>
+            </li>
+            <li class="job" data-pop>
+              <img class="job__logo" src="assets/about/tile-framer.png" width="52" height="53" alt="">
+              <span class="job__where"><span class="job__name">Framer</span><span class="job__dates">Jan - Jun 2026</span></span>
+              <span class="job__role">Campus Leader</span>
+            </li>
+            <li class="job" data-pop>
+              <img class="job__logo" src="assets/about/tile-headlamp.png" width="52" height="53" alt="">
+              <span class="job__where"><span class="job__name">Headlamp Health</span><span class="job__dates">Feb - May 2026</span></span>
+              <span class="job__role">Product Design Intern</span>
+            </li>
+            <li class="job" data-pop>
+              <img class="job__logo" src="assets/about/tile-autoinvent.png" width="52" height="53" alt="">
+              <span class="job__where"><span class="job__name">AutoInvent</span><span class="job__dates">Oct 2025 - Mar 2026</span></span>
+              <span class="job__role">Product Designer</span>
+            </li>
+          </ol>
+        </section>
+
+        <hr class="rule">
+
+        <!-- My double life: swipeable photos -->
+        <section class="life" aria-labelledby="life-title" data-reveal>
+          <h2 class="life__title" id="life-title" data-pop>My double life as a full-time, community enthusiast</h2>
+          <div class="life__track" id="life-track" tabindex="0" aria-label="Photos, scroll sideways for more" data-pop>
+            <span class="photo photo--white life__photo" style="--w: 260.491; --h: 296.303; --rot: 4.77deg"><img src="assets/about/photos/life-1.jpg" alt="Four photos of the dance team posing together" style="--x: -1.9%; --y: -17.14%; --iw: 102.79%; --ih: 135.55%"></span>
+            <span class="photo photo--white life__photo" style="--w: 260.491; --h: 296.303; --rot: -7.95deg"><img src="assets/about/photos/life-2.jpg" alt="The dance team sitting together on stage"></span>
+            <span class="photo photo--white life__photo" style="--w: 260.491; --h: 296.303; --rot: 4.48deg"><img src="assets/about/photos/life-3.jpg" alt="The team celebrating with a trophy"></span>
+            <span class="photo photo--white life__photo" style="--w: 260.491; --h: 296.303; --rot: -3.88deg"><img src="assets/about/photos/life-4.jpg" alt="Jordan and a friend holding up Framer tote bags"></span>
+          </div>
+          <span class="pill life__hint" data-pop>hint: swipe left!</span>
+        </section>
+
+        <hr class="rule">
+
+      </div>
+    </main>
+
+    <!-- Footer (Figma 633:20154): sky with the sign-off card -->
+    <footer class="footer">
+      <div class="framed framed--light footer__frame" data-reveal>
+        <div class="footer__card">
+          <div class="footer__sign">
+            <span class="plane-mark footer__icon" aria-hidden="true"><span class="plane-mark__plane"></span></span>
+            <p class="footer__thanks" data-pop>Thanks for stopping by!</p>
+            <p class="footer__later" data-pop>Until next time, or when I merge something new...</p>
+          </div>
+          <nav class="footer__links" aria-label="Footer">
+            <div class="footer__group" data-pop>
+              <h2 class="footer__label">Contact</h2>
+              <ul class="footer__list">
+                <li><a href="https://www.linkedin.com/in/jordanarivero" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a href="mailto:jarivero004@gmail.com">Email</a></li>
+                <li><a href="#">Instagram</a></li>
+              </ul>
+            </div>
+            <div class="footer__group" data-pop>
+              <h2 class="footer__label">Pages</h2>
+              <ul class="footer__list">
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="#">Playground</a></li>
+                <li><a href="about.html">About</a></li>
+              </ul>
+            </div>
+          </nav>
+          <i class="card__shine card__shine--top" aria-hidden="true"></i>
+          <i class="card__shine card__shine--bottom" aria-hidden="true"></i>
         </div>
       </div>
-    </section>
+      <span class="footer__plane" aria-hidden="true"></span>
+    </footer>
+  </div>
 
-    <section class="about__work" aria-labelledby="work-title">
-      <h2 class="about__heading" id="work-title" data-reveal>I previously worked with...</h2>
-      <ul class="roles">
-        <li class="role is-current" data-reveal><img src="assets/about/logo-cardinal.png" width="30" height="30" alt=""><div class="role__name"><strong>cardinal</strong><span>designer</span></div><span class="role__date">sept — oct</span></li>
-        <li class="role" data-reveal><img src="assets/about/logo-docusign.png" width="30" height="30" alt=""><div class="role__name"><strong>docusign</strong><span>product design intern</span></div><span class="role__date">jun — sept</span></li>
-        <li class="role" data-reveal><img src="assets/about/logo-framer.png" width="30" height="30" alt=""><div class="role__name"><strong>framer</strong><span>student campus leader</span></div><span class="role__date">jan — jun</span></li>
-        <li class="role" data-reveal><img src="assets/about/logo-headlamp.png" width="30" height="30" alt=""><div class="role__name"><strong>headlamp health</strong><span>product design intern</span></div><span class="role__date">mar — may</span></li>
-        <li class="role" data-reveal><img src="assets/about/logo-autoinvent.png" width="30" height="30" alt=""><div class="role__name"><strong>autoinvent</strong><span>product designer</span></div><span class="role__date">oct ‘25 – jan</span></li>
-      </ul>
-    </section>
-
-    <hr class="about__divider" data-reveal>
-
-    <section class="about__community" aria-labelledby="community-title">
-      <div class="community__intro">
-        <h2 class="about__heading" id="community-title" data-reveal>my community deep dive</h2>
-        <div class="community__text">
-          <p data-reveal>along with designing things, creative community has been a big part of my journey. these relationships have shaped me, my work, and how I see myself -- confident, optimistic, and down for anything.</p>
-          <p data-reveal><strong>notable communities:</strong><br>samahang modern, framer @ucla, docusign create team, creative labs, ucla kaufman dance dept.</p>
-        </div>
-      </div>
-      <div class="community__grid">
-        <div class="community__col" style="--w: 416">
-          <img data-reveal src="assets/about/community-framer.jpg" width="1248" height="840" style="--w: 416; --h: 280" alt="Two Framer campus leaders holding Framer tote bags in a classroom" loading="lazy">
-          <img data-reveal src="assets/about/community-lunch.jpg" width="708" height="627" style="--w: 236; --h: 209" alt="A group sharing food outdoors on campus" loading="lazy">
-        </div>
-        <div class="community__col" style="--w: 434">
-          <img class="is-end" data-reveal src="assets/about/community-call.jpg" width="708" height="840" style="--w: 236; --h: 280" alt="A video call grid of teammates wearing paper moustaches" loading="lazy">
-          <img data-reveal src="assets/about/community-dance.jpg" width="1302" height="840" style="--w: 434; --h: 280" alt="Dance team holding a 3rd place banner at night" loading="lazy">
-        </div>
-      </div>
-    </section>
-  </main>
-
+  <script src="site.js"></script>
   <script src="reveal.js"></script>
+  <script src="about.js"></script>
 </body>
 </html>

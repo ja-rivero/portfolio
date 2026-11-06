@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" class="is-landed">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cardinal · Jordan Rivero</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="opening.css">
+  <link rel="stylesheet" href="cardinal.css">
+  <!-- Scroll reveals: set their hidden starting state before the first paint, so the page
+       never flashes fully drawn before reveal.js takes over -->
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');</script>
+  <!-- Arrived from a link in the open nav: show the nav open from the first paint (site.js
+       then collapses it), so it never blinks closed-open-closed while the page loads -->
+  <script>try { if (sessionStorage.getItem('nav-was-open')) document.documentElement.classList.add('nav-carry'); } catch (e) {}</script>
+</head>
+<body class="case-page">
+  <!-- Cardinal case study (Figma 684:24471) -->
+  <div class="page" id="top">
+    <!-- Nav (Figma 618:19697 collapsed / 618:19668 open): opens on hover, focus or tap -->
+    <nav class="nav" id="nav" aria-label="Primary">
+      <!-- The plane goes home with the opening animation; "Work" goes home without it -->
+      <a class="nav__home" href="index.html" aria-label="Home: play the intro"><span class="plane-mark nav__icon" aria-hidden="true"><span class="plane-mark__plane"></span></span></a>
+      <button class="nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <img src="assets/chevron-right-small-white.svg" alt="" width="24" height="24">
+      </button>
+      <span class="nav__links" id="nav-links">
+        <a class="nav__link" href="index.html#work" aria-current="page">Work</a>
+        <a class="nav__link" href="#">Playground</a>
+        <a class="nav__link" href="about.html">About</a>
+      </span>
+    </nav>
+
+    <!-- Top scrim (Figma 671:24079): content softens and blurs as it passes under the nav -->
+    <div class="scrim" aria-hidden="true"></div>
+
+    <main class="landing">
+      <hr class="rule rule--top">
+      <article class="case">
+
+        <!-- Go back to the case studies -->
+        <div class="case__nav">
+          <a class="case__step" href="index.html#work"><span class="case__chevron case__chevron--back" aria-hidden="true"></span>Go back</a>
+        </div>
+
+        <hr class="rule">
+
+        <!-- Title + hero art (Figma 684:24499) -->
+        <header class="case-hero" data-reveal>
+          <div class="case-hero__text">
+            <h1 class="case-hero__title" data-type>Designed brand book for a Series A YC start-up, scaling a paper concept to help customers make better sales decisions.</h1>
+            <p class="case-hero__meta" data-pop>Cardinal (YC 2026) · Designer · 1 week contract project</p>
+          </div>
+          <div class="framed">
+            <img class="shot" src="assets/cardinal/hero.jpg" width="712" height="420" alt="A torn paper card reading “Find better outbound. Get better sales.” on teal paper, with a hand holding a magnifying glass">
+          </div>
+        </header>
+
+        <hr class="rule">
+
+        <!-- Context (Figma 686:26622) -->
+        <section class="case-context" aria-labelledby="context-title" data-reveal>
+          <div class="framed case-context__art">
+            <img class="shot" src="assets/cardinal/context.jpg" width="368" height="467" alt="A search bar reading “Find me the best leads” on a gridded paper background">
+          </div>
+          <div class="case-context__text">
+            <h2 class="case__title" id="context-title" data-pop>Context</h2>
+            <p class="case__body" data-pop>Cardinal is an AI revenue platform built for sales and go-to-market teams, straight out of Y-Combinator. Founded by two-time YC founders, Cardinal was looking a fresh brand book to hand off to partners and design clients.</p>
+            <p class="case__body" data-pop>I touched on public-facing assets (ex. LinkedIn posts, billboards, posters), but also website tokens like typography, padding, color palette, and iconography.</p>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Posters (Figma 684:24569) -->
+        <section class="case-part" aria-labelledby="posters-title" data-reveal>
+          <div class="case-part__head">
+            <h2 class="case__title" id="posters-title" data-pop>Posters</h2>
+            <p class="case__body" data-pop>Staying true to Cardinal’s torn paper/mache concept, I found ways to weave language into visual abstraction. Large shapes and focal points help onlookers read for our central message.</p>
+          </div>
+          <div class="framed">
+            <div class="shots">
+              <img class="shot" style="--w: 619.315" src="assets/cardinal/poster-1.jpg" width="619" height="348" loading="lazy" alt="Poster: “Point your sales in the right direction.” in a square framed by four halftone circles">
+              <img class="shot" style="--w: 580.608; --x: 131" src="assets/cardinal/poster-2.jpg" width="581" height="327" loading="lazy" alt="Poster: “Take your outbound to new heights.” under diagonal paper stripes">
+              <img class="shot" style="--w: 663.552" src="assets/cardinal/poster-3.jpg" width="664" height="373" loading="lazy" alt="Poster: “Design how you sell.” on torn paper, with a hand placing a coin">
+            </div>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Design context: colours and type (Figma 686:26628) -->
+        <section class="case-part" aria-labelledby="tokens-title" data-reveal>
+          <div class="case-part__head case-part__head--in" style="--in: 239; --hw: 481">
+            <h2 class="case__title" id="tokens-title" data-pop>Design context</h2>
+            <p class="case__body" data-pop>To help develop new design tokens for our website, I tested different (and more affordable) typography and color options.</p>
+            <p class="case__body" data-pop>Our team ended up preferring this blue wash, given its soothing hue and readability.</p>
+          </div>
+          <div class="framed">
+            <div class="shots">
+              <img class="shot" style="--w: 677.6; --x: 34" src="assets/cardinal/colors.png" width="678" height="494" loading="lazy" alt="Colour palette: Medium Brown-Grey, Turquoise, Midnight Black, Light Grey, Teal and Halftone Teal">
+              <img class="shot" style="--w: 677.6" src="assets/cardinal/type.png" width="678" height="454" loading="lazy" alt="Type scale pairing Sentient Variable with Gen Sans, headings 1 to 6 from 60px down to 14px">
+            </div>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Product and web assets (Figma 686:26807) -->
+        <section class="case-part" aria-labelledby="product-title" data-reveal>
+          <div class="case-part__head" style="--hw: 481">
+            <h2 class="case__title" id="product-title" data-pop>Product and web assets</h2>
+            <p class="case__body" data-pop>These are replicable visuals to show impactful processes for users.</p>
+            <p class="case__body" data-pop>I selected modals that could potentially tell a story about our product: <span class="wavy case__em">finding leads on customers and businesses.</span></p>
+          </div>
+          <div class="framed">
+            <div class="shots">
+              <img class="shot" src="assets/cardinal/product-1.jpg" width="712" height="413" loading="lazy" alt="A campaign flow: a contact card leading to a “Send LinkedIn message” step, on dark paper">
+              <img class="shot" src="assets/cardinal/product-2.jpg" width="712" height="529" loading="lazy" alt="Three stacked lead lists: Head of Growth, Series A AEs in SF, and Recruiters at Series D">
+            </div>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Iconography/logo (Figma 686:27322) -->
+        <section class="case-part" aria-labelledby="logo-title" data-reveal>
+          <div class="case-part__head case-part__head--in" style="--in: 201; --hw: 519">
+            <h2 class="case__title" id="logo-title" data-pop>Iconography/logo</h2>
+            <p class="case__body" data-pop>I reimagined logo display and isolation — mainly focusing on geometric lines and paper-textured ridges while editing.</p>
+          </div>
+          <div class="framed">
+            <div class="shots shots--loose">
+              <img class="shot" style="--w: 537.6" src="assets/cardinal/logo-1.jpg" width="538" height="302" loading="lazy" alt="The cardinal mark, white on black paper">
+              <img class="shot" style="--w: 614.4" src="assets/cardinal/logo-2.jpg" width="614" height="346" loading="lazy" alt="The cardinal mark rising over a white hill on a dark grid, with the Cardinal wordmark">
+              <img class="shot" src="assets/cardinal/logo-3.jpg" width="712" height="409" loading="lazy" alt="The Cardinal logo and wordmark on white paper">
+            </div>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Value points and takeaways (Figma 689:27920) -->
+        <section class="framed" aria-labelledby="takeaways-title" data-reveal>
+          <div class="takeaways">
+            <img class="takeaways__plane" src="assets/cardinal/plane.png" width="113" height="110" alt="">
+            <div class="takeaways__body">
+              <h2 class="case__title" id="takeaways-title" data-pop>Value points and takeaways</h2>
+              <ol class="takeaways__list">
+                <li data-pop>Really just start building ANYTHING. Creative blocks are not permanent and completely recoverable. Don’t sit around waiting too long and start chasing something.</li>
+                <li data-pop>Don’t hesitate to show your work, even if it isn’t “your best”. Quality can be subjective and you never know what others will think.</li>
+              </ol>
+            </div>
+            <i class="card__shine card__shine--top" aria-hidden="true"></i>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Back to the top -->
+        <div class="case__nav case__nav--centre">
+          <a class="case__step" href="#top" id="scroll-up"><span class="case__chevron case__chevron--up" aria-hidden="true"></span>Scroll up</a>
+        </div>
+
+        <hr class="rule">
+      </article>
+    </main>
+
+    <!-- Footer (Figma 633:20154): sky with the sign-off card -->
+    <footer class="footer">
+      <div class="framed framed--light footer__frame" data-reveal>
+        <div class="footer__card">
+          <div class="footer__sign">
+            <span class="plane-mark footer__icon" aria-hidden="true"><span class="plane-mark__plane"></span></span>
+            <p class="footer__thanks" data-pop>Thanks for stopping by!</p>
+            <p class="footer__later" data-pop>Until next time, or when I merge something new...</p>
+          </div>
+          <nav class="footer__links" aria-label="Footer">
+            <div class="footer__group" data-pop>
+              <h2 class="footer__label">Contact</h2>
+              <ul class="footer__list">
+                <li><a href="https://www.linkedin.com/in/jordanarivero" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a href="mailto:jarivero004@gmail.com">Email</a></li>
+                <li><a href="#">Instagram</a></li>
+              </ul>
+            </div>
+            <div class="footer__group" data-pop>
+              <h2 class="footer__label">Pages</h2>
+              <ul class="footer__list">
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="#">Playground</a></li>
+                <li><a href="about.html">About</a></li>
+              </ul>
+            </div>
+          </nav>
+          <i class="card__shine card__shine--top" aria-hidden="true"></i>
+          <i class="card__shine card__shine--bottom" aria-hidden="true"></i>
+        </div>
+      </div>
+      <span class="footer__plane" aria-hidden="true"></span>
+    </footer>
+  </div>
+
+  <script src="site.js"></script>
+  <script src="reveal.js"></script>
+  <script>
+    // "Scroll up" glides back to the top (or jumps, with reduced motion)
+    document.getElementById('scroll-up').addEventListener('click', (e) => {
+      e.preventDefault();
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  </script>
+</body>
+</html>
