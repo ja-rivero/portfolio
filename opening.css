@@ -502,7 +502,7 @@ html:not(.is-landed) .intro .pill:not(.is-on) { opacity: 0; }
 .reveal [data-type] .t { visibility: hidden; }
 .reveal [data-type] .t.is-on { visibility: visible; }
 [data-pop] { transition: opacity 0.3s ease; }
-.card__button[data-pop] { transition: opacity 0.3s ease, background-color 0.2s ease, color 0.2s ease; }
+.card__button[data-pop] { transition: opacity 0.3s ease, background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 .reveal [data-pop]:not(.is-on) { opacity: 0; }
 
 /* ----- Design engineer card ----- */
@@ -625,11 +625,38 @@ html:not(.is-landed) .intro .pill:not(.is-on) { opacity: 0; }
   white-space: nowrap;
   /* a 1px ring in its own colour, so it keeps its outline when it turns white on hover */
   box-shadow: inset 0 0 0 1px #000;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  /* same gentle ease-in-out as the nav opening, a touch slower than before */
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* hover (or keyboard focus): colours invert, white with black text */
 .card__button:hover,
-.card__button:focus-visible { background: #fff; color: #000; }
+.card__button:focus-visible { background: #fff; color: rgba(0, 0, 0, 0.8); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0); }
+/* the hover border: dashed like the tools bowl (5px on, 5px off, 20% black), drawn as an SVG
+   pill so the dash length can be set; it fades in with the colours */
+.card__button { position: relative; }
+.card__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card__ring rect {
+  x: 1px;
+  y: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  rx: calc(0.52em + 9px);
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.2);
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+}
+.card__button:hover .card__ring,
+.card__button:focus-visible .card__ring { opacity: 1; }
 .card__button:focus-visible { outline: 2px solid rgba(0, 0, 0, 0.3); outline-offset: 3px; }
 
 .card__meta {
