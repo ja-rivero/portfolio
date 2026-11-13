@@ -175,7 +175,7 @@
 
 /* these sit on their own lines, so their squiggles can drop a little further below the text */
 /* (3px of padding below gives the lower wave room to paint; the position counts from it) */
-.lessons__em, .mentor__name { padding-bottom: 3px; --wave-y: calc(0.31em - 4px); }
+.lessons__em, .mentor__name .wavy-lines { padding-bottom: 3px; --wave-y: calc(0.31em - 4px); }
 
 /* ----- Notes from mentors (Figma 729:2465): two quotes side by side ----- */
 
@@ -201,7 +201,7 @@
   line-height: 1.04;
   letter-spacing: -0.04em;
 }
-.mentor__name { align-self: flex-start; color: rgba(0, 0, 0, 0.9); } /* squiggle only as wide as the name */
+.mentor__name { color: rgba(0, 0, 0, 0.9); } /* (its squiggle is on an inner inline span, measured like the takeaways') */
 .mentor__role { color: rgba(0, 0, 0, 0.3); }
 
 /* ----- Thank-you card (Figma 731:2744): soft pink-to-lilac, team photos ----- */
