@@ -144,43 +144,49 @@
 /* some parts set their heading in from the left, as in Figma (--in) */
 .case-part__head--in { margin-left: calc(var(--in) / 728 * 100% - 8px); }
 
-/* ----- Value points and takeaways (same card as the home page's) ----- */
+/* ----- Value points and takeaways (Figma 689:27920): a small grey plane on top, then the
+   title and the numbered list, all in one column ----- */
 
 .takeaways {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.03);
+  padding: 24px;
+  background: #f7f7f7;
 }
 .takeaways__plane {
   position: relative;
   z-index: 1;
   flex: none;
-  width: 112.68px;
+  width: 52.8px;
   height: auto;
-  margin-top: 57.85px;
+  filter: grayscale(1); /* grey in Figma (a colour blend over the coral plane) */
 }
 .takeaways__body {
   position: relative;
   z-index: 1;
   display: flex;
-  flex: 1;
   flex-direction: column;
   gap: 16px;
-  min-width: 0;
-  padding: 24px;
+  width: 100%;
 }
 .takeaways__list {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-left: 27px;
-  font-size: 18px;
+  padding-left: 24px;
+  font-size: 16px;
   line-height: 1.04;
   letter-spacing: -0.04em;
   color: rgba(0, 0, 0, 0.6);
 }
+/* each takeaway leads with its point: medium, darker, with the squiggle (.wavy-lines) drawn
+   under it; the cover matches the card */
+.takeaways__em { font-weight: 500; color: rgba(0, 0, 0, 0.8); }
+.takeaways { --cover: #f7f7f7; }
+.takeaways .wavy-lines { --cover: inherit; }
 .takeaways .card__shine { height: 96.287px; top: 8.3px; }
 
 /* ----- Narrow screens ----- */
@@ -192,7 +198,4 @@
   .case-context__text { padding: 0 8px 16px; }
   .case-part__head--in { margin-left: 0; }
   .shot { width: 100%; margin-left: 0; }
-  .takeaways { flex-direction: column; }
-  .takeaways__plane { width: 80px; margin: 16px 0 0 16px; }
-  .takeaways__body { padding-top: 8px; }
 }

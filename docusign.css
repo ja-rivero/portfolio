@@ -1,0 +1,235 @@
+/* ---------- Docusign case study (Figma 700:28052) ----------
+   Builds on cardinal.css (case layout, hero, shots, go back / scroll up rows). */
+
+
+/* ----- Milestone heading: title on the left, pill on the right (Figma 700:28121) ----- */
+
+.milestone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 40px 8px 16px;
+}
+.milestone__title {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.milestone__pill {
+  flex: none;
+  font-size: 18px;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Milestone 01's video keeps the 1px grey outline from Figma (707:1938), drawn just inside */
+.shot--outlined { outline: 1px solid #e6e6e6; outline-offset: -1px; }
+
+/* Milestone 02: the same grey outline, but blurred along with the video (Figma 715:1972
+   blurs the whole box, outline included), so the edges go soft */
+.blurbox { position: relative; overflow: hidden; }
+.blurbox::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #e6e6e6;
+  box-shadow: inset 0 0 14px 6px #fff;
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* Milestone 01's video hovers like the home page's case studies: the frame shrinks a little
+   and the video darkens. Nothing opens yet, so both milestones (data-wip) show wip.js's
+   "Still tinkering..." tag; Milestone 02 gets only the tag */
+.milestone-shot {
+  transition: --r 1s cubic-bezier(0.65, 0, 0.35, 1), scale 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.milestone-shot:hover { scale: 0.96; }
+.milestone-shot .shot { transition: filter 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.milestone-shot:hover .shot { filter: brightness(0.92); }
+@media (prefers-reduced-motion: reduce) { .milestone-shot, .milestone-shot .shot { transition: none; } }
+
+/* the NDA preview is already blurred in the file itself; nothing to select or drag */
+.shot--hidden { user-select: none; -webkit-user-drag: none; pointer-events: none; }
+
+/* ----- NDA note: grey card, plane, text and a code field (Figma 715:2036) ----- */
+
+.nda {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 106px;
+  padding: 0 16px;
+  background: rgba(0, 0, 0, 0.03);
+}
+.nda__plane {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 47.2px;
+  height: auto;
+}
+.nda__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  padding: 24px;
+}
+.nda__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  line-height: 1.04;
+}
+.nda__title {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.3);
+}
+.nda__sub {
+  font-size: 18px;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.nda__sub a { color: inherit; text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-decoration-color: rgba(0, 0, 0, 0.3); text-underline-offset: 3px; transition: text-decoration-color 0.2s ease; }
+.nda__sub a:hover, .nda__sub a:focus-visible { text-decoration-color: currentColor; }
+
+.nda__form { position: relative; flex: none; font-size: 18px; }
+.nda__code {
+  /* starts at Figma's 161px and grows with what's typed (the page script sets the width),
+     so a longer code never scrolls out of sight */
+  width: 161px;
+  max-width: 216px; /* about as wide as it can get before the heading beside it wraps */
+  height: 43.72px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  font: inherit;
+  font-size: 18px;
+  line-height: normal; /* room for the whole glyph, so nothing's clipped top or bottom */
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  outline: none;
+}
+.nda__code::placeholder { color: rgba(0, 0, 0, 0.3); opacity: 1; }
+/* clicked into (focused): the same dashed ring as "Learn about my workflow" on hover,
+   5px on / 5px off, 20% black, fading in */
+.nda__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nda__ring rect {
+  x: 1px;
+  y: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  rx: calc(0.52em + 11.5px); /* half the field's height, so the ends are round */
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.2);
+  stroke-width: 2;
+  stroke-dasharray: 5 5;
+}
+.nda__form:focus-within .nda__ring { opacity: 1; }
+.nda__form.is-wrong { animation: nda-shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+@keyframes nda-shake {
+  20%, 60% { translate: -4px 0; }
+  40%, 80% { translate: 4px 0; }
+}
+.nda .card__shine { height: 96.287px; top: 8.3px; }
+
+/* ----- Value points and takeaways (Figma 729:2093): grey plane, then each point (numbered,
+   underlined) with its explanation below ----- */
+
+.lessons { display: flex; flex-direction: column; align-items: flex-start; padding: 22px 8px; } /* plane and text both 8px in */
+.lessons__plane { width: 53px; height: auto; } /* Figma's grey plane, on white like the page */
+.lessons__body { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.lessons__list { display: flex; flex-direction: column; gap: 16px; counter-reset: lesson; list-style: none; }
+.lessons__list li { display: flex; flex-direction: column; gap: 16px; counter-increment: lesson; }
+.lessons__point {
+  position: relative;
+  padding-left: 27px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.9);
+}
+.lessons__point::before { content: counter(lesson) "."; position: absolute; left: 4px; }
+
+/* these sit on their own lines, so their squiggles can drop a little further below the text */
+/* (3px of padding below gives the lower wave room to paint; the position counts from it) */
+.lessons__em, .mentor__name { padding-bottom: 3px; --wave-y: calc(0.31em - 4px); }
+
+/* ----- Notes from mentors (Figma 729:2465): two quotes side by side ----- */
+
+.mentors { display: flex; flex-direction: column; gap: 16px; padding: 22px 8px; }
+.mentors__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.mentor { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; margin: 0; }
+.mentor__quote {
+  margin: 0;
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.mentor__by { display: flex; align-items: center; gap: 16px; }
+.mentor__photo { flex: none; width: 77.76px; height: auto; }
+.mentor__who {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+.mentor__name { align-self: flex-start; color: rgba(0, 0, 0, 0.9); } /* squiggle only as wide as the name */
+.mentor__role { color: rgba(0, 0, 0, 0.3); }
+
+/* ----- Thank-you card (Figma 731:2744): soft pink-to-lilac, team photos ----- */
+
+.thanks {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+  padding: 24px;
+  background: linear-gradient(to bottom, rgba(255, 211, 211, 0.6), rgba(247, 213, 255, 0.6));
+  text-align: center;
+}
+.thanks__text { display: flex; flex-direction: column; gap: 16px; max-width: 356px; line-height: 1.04; }
+.thanks__title { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; color: rgba(0, 0, 0, 0.8); }
+.thanks__sub { font-size: 18px; letter-spacing: -0.04em; color: rgba(0, 0, 0, 0.6); }
+.thanks__people { position: relative; z-index: 1; width: 404px; max-width: 100%; height: auto; margin-bottom: -26px; }
+.thanks .card__shine { height: 96.287px; top: 8.3px; }
+
+@media (max-width: 640px) {
+  .milestone { padding-top: 28px; }
+  .milestone__title { font-size: 20px; }
+  .nda { align-items: flex-start; padding: 16px 16px 0; }
+  .nda__plane { margin-top: 20px; }
+  .nda__body { flex-direction: column; align-items: flex-start; padding: 16px 8px 24px 16px; }
+  .nda__code { max-width: min(300px, 70vw); } /* stacked under the text: room to grow */
+  .mentors__grid { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .nda__form.is-wrong { animation: none; } }

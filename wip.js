@@ -1,10 +1,13 @@
 (() => {
   // "Still tinkering..." (Figma 696:28033): a black tag that follows the cursor while it's over
-  // a case study that doesn't have its own page yet (a .work card with no .work__link). Each
+  // a case study that doesn't have its own page yet (a .work card with no .work__link, or
+  // anything marked data-wip). Each
   // time it shows, its letters type in like the intro. Only for a mouse or trackpad: touch
   // screens have no cursor to follow
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  const cards = [...document.querySelectorAll('.work')].filter((w) => !w.querySelector('.work__link'));
+  // (also anything marked data-wip, like the Docusign milestone videos)
+  const cards = [...document.querySelectorAll('.work')].filter((w) => !w.querySelector('.work__link'))
+    .concat([...document.querySelectorAll('[data-wip]')]);
   if (!cards.length) return;
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" class="is-landed">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docusign · Jordan Rivero</title>
+  <link rel="icon" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="opening.css">
+  <link rel="stylesheet" href="cardinal.css">
+  <link rel="stylesheet" href="docusign.css">
+  <!-- Scroll reveals: set their hidden starting state before the first paint, so the page
+       never flashes fully drawn before reveal.js takes over -->
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal');</script>
+  <!-- Arrived from a link in the open nav: show the nav open from the first paint (site.js
+       then collapses it), so it never blinks closed-open-closed while the page loads -->
+  <script>try { if (sessionStorage.getItem('nav-was-open')) document.documentElement.classList.add('nav-carry'); } catch (e) {}</script>
+</head>
+<body class="case-page">
+  <!-- Docusign case study (Figma 700:28052) -->
+  <div class="page" id="top">
+    <!-- Nav (Figma 618:19697 collapsed / 618:19668 open): opens on hover, focus or tap -->
+    <nav class="nav" id="nav" aria-label="Primary">
+      <!-- The plane goes home with the opening animation; "Work" goes home without it -->
+      <a class="nav__home" href="index.html" aria-label="Home: play the intro"><span class="plane-mark nav__icon" aria-hidden="true"><span class="plane-mark__plane"></span></span></a>
+      <button class="nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+        <img src="assets/chevron-right-small-white.svg" alt="" width="24" height="24">
+      </button>
+      <span class="nav__links" id="nav-links">
+        <a class="nav__link" href="index.html#work" aria-current="page">Work</a>
+        <a class="nav__link" href="about.html">About</a>
+      </span>
+    </nav>
+
+    <!-- Top scrim (Figma 671:24079): content softens and blurs as it passes under the nav -->
+    <div class="scrim" aria-hidden="true"></div>
+
+    <main class="landing">
+      <hr class="rule rule--top">
+      <article class="case">
+
+        <!-- Go back to the case studies -->
+        <div class="case__nav">
+          <a class="case__step" href="index.html#work"><span class="case__chevron case__chevron--back" aria-hidden="true"></span>Go back</a>
+        </div>
+
+        <hr class="rule">
+
+        <!-- Title + hero art (Figma 700:28060) -->
+        <header class="case-hero" data-reveal>
+          <div class="case-hero__text">
+            <h1 class="case-hero__title" data-type>Working on Docusign’s first AI-native contract builder.</h1>
+            <p class="case-hero__meta" data-pop>Docusign · Product Design Intern · 1 Shipped Project, Smaller Vision Projects</p>
+          </div>
+          <div class="framed">
+            <img class="shot" src="assets/docusign/hero.jpg" width="712" height="405" alt="A purple new-document tile with a plus sign, surrounded by blank document pages on a pink gradient">
+          </div>
+        </header>
+
+        <hr class="rule">
+
+        <!-- Milestone 01 (Figma 700:28121, 707:1937) -->
+        <div class="milestone" data-reveal>
+          <h2 class="milestone__title" data-type>AI core experience for drafting templates.</h2>
+          <span class="pill milestone__pill" data-pop>Milestone 01.</span>
+        </div>
+
+        <hr class="rule">
+
+        <div class="framed milestone-shot" data-reveal data-wip>
+          <video class="shot shot--outlined" src="assets/docusign/template-preview.mp4#t=0.001" width="712" height="533" muted loop playsinline preload="metadata" data-autoplay aria-label="Previewing a template before using it: the signer fields for the sales representative and the client, then Select"></video>
+        </div>
+
+        <hr class="rule">
+
+        <!-- Milestone 02 (Figma 715:1950, 715:1971): under NDA, so only a blurred preview -->
+        <div class="milestone" data-reveal>
+          <h2 class="milestone__title" data-type>Iris chat vision features</h2>
+          <span class="pill milestone__pill" data-pop>Milestone 02.</span>
+        </div>
+
+        <hr class="rule">
+
+        <div class="framed" data-reveal data-wip>
+          <!-- the blur is baked into the video file itself, so the clear footage is never on the site -->
+          <div class="blurbox">
+            <video class="shot shot--hidden" src="assets/docusign/iris-blurred.mp4" poster="assets/docusign/iris-blurred.jpg" width="712" height="486" muted loop playsinline preload="metadata" data-autoplay aria-label="A blurred recording of redlining with the Iris chat, hidden while it’s under NDA"></video>
+          </div>
+        </div>
+
+        <hr class="rule">
+
+        <!-- NDA note (Figma 715:2035): same card as the takeaways, with a code field -->
+        <section class="framed" aria-labelledby="nda-title" data-reveal>
+          <div class="nda">
+            <img class="nda__plane" src="assets/docusign/plane-coral.png" width="47" height="53" alt="">
+            <div class="nda__body">
+              <div class="nda__text">
+                <h2 class="nda__title" id="nda-title" data-pop>This project is under NDA and hidden.</h2>
+                <p class="nda__sub" data-pop><a href="mailto:jarivero004@gmail.com">Shoot me an email</a> if you want to know more!</p>
+              </div>
+              <form class="nda__form" id="nda-form" data-pop>
+                <input class="nda__code" type="text" name="code" placeholder="Enter code here" aria-label="Access code" autocomplete="off" spellcheck="false"><svg class="nda__ring" aria-hidden="true"><rect /></svg>
+              </form>
+            </div>
+            <i class="card__shine card__shine--top" aria-hidden="true"></i>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Value points and takeaways (Figma 729:2093) -->
+        <section class="lessons" aria-labelledby="lessons-title" data-reveal>
+          <img class="lessons__plane" src="assets/docusign/plane-grey.png" width="53" height="56.5" alt="">
+          <div class="lessons__body">
+            <h2 class="case__title" id="lessons-title" data-pop>Value points and takeaways</h2>
+            <ol class="lessons__list">
+              <li>
+                <p class="lessons__point" data-pop><span class="lessons__em wavy-lines">You should anticipate, but never assume.</span></p>
+                <p class="case__body" data-pop>Designers sometimes need to figure out a solution with low context and high risk. We must make tough calls, but always grounded in some trend or metric, never a baseless assumption.</p>
+              </li>
+              <li>
+                <p class="lessons__point" data-pop><span class="lessons__em wavy-lines">Creativity depends on how well you know your users.</span></p>
+                <p class="case__body" data-pop>Creative block happens, but you can leverage use cases to start iterating. We are all human, therefore we are familiar with what bothers us and how we attempt resolution. Solutions then become infinite.</p>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Notes from mentors (Figma 729:2465) -->
+        <section class="mentors" aria-labelledby="mentors-title" data-reveal>
+          <h2 class="case__title" id="mentors-title" data-pop>Notes from mentors</h2>
+          <div class="mentors__grid">
+            <figure class="mentor" data-pop>
+              <blockquote class="mentor__quote">“Jordan has worked on so many big-scale designs across Docusign, setting a high bar for commitment, challenging ideas, and being comfortable in stressful situations.”</blockquote>
+              <figcaption class="mentor__by">
+                <img class="mentor__photo" src="assets/docusign/mentor-julia.png" width="78" height="78" alt="">
+                <span class="mentor__who"><span class="mentor__name wavy-lines">Julia Vo</span><span class="mentor__role">Lead product designer @Docusign</span></span>
+              </figcaption>
+            </figure>
+            <figure class="mentor" data-pop>
+              <blockquote class="mentor__quote">“Jordan has been keeping up with the speed of the team, managing items well and delivering quickly. Especially on a product with many twists.”</blockquote>
+              <figcaption class="mentor__by">
+                <img class="mentor__photo" src="assets/docusign/mentor-lakshmi.png" width="78" height="78" alt="">
+                <span class="mentor__who"><span class="mentor__name wavy-lines">Lakshmi Kumar</span><span class="mentor__role">Head of product design @Docusign</span></span>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Thank-you card (Figma 731:2743) -->
+        <section class="framed" aria-labelledby="thanks-title" data-reveal>
+          <div class="thanks">
+            <div class="thanks__text">
+              <h2 class="thanks__title" id="thanks-title" data-pop>Unconditionally grateful for this team!</h2>
+              <p class="thanks__sub" data-pop>Across product, engineering, design, research, and more...</p>
+            </div>
+            <img class="thanks__people" src="assets/docusign/people.png" width="404" height="172" alt="Photos of fifteen teammates from Docusign" data-pop>
+            <i class="card__shine card__shine--top" aria-hidden="true"></i>
+          </div>
+        </section>
+
+        <hr class="rule">
+
+        <!-- Back to the top -->
+        <div class="case__nav case__nav--centre">
+          <a class="case__step" href="#top" id="scroll-up"><span class="case__chevron case__chevron--up" aria-hidden="true"></span>Scroll up</a>
+        </div>
+
+        <hr class="rule">
+      </article>
+    </main>
+
+    <!-- Footer (Figma 633:20154): sky with the sign-off card -->
+    <footer class="footer">
+      <div class="framed framed--light footer__frame" data-reveal>
+        <div class="footer__card">
+          <div class="footer__sign">
+            <span class="plane-mark footer__icon" aria-hidden="true"><span class="plane-mark__plane"></span></span>
+            <p class="footer__thanks" data-pop>Thanks for stopping by!</p>
+            <p class="footer__later" data-pop>Until next time, or when I merge something new...</p>
+          </div>
+          <nav class="footer__links" aria-label="Footer">
+            <div class="footer__group" data-pop>
+              <h2 class="footer__label">Contact</h2>
+              <ul class="footer__list">
+                <li><a href="https://www.linkedin.com/in/jordanarivero" target="_blank" rel="noopener">LinkedIn</a></li>
+                <li><a href="mailto:jarivero004@gmail.com">Email</a></li>
+              </ul>
+            </div>
+            <div class="footer__group" data-pop>
+              <h2 class="footer__label">Pages</h2>
+              <ul class="footer__list">
+                <li><a href="index.html#work">Work</a></li>
+                <li><a href="about.html">About</a></li>
+              </ul>
+            </div>
+          </nav>
+          <i class="card__shine card__shine--top" aria-hidden="true"></i>
+          <i class="card__shine card__shine--bottom" aria-hidden="true"></i>
+        </div>
+      </div>
+      <span class="footer__plane" aria-hidden="true"></span>
+    </footer>
+  </div>
+
+  <script src="site.js"></script>
+  <script src="reveal.js"></script>
+  <script src="wip.js"></script>
+  <script>
+    // "Scroll up" glides back to the top (or jumps, with reduced motion)
+    document.getElementById('scroll-up').addEventListener('click', (e) => {
+      e.preventDefault();
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+    // The code field widens to fit a code too long for it (it never gets narrower than 161px)
+    const code = document.querySelector('.nda__code');
+    const ruler = document.createElement('canvas').getContext('2d');
+    const fit = () => {
+      // empty: back to its own 161px, so the pill never jumps when typing starts
+      if (!code.value) { code.style.removeProperty('width'); return; }
+      const cs = getComputedStyle(code);
+      ruler.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const text = code.value;
+      const w = ruler.measureText(text).width + text.length * parseFloat(cs.letterSpacing || 0);
+      code.style.width = `${Math.max(161, Math.ceil(w + 40 + 4))}px`;
+      // once it all fits, show it from the start rather than scrolled
+      if (code.scrollWidth <= code.clientWidth) code.scrollLeft = 0;
+    };
+    code.addEventListener('input', fit);
+    // No code unlocks anything yet: a wrong (or any) code gives the field a little shake
+    document.getElementById('nda-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = e.currentTarget;
+      f.classList.remove('is-wrong');
+      void f.offsetWidth;
+      f.classList.add('is-wrong');
+    });
+  </script>
+</body>
+</html>

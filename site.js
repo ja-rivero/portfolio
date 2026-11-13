@@ -110,10 +110,45 @@
     });
   }
 
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(measureGaps);
+  // The same breaks for .wavy-lines, whose wave is the phrase's background and so runs on
+  // along every line it wraps onto: each break is a patch of the background colour, placed
+  // by how far along the joined-up lines its letter sits
+  function measureLineGaps() {
+    document.querySelectorAll('.wavy-lines').forEach((w) => {
+      const frags = [...w.getClientRects()];
+      const gaps = [];
+      const walker = document.createTreeWalker(w, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        for (let i = 0; i < n.data.length; i++) {
+          if (!DESCENDERS.test(n.data[i])) continue;
+          const ink = inkBelowBaseline(n.data[i], getComputedStyle(n.parentElement));
+          if (!ink) continue;
+          const r = document.createRange();
+          r.setStart(n, i); r.setEnd(n, i + 1);
+          const cr = r.getBoundingClientRect();
+          const k = frags.findIndex((f) => cr.top >= f.top - 2 && cr.bottom <= f.bottom + 2);
+          if (k < 0) continue;
+          let x = cr.left - frags[k].left;
+          for (let j = 0; j < k; j++) x += frags[j].width;
+          gaps.push([x + ink[0] - GAP_AIR, ink[1] - ink[0] + GAP_AIR * 2]);
+        }
+      }
+      if (!gaps.length) {
+        ['--gaps', '--gaps-at', '--gaps-size', '--gaps-rep'].forEach((p) => w.style.removeProperty(p));
+        return;
+      }
+      const patch = 'linear-gradient(var(--cover), var(--cover))';
+      w.style.setProperty('--gaps', gaps.map(() => patch).join(', '));
+      w.style.setProperty('--gaps-at', gaps.map(([x]) => `left ${x.toFixed(1)}px bottom var(--wave-y)`).join(', '));
+      w.style.setProperty('--gaps-size', gaps.map(([, g]) => `${g.toFixed(1)}px 6px`).join(', '));
+      w.style.setProperty('--gaps-rep', gaps.map(() => 'no-repeat').join(', '));
+    });
+  }
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { measureGaps(); measureLineGaps(); });
   // Without the reveal animations (reduced motion), squiggles are simply there
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.wavy').forEach((w) => w.classList.add('is-drawn'));
+    document.querySelectorAll('.wavy, .wavy-lines').forEach((w) => w.classList.add('is-drawn'));
   }
-  addEventListener('resize', measureGaps);
+  addEventListener('resize', () => { measureGaps(); measureLineGaps(); });
 })();

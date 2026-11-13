@@ -54,7 +54,7 @@
   // Reveals letters of el at LETTER_MS each; resolves when it's all in
   function type(el) {
     const letters = typed.get(el) || [];
-    const wavies = [...el.querySelectorAll('.wavy')];
+    const wavies = [...el.querySelectorAll('.wavy, .wavy-lines')];
     return new Promise((done) => {
       const t0 = performance.now();
       function frame(now) {
@@ -85,7 +85,7 @@
       else {
         el.classList.add('is-on');
         // its squiggle draws a beat after the words appear (the delay is in the CSS)
-        el.querySelectorAll('.wavy').forEach((w) => w.classList.add('is-drawn'));
+        el.querySelectorAll('.wavy, .wavy-lines').forEach((w) => w.classList.add('is-drawn'));
         await new Promise((r) => setTimeout(r, POP_MS));
       }
     }

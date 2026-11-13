@@ -400,6 +400,30 @@ html:not(.is-landed) body { overflow: hidden; }
 .wavy.is-drawn::after { clip-path: inset(0 -2px 0 0); }
 @media (prefers-reduced-motion: reduce) { .wavy::after { transition: none; } }
 
+/* The same squiggle for phrases that may wrap onto more lines (.wavy-lines): drawn as the
+   phrase's background, so it follows every line, and drawn in left to right across the
+   lines by shrinking a cover (in the colour behind it, --cover) off the wave. Scripts add
+   .is-drawn just like .wavy */
+@property --ink { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+.wavy-lines {
+  --cover: #fff;
+  /* the wave sits just under the baseline (0.31em above the line box's bottom), not at the
+     bottom of the line box, so it clears the next line on tightly set text */
+  --wave-y: calc(0.31em - 4.5px);
+  /* layers, top first: breaks where descenders (p, g, y…) cross the wave (site.js measures
+     them into --gaps), the cover that's pulled off as it draws, then the wave itself */
+  background-image:
+    var(--gaps, linear-gradient(transparent, transparent)),
+    linear-gradient(var(--cover), var(--cover)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M-4 2.5 Q-2 0.6 0 2.5 T4 2.5 T8 2.5 T12 2.5' fill='none' stroke='%23000' stroke-opacity='0.8' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-position: var(--gaps-at, 0 0), right bottom var(--wave-y), left bottom var(--wave-y);
+  background-size: var(--gaps-size, 0 0), calc(100% - var(--ink)) 6px, 8px 5px;
+  background-repeat: var(--gaps-rep, no-repeat), no-repeat, repeat-x;
+  transition: --ink 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.25s;
+}
+.wavy-lines.is-drawn { --ink: 100%; }
+@media (prefers-reduced-motion: reduce) { .wavy-lines { --ink: 100%; transition: none; } }
+
 .slot {
   position: relative;
   /* Figma 728:539, as big as the viewport allows up to the design size. Above it: nav
