@@ -379,14 +379,15 @@ html:not(.is-landed) body { overflow: hidden; }
   color: rgba(0, 0, 0, 0.8);
   white-space: nowrap;
 }
-/* Wavy underline drawn as one continuous wave (8px period, 1.6px line, starting
-   just under the baseline, which sits 0.31em above the span's bottom). It draws in left to
-   right, a beat after its words are on screen: scripts add .is-drawn once they are */
+/* Wavy underline drawn as one continuous wave (8px period, 1.6px line, about 2px under the
+   baseline, which sits 0.31em above the span's bottom; the same spot as .wavy-lines below).
+   It draws in left to right, a beat after its words are on screen: scripts add .is-drawn
+   once they are */
 .wavy::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: calc(0.27em - 5px);
+  bottom: calc(0.31em - 7px);
   width: 100%;
   height: 5px;
   clip-path: inset(0 100% 0 0);
