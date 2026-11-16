@@ -154,8 +154,8 @@
 }
 .nda .card__shine { height: 96.287px; top: 8.3px; }
 
-/* ----- Value points and takeaways (Figma 729:2093): grey plane, then each point (numbered,
-   underlined) with its explanation below ----- */
+/* ----- Value points and takeaways (Figma 729:2093): grey plane, then each point (numbered)
+   with its explanation below ----- */
 
 .lessons { display: flex; flex-direction: column; align-items: flex-start; padding: 22px 8px; } /* plane and text both 8px in */
 .lessons__plane { width: 53px; height: auto; } /* Figma's grey plane, on white like the page */
@@ -169,13 +169,9 @@
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.04em;
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(0, 0, 0, 0.6);
 }
 .lessons__point::before { content: counter(lesson) "."; position: absolute; left: 4px; }
-
-/* these sit on their own lines, so their squiggles can drop a little further below the text */
-/* (3px of padding below gives the lower wave room to paint; the position counts from it) */
-.lessons__em, .mentor__name .wavy-lines { padding-bottom: 3px; --wave-y: calc(0.31em - 4px); }
 
 /* ----- Notes from mentors (Figma 729:2465): two quotes side by side ----- */
 
@@ -201,7 +197,7 @@
   line-height: 1.04;
   letter-spacing: -0.04em;
 }
-.mentor__name { color: rgba(0, 0, 0, 0.9); } /* (its squiggle is on an inner inline span, measured like the takeaways') */
+.mentor__name { color: rgba(0, 0, 0, 0.6); }
 .mentor__role { color: rgba(0, 0, 0, 0.3); }
 
 /* ----- Thank-you card (Figma 731:2744): soft pink-to-lilac, team photos ----- */
@@ -218,8 +214,8 @@
   text-align: center;
 }
 .thanks__text { display: flex; flex-direction: column; gap: 16px; max-width: 356px; line-height: 1.04; }
-.thanks__title { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; color: rgba(0, 0, 0, 0.8); }
-.thanks__sub { font-size: 18px; letter-spacing: -0.04em; color: rgba(0, 0, 0, 0.6); }
+.thanks__title { font-size: 22px; font-weight: 500; letter-spacing: -0.04em; color: rgba(0, 0, 0, 0.6); }
+.thanks__sub { font-size: 18px; letter-spacing: -0.04em; color: rgba(0, 0, 0, 0.3); }
 .thanks__people { position: relative; z-index: 1; width: 404px; max-width: 100%; height: auto; margin-bottom: -26px; }
 .thanks .card__shine { height: 96.287px; top: 8.3px; }
 

@@ -177,23 +177,11 @@
   flex-direction: column;
   gap: 16px;
   padding-left: 24px;
-  font-size: 18px;
-  line-height: 1.3; /* a touch more than Figma's 1.04, so a squiggle clears the line under it */
+  font-size: 16px;
+  line-height: 1.04;
   letter-spacing: -0.04em;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6); /* each point reads in the same plain text as the rest (Figma) */
 }
-/* each takeaway leads with its point: medium, darker, with the squiggle (.wavy-lines) drawn
-   under it; the cover matches the card */
-.takeaways__em {
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.8);
-  /* the squiggle sits as far below the text as the Docusign takeaways' (3px of padding gives
-     it room to paint; its position counts from there) */
-  padding-bottom: 3px;
-  --wave-y: calc(0.31em - 4px);
-}
-.takeaways { --cover: #f7f7f7; }
-.takeaways .wavy-lines { --cover: inherit; }
 .takeaways .card__shine { height: 96.287px; top: 8.3px; }
 
 /* ----- Narrow screens ----- */
