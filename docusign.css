@@ -191,7 +191,7 @@
 .mentor__who {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 4px; /* name and role sit close (Figma 729:2688, 729:2700) */
   font-size: 18px;
   font-weight: 500;
   line-height: 1.04;
