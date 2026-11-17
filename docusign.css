@@ -154,10 +154,9 @@
 }
 .nda .card__shine { height: 96.287px; top: 8.3px; }
 
-/* ----- Value points and takeaways (Figma 729:2093): grey plane, then a numbered list ----- */
+/* ----- Value points and takeaways (Figma 729:2093): title, then a numbered list ----- */
 
 .lessons { display: flex; flex-direction: column; align-items: flex-start; padding: 22px 8px; } /* plane and text both 8px in */
-.lessons__plane { width: 53px; height: auto; } /* Figma's grey plane, on white like the page */
 .lessons__body { display: flex; flex-direction: column; gap: 16px; width: 100%; }
 .lessons__list {
   display: flex;
@@ -194,8 +193,9 @@
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.04em;
-  color: rgba(0, 0, 0, 0.3); /* name and role both light (Figma 729:2465) */
 }
+.mentor__name { color: rgba(0, 0, 0, 0.6); }
+.mentor__role { color: rgba(0, 0, 0, 0.3); }
 
 /* ----- Thank-you card (Figma 731:2744): soft pink-to-lilac, team photos ----- */
 

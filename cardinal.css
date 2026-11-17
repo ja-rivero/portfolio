@@ -144,8 +144,7 @@
 /* some parts set their heading in from the left, as in Figma (--in) */
 .case-part__head--in { margin-left: calc(var(--in) / 728 * 100% - 8px); }
 
-/* ----- Value points and takeaways (Figma 689:27920): a small grey plane on top, then the
-   title and the numbered list, all in one column ----- */
+/* ----- Value points and takeaways (Figma 689:27920): the title and the numbered list ----- */
 
 .takeaways {
   position: relative;
@@ -155,14 +154,6 @@
   overflow: hidden;
   padding: 24px;
   background: #f7f7f7;
-}
-.takeaways__plane {
-  position: relative;
-  z-index: 1;
-  flex: none;
-  width: 52.8px;
-  height: auto;
-  filter: grayscale(1); /* grey in Figma (a colour blend over the coral plane) */
 }
 .takeaways__body {
   position: relative;
