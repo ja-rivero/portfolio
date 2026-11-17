@@ -154,24 +154,22 @@
 }
 .nda .card__shine { height: 96.287px; top: 8.3px; }
 
-/* ----- Value points and takeaways (Figma 729:2093): grey plane, then each point (numbered)
-   with its explanation below ----- */
+/* ----- Value points and takeaways (Figma 729:2093): grey plane, then a numbered list ----- */
 
 .lessons { display: flex; flex-direction: column; align-items: flex-start; padding: 22px 8px; } /* plane and text both 8px in */
 .lessons__plane { width: 53px; height: auto; } /* Figma's grey plane, on white like the page */
 .lessons__body { display: flex; flex-direction: column; gap: 16px; width: 100%; }
-.lessons__list { display: flex; flex-direction: column; gap: 16px; counter-reset: lesson; list-style: none; }
-.lessons__list li { display: flex; flex-direction: column; gap: 16px; counter-increment: lesson; }
-.lessons__point {
-  position: relative;
+.lessons__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   padding-left: 27px;
+  list-style: decimal;
   font-size: 18px;
-  font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.04em;
   color: rgba(0, 0, 0, 0.6);
 }
-.lessons__point::before { content: counter(lesson) "."; position: absolute; left: 4px; }
 
 /* ----- Notes from mentors (Figma 729:2465): two quotes side by side ----- */
 
@@ -186,7 +184,7 @@
   letter-spacing: -0.04em;
   color: rgba(0, 0, 0, 0.6);
 }
-.mentor__by { display: flex; align-items: center; gap: 16px; }
+.mentor__by { display: flex; align-items: center; gap: 12px; }
 .mentor__photo { flex: none; width: 77.76px; height: auto; }
 .mentor__who {
   display: flex;
@@ -196,9 +194,8 @@
   font-weight: 500;
   line-height: 1.04;
   letter-spacing: -0.04em;
+  color: rgba(0, 0, 0, 0.3); /* name and role both light (Figma 729:2465) */
 }
-.mentor__name { color: rgba(0, 0, 0, 0.6); }
-.mentor__role { color: rgba(0, 0, 0, 0.3); }
 
 /* ----- Thank-you card (Figma 731:2744): soft pink-to-lilac, team photos ----- */
 
